@@ -13,7 +13,7 @@ const tabs = [
   },
   {
     icon: "/assets/lottie/click.lottie",
-    title: "One-click optimization",
+    title: "One-click product optimization",
     isNew: false,
     backgroundPositionX: 98,
     backgroundPositionY: 100,
@@ -21,11 +21,19 @@ const tabs = [
   },
   {
     icon: "/assets/lottie/stars.lottie",
-    title: "Smart keyword generator",
+    title: "Smart analytics and insights",
     isNew: true,
     backgroundPositionX: 100,
     backgroundPositionY: 27,
     backgroundSizeX: 177,
+  },
+  {
+    icon: "/assets/lottie/vroom.lottie",
+    title: "Verified buyers and deals negotiations",
+    isNew: false,
+    backgroundPositionX: 0,
+    backgroundPositionY: 0,
+    backgroundSizeX: 150,
   },
 ];
 
@@ -55,7 +63,7 @@ export const Features = () => {
 
               <div className='font-medium'>{tab.title}</div>
               {tab.isNew && (
-                <div className='text-xs rounded-full px-2 py-0.5 bg-[#8c44ff] text-black'>
+                <div className='text-xs rounded-full px-2 py-0.5 bg-[#8c44ff] text-black font-semibold'>
                   new
                 </div>
               )}
@@ -69,7 +77,6 @@ export const Features = () => {
               backgroundImage: `url(${productImage.src})`,
             }}
           ></div>
-          {/* <Image src={productImage} alt='Product Image' /> */}
         </div>
       </div>
     </section>

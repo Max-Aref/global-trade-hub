@@ -1,6 +1,7 @@
 import LogoIcon from "@/assets/logo.svg";
 import MenuIcon from "@/assets/icon-menu.svg";
 import Button from "@/components/Button";
+import Link from "next/link";
 export const Header = () => {
   return (
     <header className='py-4 border-b border-b-[#2A2A2A] md:border-none sticky top-0 z-10    '>
@@ -30,7 +31,13 @@ export const Header = () => {
             </nav>
           </div>
           <div className='flex items-center gap-4'>
-            <Button>Register</Button>
+            <Link
+              href='/auth'
+              className='text-white/70 hover:text-white transition'
+            >
+              <Button>Register</Button>
+            </Link>
+
             <MenuIcon className='h-8 w-8 md:hidden' />
           </div>
         </div>
