@@ -11,109 +11,113 @@ export const WhyExportersChooseUs = () => {
       </div>
       
       <div className="container mx-auto px-4 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Left column - Headline and CTA */}
-          <div className="lg:col-span-5 flex flex-col">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tighter mb-6">
-              Unlock the World's Most Profitable Market — Without the Usual Barriers
+        <div className="max-w-7xl mx-auto">
+          {/* Main heading */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tighter text-white mb-6">
+              Why Exporters Choose Us
             </h2>
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight text-white/90 mb-8">
+              Unlock the World&rsquo;s Most Profitable Market — Without the Usual Barriers
+            </h3>
+          </div>
+          
+          {/* Features grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {/* Feature 1 */}
+            <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
+              <div className="flex gap-4 mb-4">
+                <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
+                  <FaCheck className="h-5 w-5 text-[#8c45ff]" />
+                </div>
+                <h4 className="text-xl font-medium text-white leading-tight">
+                  Direct Access to U.S. Buyers
+                </h4>
+              </div>
+              <p className="text-white/70 ml-14">
+                Reach verified importers, retailers, and distributors actively sourcing international products.
+              </p>
+            </div>
             
-            <p className="text-lg text-white/70 mb-8">
-              Join thousands of successful exporters who have simplified their path to the U.S. market through our platform.
-            </p>
+            {/* Feature 2 */}
+            <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
+              <div className="flex gap-4 mb-4">
+                <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
+                  <FaCheck className="h-5 w-5 text-[#8c45ff]" />
+                </div>
+                <h4 className="text-xl font-medium text-white leading-tight">
+                  No Upfront Costs or Middlemen
+                </h4>
+              </div>
+              <p className="text-white/70 ml-14">
+                List your products free. Keep full control of your margins and communication.
+              </p>
+            </div>
             
-            <div className="mt-auto pt-8">
-              <Button>Get Started Today</Button>
+            {/* Feature 3 */}
+            <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
+              <div className="flex gap-4 mb-4">
+                <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
+                  <FaCheck className="h-5 w-5 text-[#8c45ff]" />
+                </div>
+                <h4 className="text-xl font-medium text-white leading-tight">
+                  Export Support, Simplified
+                </h4>
+              </div>
+              <p className="text-white/70 ml-14">
+                From compliance documents to customs prep — we help you every step of the way.
+              </p>
+            </div>
+            
+            {/* Feature 4 */}
+            <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
+              <div className="flex gap-4 mb-4">
+                <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
+                  <FaCheck className="h-5 w-5 text-[#8c45ff]" />
+                </div>
+                <h4 className="text-xl font-medium text-white leading-tight">
+                  Fast, Secure Payments with Global Coverage
+                </h4>
+              </div>
+              <p className="text-white/70 ml-14">
+                We integrate trusted escrow and bank transfer solutions for safe, timely payouts.
+              </p>
+            </div>
+            
+            {/* Feature 5 */}
+            <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
+              <div className="flex gap-4 mb-4">
+                <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
+                  <FaCheck className="h-5 w-5 text-[#8c45ff]" />
+                </div>
+                <h4 className="text-xl font-medium text-white leading-tight">
+                  Real-Time Analytics & Buyer Feedback
+                </h4>
+              </div>
+              <p className="text-white/70 ml-14">
+                Know who&rsquo;s viewing, quoting, and buying — and fine-tune your strategy with confidence.
+              </p>
+            </div>
+            
+            {/* Feature 6 */}
+            <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
+              <div className="flex gap-4 mb-4">
+                <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
+                  <FaCheck className="h-5 w-5 text-[#8c45ff]" />
+                </div>
+                <h4 className="text-xl font-medium text-white leading-tight">
+                  Dedicated Account Support
+                </h4>
+              </div>
+              <p className="text-white/70 ml-14">
+                Every exporter gets a real human expert to help optimize listings and unlock opportunities.
+              </p>
             </div>
           </div>
           
-          {/* Right column - Feature grid */}
-          <div className="lg:col-span-7">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Feature 1 */}
-              <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
-                <div className="flex gap-4 mb-3">
-                  <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
-                    {/* <!-- IMAGE: Direct connection icon, 1:1 ratio, connection-icon.svg --> */}
-                    <FaCheck className="h-5 w-5 text-[#8c45ff]" />
-                  </div>
-                  <h3 className="text-xl font-medium">Direct Access to U.S. Buyers</h3>
-                </div>
-                <p className="text-white/70 ml-14">
-                  Reach verified importers, retailers, and distributors actively sourcing international products.
-                </p>
-              </div>
-              
-              {/* Feature 2 */}
-              <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
-                <div className="flex gap-4 mb-3">
-                  <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
-                    {/* <!-- IMAGE: No cost icon, 1:1 ratio, no-cost-icon.svg --> */}
-                    <FaCheck className="h-5 w-5 text-[#8c45ff]" />
-                  </div>
-                  <h3 className="text-xl font-medium">No Upfront Costs or Middlemen</h3>
-                </div>
-                <p className="text-white/70 ml-14">
-                  List your products free. Keep full control of your margins and communication.
-                </p>
-              </div>
-              
-              {/* Feature 3 */}
-              <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
-                <div className="flex gap-4 mb-3">
-                  <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
-                    {/* <!-- IMAGE: Support icon, 1:1 ratio, support-icon.svg --> */}
-                    <FaCheck className="h-5 w-5 text-[#8c45ff]" />
-                  </div>
-                  <h3 className="text-xl font-medium">Export Support, Simplified</h3>
-                </div>
-                <p className="text-white/70 ml-14">
-                  From compliance documents to customs prep — we help you every step of the way.
-                </p>
-              </div>
-              
-              {/* Feature 4 */}
-              <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
-                <div className="flex gap-4 mb-3">
-                  <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
-                    {/* <!-- IMAGE: Payment icon, 1:1 ratio, payment-icon.svg --> */}
-                    <FaCheck className="h-5 w-5 text-[#8c45ff]" />
-                  </div>
-                  <h3 className="text-xl font-medium">Fast, Secure Payments with Global Coverage</h3>
-                </div>
-                <p className="text-white/70 ml-14">
-                  We integrate trusted escrow and bank transfer solutions for safe, timely payouts.
-                </p>
-              </div>
-              
-              {/* Feature 5 */}
-              <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
-                <div className="flex gap-4 mb-3">
-                  <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
-                    {/* <!-- IMAGE: Analytics icon, 1:1 ratio, analytics-icon.svg --> */}
-                    <FaCheck className="h-5 w-5 text-[#8c45ff]" />
-                  </div>
-                  <h3 className="text-xl font-medium">Real-Time Analytics & Buyer Feedback</h3>
-                </div>
-                <p className="text-white/70 ml-14">
-                  Know who's viewing, quoting, and buying — and fine-tune your strategy with confidence.
-                </p>
-              </div>
-              
-              {/* Feature 6 */}
-              <div className="group border border-white/15 rounded-xl p-6 hover:border-white/30 transition-all duration-300 bg-gradient-to-br from-[#190d2e] to-black">
-                <div className="flex gap-4 mb-3">
-                  <div className="h-10 w-10 rounded-lg bg-[#8c45ff]/20 flex items-center justify-center shrink-0">
-                    {/* <!-- IMAGE: Account support icon, 1:1 ratio, account-support-icon.svg --> */}
-                    <FaCheck className="h-5 w-5 text-[#8c45ff]" />
-                  </div>
-                  <h3 className="text-xl font-medium">Dedicated Account Support</h3>
-                </div>
-                <p className="text-white/70 ml-14">
-                  Every exporter gets a real human expert to help optimize listings and unlock opportunities.
-                </p>
-              </div>
-            </div>
+          {/* Call to Action */}
+          <div className="text-center">
+            <Button>Start Exporting Today</Button>
           </div>
         </div>
       </div>

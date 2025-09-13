@@ -1,7 +1,17 @@
+"use client";
+
 import React from "react";
 import Button from "@/components/Button";
+import { useRouter } from "next/navigation"; // Import router for navigation
 
 export const HowItWorks = () => {
+  const router = useRouter(); // Initialize router
+
+  // Handler function to navigate to auth page
+  const handleJoinNowClick = () => {
+    router.push("/auth"); // Navigate to the auth page
+  };
+
   return (
     <section id='gth-how-it-works' className='py-20 md:py-24'>
       <div className='container mx-auto px-4'>
@@ -80,7 +90,12 @@ export const HowItWorks = () => {
         </div>
 
         <div className='text-center'>
-          <Button>Join Now – Connect with Active U.S. Buyers</Button>
+          <Button
+            onClick={handleJoinNowClick}
+            className='px-6 py-3 text-base font-medium' // Match header register button size
+          >
+            Join Now – Connect with Active U.S. Buyers
+          </Button>
         </div>
       </div>
     </section>

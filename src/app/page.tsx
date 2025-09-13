@@ -8,6 +8,8 @@ import { LogoTicker } from "@/sections/LogoTicker";
 import ManufacturersShowcase from "@/sections/ManufacturersShowcase";
 import { WhyToJoinUS } from "@/sections/WhyToJoinUS";
 import { WhyExportersChooseUs } from "@/sections/WhyExportersChooseUs";
+import { GettingStartedSection } from "@/sections/GettingStartedSection";
+import { PricingTransparency } from "@/sections/PricingTransparency";
 
 // This is the main entry point of the application
 // It is responsible for rendering the main layout of the application
@@ -23,6 +25,8 @@ export default function Home() {
       <HowItWorks />
       <ManufacturersShowcase />
       <WhyExportersChooseUs />
+      <PricingTransparency />
+      <GettingStartedSection />
       <CallToAction />
       <Footer />
     </>

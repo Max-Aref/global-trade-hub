@@ -2,13 +2,55 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Ensure this import exists
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function AuthPage() {
-  const [activeTab, setActiveTab] = useState("signup"); // "signup" or "login"
+  const router = useRouter(); // Make sure this is initialized
+  const [activeTab, setActiveTab] = useState("signup");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Your existing form state
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    companyName: "",
+  });
+
+  // Handle input changes (existing)
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      [id]: value,
+    });
+  };
+
+  // Updated form submission handler
+  const handleSignUpSubmit = (e) => {
+    e.preventDefault();
+
+    // Basic validation
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    // Create query parameters with user data
+    const queryParams = new URLSearchParams({
+      fullName: formData.fullName,
+      email: formData.email,
+      companyName: formData.companyName || "",
+    }).toString();
+
+    // Navigate to the company registration page
+    // Note the exact spelling "CompanyRegisteration" matches your file structure
+    router.push(`/CompanyRegisteration?${queryParams}`);
+  };
 
   return (
     <div className='min-h-screen flex flex-col md:flex-row bg-black text-white'>
@@ -86,7 +128,7 @@ export default function AuthPage() {
 
             {/* Forms */}
             {activeTab === "signup" ? (
-              <form className='space-y-4'>
+              <form className='space-y-4' onSubmit={handleSignUpSubmit}>
                 <div>
                   <label
                     htmlFor='fullName'
@@ -97,6 +139,8 @@ export default function AuthPage() {
                   <input
                     type='text'
                     id='fullName'
+                    value={formData.fullName}
+                    onChange={handleInputChange}
                     className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
                     placeholder='Enter your full name'
                     required
@@ -105,14 +149,16 @@ export default function AuthPage() {
 
                 <div>
                   <label
-                    htmlFor='signupEmail'
+                    htmlFor='email'
                     className='block text-sm font-medium mb-1'
                   >
                     Email Address
                   </label>
                   <input
                     type='email'
-                    id='signupEmail'
+                    id='email'
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
                     placeholder='Enter your email'
                     required
@@ -121,7 +167,7 @@ export default function AuthPage() {
 
                 <div>
                   <label
-                    htmlFor='signupPassword'
+                    htmlFor='password'
                     className='block text-sm font-medium mb-1'
                   >
                     Password
@@ -129,7 +175,9 @@ export default function AuthPage() {
                   <div className='relative'>
                     <input
                       type={showPassword ? "text" : "password"}
-                      id='signupPassword'
+                      id='password'
+                      value={formData.password}
+                      onChange={handleInputChange}
                       className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
                       placeholder='Create a password'
                       required
@@ -158,6 +206,8 @@ export default function AuthPage() {
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       id='confirmPassword'
+                      value={formData.confirmPassword}
+                      onChange={handleInputChange}
                       className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
                       placeholder='Confirm your password'
                       required
@@ -182,11 +232,14 @@ export default function AuthPage() {
                     htmlFor='companyName'
                     className='block text-sm font-medium mb-1'
                   >
-                    Company Name <span className='text-white/50'></span>
+                    Company Name{" "}
+                    <span className='text-white/50'>(Optional)</span>
                   </label>
                   <input
                     type='text'
                     id='companyName'
+                    value={formData.companyName}
+                    onChange={handleInputChange}
                     className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
                     placeholder='Enter your company name'
                   />
@@ -225,6 +278,7 @@ export default function AuthPage() {
               </form>
             ) : (
               <form className='space-y-4'>
+                {/* Login form unchanged */}
                 <div>
                   <label
                     htmlFor='loginEmail'
