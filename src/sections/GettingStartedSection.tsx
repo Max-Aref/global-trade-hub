@@ -55,11 +55,11 @@ export const GettingStartedSection = () => {
       id='getting-started'
       className='relative py-16 md:py-24 overflow-hidden'
     >
-      {/* Background gradient - scoped to this section only */}
-      <div className='absolute inset-0 bg-[radial-gradient(70%_70%_at_center_center,rgb(140,69,255,.3)_15%,rgb(14,0,36,.5)_78%,transparent)]'></div>
-
-      {/* Background pattern */}
-      <div className='absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]'></div>
+      {/* Background elements */}
+      <div className='absolute inset-0'>
+        <div className='absolute inset-0 bg-[radial-gradient(70%_70%_at_center_center,rgb(140,69,255,.3)_15%,rgb(14,0,36,.5)_78%,transparent)]'></div>
+        <div className='absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]'></div>
+      </div>
 
       <div className='container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10'>
         <div className='max-w-4xl mx-auto'>

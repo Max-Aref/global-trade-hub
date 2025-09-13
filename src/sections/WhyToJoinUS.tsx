@@ -52,9 +52,9 @@ export const WhyToJoinUS = () => {
         </p>
         <div className='overflow-hidden mt-10 [mask-image:linear-gradient(to_right,transparent,black_2%,black_98%,transparent)] '>
           <div className='mt-10 grid grid-cols-1 md:grid-cols-2 gap-5 '>
-            {Why.map((why) => (
+            {Why.map((why, index) => (
               <div
-                key={why.name}
+                key={index}
                 className='min-w-[300px] min-h-[338px] p-10 px-5 bg-white/5 rounded-2xl border border-gray-200/30'
                 style={{
                   background:
