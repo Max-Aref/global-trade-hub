@@ -3,7 +3,43 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { FaCheck, FaUpload, FaEye } from "react-icons/fa";
+
+interface FormData {
+  companyName: string;
+  businessType: string;
+  industryCategory: string;
+  country: string;
+  city: string;
+  registrationNumber: string;
+  contactName: string;
+  email: string;
+  phoneNumber: string;
+  website: string;
+  shortBio: string;
+  fullDescription: string;
+  companyLogo: File | null;
+  businessLicense: File | null;
+  agreeTerms: boolean;
+  productsCount: string;
+  leadTime: string;
+}
+
+interface FormErrors {
+  companyName?: string;
+  businessType?: string;
+  industryCategory?: string;
+  country?: string;
+  city?: string;
+  contactName?: string;
+  email?: string;
+  phoneNumber?: string;
+  shortBio?: string;
+  agreeTerms?: string;
+  productsCount?: string;
+  leadTime?: string;
+}
 
 export default function CompanyRegistration() {
   const router = useRouter();
@@ -17,7 +53,7 @@ export default function CompanyRegistration() {
   const companyNameFromParams = searchParams.get("companyName") || "";
 
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     companyName: companyNameFromParams,
     businessType: "Manufacturer",
     industryCategory: "",
@@ -39,27 +75,33 @@ export default function CompanyRegistration() {
   });
 
   // Error state
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
   // Handle input changes
-  const handleInputChange = (e) => {
-    const { id, value, type, checked } = e.target;
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { id, value, type } = e.target;
+    const checked = "checked" in e.target ? e.target.checked : false;
+
     setFormData({
       ...formData,
       [id]: type === "checkbox" ? checked : value,
     });
 
     // Clear error for this field when user starts typing
-    if (errors[id]) {
+    if (errors[id as keyof FormErrors]) {
       setErrors({
         ...errors,
-        [id]: null,
+        [id]: undefined,
       });
     }
   };
 
   // Handle file uploads
-  const handleFileUpload = (e) => {
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, files } = e.target;
     if (files && files[0]) {
       setFormData({
@@ -71,7 +113,7 @@ export default function CompanyRegistration() {
 
   // Form validation
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: FormErrors = {};
 
     if (!formData.companyName.trim())
       newErrors.companyName = "Company name is required";
@@ -99,7 +141,7 @@ export default function CompanyRegistration() {
   };
 
   // Form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (validateForm()) {
@@ -624,10 +666,12 @@ export default function CompanyRegistration() {
                     <div className='flex flex-col md:flex-row items-start md:items-center gap-4'>
                       <div className='w-24 h-24 bg-[#190d2e] border border-white/15 rounded-lg flex items-center justify-center overflow-hidden'>
                         {formData.companyLogo ? (
-                          <img
+                          <Image
                             src={URL.createObjectURL(formData.companyLogo)}
                             alt='Company logo preview'
                             className='w-full h-full object-cover'
+                            width={96}
+                            height={96}
                           />
                         ) : (
                           <span className='text-white/30 text-xs text-center p-2'>

@@ -1,5 +1,11 @@
 import React from "react";
-import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiChevronDown } from "react-icons/fi";
 import { LiaGlobeAmericasSolid } from "react-icons/lia";
@@ -13,7 +19,7 @@ export const Footer = () => {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12'>
           {/* About Column */}
           <div>
-            <Link href="/" className='flex items-center gap-2 mb-4 group'>
+            <Link href='/' className='flex items-center gap-2 mb-4 group'>
               <div className='h-10 w-10 rounded-lg inline-flex justify-center border border-[#2A2A2A] group-hover:border-[#8c45ff]/40 transition-colors duration-300 p-2 items-center'>
                 <LiaGlobeAmericasSolid className='h-8 w-8 text-[#8c45ff]' />
               </div>
@@ -72,45 +78,64 @@ export const Footer = () => {
             <h3 className='text-white text-lg font-medium mb-4'>
               Connect With Us
             </h3>
+            {/* Social media icons with their official brand colors and consistent gray hover effect */}
             <div className='flex space-x-4'>
               {[
                 {
                   Icon: FaLinkedin,
                   label: "LinkedIn",
-                  brandColor: "hover:text-[#0A66C2]",
+                  brandColor: "#0A66C2", // LinkedIn official blue
                 },
                 {
                   Icon: FaXTwitter,
                   label: "X",
-                  brandColor: "hover:text-[#8c45ff]",
+                  brandColor: "#645b5b", // X (Twitter) black
                 },
                 {
                   Icon: FaFacebook,
                   label: "Facebook",
-                  brandColor: "hover:text-[#1877F2]",
+                  brandColor: "#1877F2", // Facebook official blue
                 },
                 {
                   Icon: FaInstagram,
                   label: "Instagram",
-                  brandColor:
-                    "hover:from-pink-500 hover:via-purple-500 hover:to-yellow-500 hover:bg-gradient-to-tr hover:text-transparent hover:bg-clip-text",
+                  brandColor: "#E1306C", // Instagram pink (fallback for gradient)
+                  isGradient: true,
                 },
                 {
                   Icon: FaYoutube,
                   label: "YouTube",
-                  brandColor: "hover:text-[#FF0000]",
+                  brandColor: "#FF0000", // YouTube red
                 },
-              ].map(({ Icon, label, brandColor }) => (
+                {
+                  Icon: FaWhatsapp,
+                  label: "WhatsApp",
+                  brandColor: "#25D366", // WhatsApp green
+                },
+              ].map(({ Icon, label, brandColor, isGradient }) => (
                 <a
                   key={label}
                   href='#'
-                  aria-label={label}
-                  className='h-10 w-10 border border-white/15 rounded-lg inline-flex items-center justify-center hover:border-white/40 transition group'
+                  aria-label={`Visit our ${label} page`}
+                  className='h-10 w-10 border border-white/15 rounded-lg inline-flex items-center justify-center hover:border-white/40 transition group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50'
                 >
-                  <Icon
-                    className={`h-5 w-5 text-white/70 transition-colors duration-300 ease-in-out ${brandColor}`}
-                    aria-hidden='true'
-                  />
+                  {isGradient ? (
+                    // Special case for Instagram with gradient background
+                    <div className='relative w-5 h-5 flex items-center justify-center'>
+                      <div className='absolute inset-0 bg-gradient-to-tr from-[#FFDC80] via-[#E1306C] to-[#833AB4] opacity-0 group-hover:opacity-0 transition-opacity duration-300'></div>
+                      <Icon
+                        className='h-5 w-5 text-[#E1306C] group-hover:text-gray-500 transition-colors duration-300'
+                        aria-hidden='true'
+                      />
+                    </div>
+                  ) : (
+                    // All other social icons with their brand colors
+                    <Icon
+                      className={`h-5 w-5 text-[${brandColor}] group-hover:text-gray-500 transition-colors duration-300`}
+                      style={{ color: brandColor }} // Fallback for dynamic Tailwind classes
+                      aria-hidden='true'
+                    />
+                  )}
                 </a>
               ))}
             </div>

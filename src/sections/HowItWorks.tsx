@@ -90,12 +90,7 @@ export const HowItWorks = () => {
         </div>
 
         <div className='text-center'>
-          <Button
-            onClick={handleJoinNowClick}
-            className='px-6 py-3 text-base font-medium' // Match header register button size
-          >
-            Join Now – Connect with Active U.S. Buyers
-          </Button>
+          <Button>Join Now – Connect with Active U.S. Buyers</Button>
         </div>
       </div>
     </section>

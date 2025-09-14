@@ -13,88 +13,130 @@ import {
   FaCheck,
 } from "react-icons/fa";
 
+import {
+  CompanyData,
+  Product,
+  EditProduct,
+  FormErrors,
+  EditErrors,
+  ProductFormData,
+  ImageUploadProps,
+  DisplayToast,
+} from "./types";
+  country?: string;
+  city?: string;
+  email?: string;
+  phoneNumber?: string;
+}
+
+interface ProductErrors {
+  name?: string;
+  description?: string;
+  price?: string;
+}
+
+type HandleImageUpload = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  index: number
+) => void;
+
 /**
  * Toast Notification Component
  * Displays success messages with animation
  */
-const Toast = memo(({ message, onClose }) => (
-  <div className='fixed top-4 right-4 z-50 bg-[#8c45ff] text-white px-6 py-3 rounded-lg shadow-lg flex items-center animate-fade-in'>
-    <FaCheck className='mr-2' />
-    <span>{message}</span>
-  </div>
-));
+const Toast = memo(
+  ({ message, onClose }: { message: string; onClose: () => void }) => (
+    <div className='fixed top-4 right-4 z-50 bg-[#8c45ff] text-white px-6 py-3 rounded-lg shadow-lg flex items-center animate-fade-in'>
+      <FaCheck className='mr-2' />
+      <span>{message}</span>
+    </div>
+  )
+);
 Toast.displayName = "Toast";
 
 /**
  * Welcome Banner Component
  * Shows initial welcome message to new users
  */
-const WelcomeBanner = memo(({ companyName, onClose }) => (
-  <div className='relative bg-gradient-to-r from-[#190d2e] to-[#4a208a] py-4 px-6 sm:px-10'>
-    <div className='container mx-auto flex items-center justify-between'>
-      <div className='pr-10'>
-        <h2 className='font-medium text-lg'>Welcome {companyName}!</h2>
-        <p className='text-white/70 text-sm mt-1'>
-          Your profile is ready. Start adding your products to attract global
-          buyers.
-        </p>
+const WelcomeBanner = memo(
+  ({ companyName, onClose }: { companyName: string; onClose: () => void }) => (
+    <div className='relative bg-gradient-to-r from-[#190d2e] to-[#4a208a] py-4 px-6 sm:px-10'>
+      <div className='container mx-auto flex items-center justify-between'>
+        <div className='pr-10'>
+          <h2 className='font-medium text-lg'>Welcome {companyName}!</h2>
+          <p className='text-white/70 text-sm mt-1'>
+            Your profile is ready. Start adding your products to attract global
+            buyers.
+          </p>
+        </div>
+        <button
+          onClick={onClose}
+          className='text-white/70 hover:text-white transition-colors'
+          aria-label='Close welcome banner'
+        >
+          <FaTimes />
+        </button>
       </div>
-      <button
-        onClick={onClose}
-        className='text-white/70 hover:text-white transition-colors'
-        aria-label='Close welcome banner'
-      >
-        <FaTimes />
-      </button>
     </div>
-  </div>
-));
+  )
+);
 WelcomeBanner.displayName = "WelcomeBanner";
 
 /**
  * Company Logo Component
  * Displays company logo with fallback to initial letter
  */
-const CompanyLogo = memo(({ logo, companyName }) => (
-  <div className='w-24 h-24 bg-[#190d2e] border border-white/15 rounded-lg flex items-center justify-center overflow-hidden'>
-    {logo ? (
-      <Image
-        src={logo}
-        alt={`${companyName} logo`}
-        width={96}
-        height={96}
-        className='w-full h-full object-cover'
-        loading='eager' // Load company logo immediately as it's above the fold
-      />
-    ) : (
-      <div className='w-16 h-16 bg-[#8c45ff]/30 rounded-full flex items-center justify-center text-2xl font-medium'>
-        {companyName.charAt(0)}
-      </div>
-    )}
-  </div>
-));
+const CompanyLogo = memo(
+  ({ logo, companyName }: { logo?: string; companyName: string }) => (
+    <div className='w-24 h-24 bg-[#190d2e] border border-white/15 rounded-lg flex items-center justify-center overflow-hidden'>
+      {logo ? (
+        <Image
+          src={logo}
+          alt={`${companyName} logo`}
+          width={96}
+          height={96}
+          className='w-full h-full object-cover'
+          loading='eager' // Load company logo immediately as it's above the fold
+        />
+      ) : (
+        <div className='w-16 h-16 bg-[#8c45ff]/30 rounded-full flex items-center justify-center text-2xl font-medium'>
+          {companyName.charAt(0)}
+        </div>
+      )}
+    </div>
+  )
+);
 CompanyLogo.displayName = "CompanyLogo";
 
 /**
  * Product Card Component
  * Displays individual product information in a card format
  */
-const ProductCard = memo(({ product, onEditClick }) => (
+interface ProductCardProps {
+  product: Product;
+  onEditClick: (product: Product) => void;
+}
+
+const ProductCard = memo(({ product, onEditClick }: ProductCardProps) => (
   <div className='border border-white/15 rounded-xl overflow-hidden bg-[#190d2e] transition-all hover:border-white/30 hover:shadow-[0_0_25px_rgba(140,69,255,0.15)]'>
     <div className='h-48 bg-gray-800 relative'>
       {product.images[product.primaryImageIndex]?.startsWith("/") ? (
         <div className='w-full h-full bg-gradient-to-br from-[#190d2e] to-[#4a208a]/30 flex items-center justify-center'>
           <span className='text-white/30'>Product Image</span>
         </div>
-      ) : (
+      ) : product.images[product.primaryImageIndex] ? (
         <Image
-          src={product.images[product.primaryImageIndex]}
+          src={product.images[product.primaryImageIndex]!}
           alt={product.name}
           width={400}
           height={300}
           className='w-full h-full object-cover'
           loading='lazy'
         />
+      ) : (
+        <div className='w-full h-full bg-gradient-to-br from-[#190d2e] to-[#4a208a]/30 flex items-center justify-center'>
+          <span className='text-white/30'>No Image</span>
+        </div>
       )}
     </div>
 
@@ -127,8 +169,16 @@ ProductCard.displayName = "ProductCard";
  * Image Upload Slot Component
  * Reusable component for image upload in product forms
  */
+interface ImageUploadSlotProps {
+  index: number;
+  image: string | null;
+  isPrimary: boolean;
+  onImageUpload: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+  onSetPrimary: (index: number) => void;
+}
+
 const ImageUploadSlot = memo(
-  ({ index, image, isPrimary, onImageUpload, onSetPrimary }) => (
+  ({ index, image, isPrimary, onImageUpload, onSetPrimary }: ImageUploadSlotProps) => (
     <div
       className={`relative aspect-square bg-black border ${
         isPrimary ? "border-[#8c45ff]" : "border-white/15"
@@ -365,7 +415,7 @@ export default function CompanyProfile() {
   // ===== HANDLERS =====
   // Handle input changes for new product
   const handleInputChange = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { id, value } = e.target;
       setNewProduct((prev) => ({
         ...prev,
@@ -416,7 +466,7 @@ export default function CompanyProfile() {
   );
 
   // Set primary image for new product
-  const setPrimaryImage = useCallback((index) => {
+  const setPrimaryImage = useCallback((index: number) => {
     setNewProduct((prev) => ({
       ...prev,
       primaryImageIndex: index,
@@ -453,8 +503,24 @@ export default function CompanyProfile() {
   }, [newProduct.name, newProduct.keyFeatures]);
 
   // Validate product form
+  // Define FormErrors interface at the top of the file
+  interface FormErrors {
+    name?: string;
+    description?: string;
+    price?: string;
+    companyName?: string;
+    businessType?: string;
+    industryCategory?: string;
+    country?: string;
+    city?: string;
+    email?: string;
+    phoneNumber?: string;
+    shortBio?: string;
+    [key: string]: string | undefined;
+  }
+
   const validateProductForm = useCallback(() => {
-    const errors = {};
+    const errors: FormErrors = {};
 
     if (!newProduct.name.trim()) errors.name = "Product name is required";
     if (!newProduct.description.trim())

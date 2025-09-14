@@ -22,7 +22,7 @@ export default function AuthPage() {
   });
 
   // Handle input changes (existing)
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData({
       ...formData,
@@ -31,7 +31,7 @@ export default function AuthPage() {
   };
 
   // Updated form submission handler
-  const handleSignUpSubmit = (e) => {
+  const handleSignUpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Basic validation
@@ -346,7 +346,7 @@ export default function AuthPage() {
                 </div>
 
                 <p className='text-sm text-white/50 text-center pt-2'>
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <button
                     type='button'
                     className='text-[#8c45ff] hover:underline'
