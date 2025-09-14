@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 
 import { twMerge } from "tailwind-merge";
 import { Analytics } from "@vercel/analytics/react";
+import { getCurrentLocale } from "@/lib/i18n";
+import { getDirection } from "@/config/i18n";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -70,11 +72,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = getCurrentLocale();
+  const dir = getDirection(locale);
+
   return (
-    <html lang='en'>
-      {/* <html lang='ar-EG'>  */}
+    <html lang={locale} dir={dir}>
       <body
-        className={twMerge(inter.className, "bg-black text-white antialiased")}
+        className={twMerge(
+          inter.className,
+          "bg-black text-white antialiased",
+          dir === "rtl" ? "text-right" : "text-left"
+        )}
       >
         {children}
       </body>

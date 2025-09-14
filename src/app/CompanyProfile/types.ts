@@ -1,21 +1,20 @@
 import { ChangeEvent } from "react";
 
 export interface FormErrors {
-  name?: string;
-  description?: string;
-  price?: string;
-  companyName?: string;
-  businessType?: string;
-  industryCategory?: string;
-  country?: string;
-  city?: string;
-  email?: string;
-  phoneNumber?: string;
-  shortBio?: string;
-  [key: string]: string | undefined;
+  [key: string]: string | null | undefined;
 }
 
 export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  keyFeatures: string;
+  images: (string | null)[];
+  primaryImageIndex: number;
+}
+
+export interface ProductFormData {
   id?: string;
   name: string;
   description: string;
@@ -35,6 +34,7 @@ export interface CompanyData {
   industryCategory: string;
   country: string;
   city: string;
+  address: string;
   email: string;
   phoneNumber: string;
   logo: string | null;

@@ -12,7 +12,6 @@ import {
   FaRedo,
   FaCheck,
 } from "react-icons/fa";
-
 import {
   CompanyData,
   Product,
@@ -23,16 +22,21 @@ import {
   ImageUploadProps,
   DisplayToast,
 } from "./types";
+
+type EditState = CompanyData;
+type EditProductState = ProductFormData | null;
+type FormErrorsState = FormErrors;
+type ProductErrorsState = {
+  name?: string;
+  description?: string;
+  price?: string;
+};
+
+interface CompanyProfileProps {
   country?: string;
   city?: string;
   email?: string;
   phoneNumber?: string;
-}
-
-interface ProductErrors {
-  name?: string;
-  description?: string;
-  price?: string;
 }
 
 type HandleImageUpload = (
@@ -120,13 +124,13 @@ interface ProductCardProps {
 const ProductCard = memo(({ product, onEditClick }: ProductCardProps) => (
   <div className='border border-white/15 rounded-xl overflow-hidden bg-[#190d2e] transition-all hover:border-white/30 hover:shadow-[0_0_25px_rgba(140,69,255,0.15)]'>
     <div className='h-48 bg-gray-800 relative'>
-      {product.images[product.primaryImageIndex]?.startsWith("/") ? (
+      {typeof product.images[product.primaryImageIndex] === 'string' ? (
         <div className='w-full h-full bg-gradient-to-br from-[#190d2e] to-[#4a208a]/30 flex items-center justify-center'>
           <span className='text-white/30'>Product Image</span>
         </div>
       ) : product.images[product.primaryImageIndex] ? (
         <Image
-          src={product.images[product.primaryImageIndex]!}
+          src={product.images[product.primaryImageIndex] as string}
           alt={product.name}
           width={400}
           height={300}
@@ -276,31 +280,34 @@ export default function CompanyProfile() {
   });
 
   // Product state with sample data
-  const [products, setProducts] = useState([
+  const [products, setProducts] = useState<Product[]>([
     {
-      id: 1,
+      id: "1",
       name: "Premium Egyptian Cotton Towel Set",
       description:
         "Luxurious 700 GSM cotton towels with exceptional absorbency and softness. Available in multiple colors.",
       price: "$39.99",
+      keyFeatures: "High GSM\nPremium Cotton\nMultiple Colors\nLuxurious Feel",
       images: ["/placeholder-product-1.jpg", null, null, null, null],
       primaryImageIndex: 0,
     },
     {
-      id: 2,
+      id: "2",
       name: "Organic Cotton Bed Sheets",
       description:
         "100% GOTS certified organic Egyptian cotton sheets with 400 thread count. Breathable and eco-friendly.",
       price: "$89.99",
+      keyFeatures: "100% Organic\nGOTS certified\n400 Thread Count\nEco-friendly",
       images: ["/placeholder-product-2.jpg", null, null, null, null],
       primaryImageIndex: 0,
     },
     {
-      id: 3,
+      id: "3",
       name: "Handcrafted Table Runner",
       description:
         "Elegant hand-embroidered table runner made from premium cotton with traditional Egyptian patterns.",
       price: "$29.99",
+      keyFeatures: "Hand-embroidered\nTraditional Patterns\nPremium Materials\nElegant Design",
       images: ["/placeholder-product-3.jpg", null, null, null, null],
       primaryImageIndex: 0,
     },
@@ -342,14 +349,12 @@ export default function CompanyProfile() {
     null,
     null,
   ]);
-  const [formErrors, setFormErrors] = useState<{
-    [key: string]: string | null;
-  }>({});
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
 
   // Edit states
   const [editData, setEditData] = useState(companyData);
-  const [editProductData, setEditProductData] = useState(null);
-  const [editErrors, setEditErrors] = useState({});
+  const [editProductData, setEditProductData] = useState<ProductFormData | null>(null);
+  const [editErrors, setEditErrors] = useState<FormErrors>({});
   const [editProductErrors, setEditProductErrors] = useState<{
     name?: string;
     description?: string;
@@ -367,8 +372,8 @@ export default function CompanyProfile() {
   // ===== EFFECTS =====
   // Initialize company data from URL parameters (for when coming from registration)
   useEffect(() => {
-    const companyNameParam = searchParams.get("companyName");
-    const emailParam = searchParams.get("email");
+    const companyNameParam = searchParams?.get("companyName") || "";
+    const emailParam = searchParams?.get("email") || "";
 
     if (companyNameParam) {
       setCompanyData((prevData) => ({
@@ -543,16 +548,17 @@ export default function CompanyProfile() {
       ? newProduct.images.map((img, i) => (img ? productPreviews[i] : null))
       : ["/placeholder-product-1.jpg", null, null, null, null];
 
-    const newProductObject = {
-      id: products.length + 1,
+    const newProductObject: Product = {
+      id: (products.length + 1).toString(),
       name: newProduct.name,
       description: newProduct.description,
       price: newProduct.price,
+      keyFeatures: newProduct.keyFeatures || "",
       images: productImages,
       primaryImageIndex: newProduct.primaryImageIndex,
     };
 
-    setProducts((prev) => [...prev, newProductObject]);
+    setProducts((prev) => [...prev, { ...newProductObject, keyFeatures: "" } as Product]);
     resetProductForm();
     setShowAddProductModal(false);
     displayToast("Product added successfully!");
@@ -576,7 +582,7 @@ export default function CompanyProfile() {
 
   // Handle input changes in edit profile form
   const handleEditInputChange = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
       const { id, value } = e.target;
       setEditData((prev) => ({
         ...prev,
@@ -662,7 +668,7 @@ export default function CompanyProfile() {
 
   // Validate edit profile form
   const validateEditForm = useCallback(() => {
-    const errors = {};
+    const errors: FormErrors = {};
 
     if (!editData.companyName.trim())
       errors.companyName = "Company name is required";
@@ -702,9 +708,10 @@ export default function CompanyProfile() {
   }, [validateEditForm, editData, displayToast]);
 
   // Handle company logo upload
-  const handleLogoUpload = useCallback((e) => {
-    const file = e.target.files[0];
-    if (file) {
+  const handleLogoUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files[0]) {
+      const file = files[0];
       // In a real app, you would upload this file to a server
       // Here we're just creating a local URL for preview
       const logoPreview = URL.createObjectURL(file);
@@ -716,23 +723,31 @@ export default function CompanyProfile() {
   }, []);
 
   // Initialize edit product modal
-  const handleEditProductClick = useCallback((product) => {
-    setEditProductData({ ...product });
+  const handleEditProductClick = useCallback((product: Product) => {
+    const productFormData: ProductFormData = {
+      ...product,
+      images: product.images.map(img => img ? new File([img], img, { type: 'image/jpeg' }) : null)
+    };
+    setEditProductData(product);
     setShowEditProductModal(true);
     setEditProductErrors({});
   }, []);
 
   // Handle input changes in edit product form
   const handleEditProductInputChange = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { id, value } = e.target;
-      setEditProductData((prev) => ({
-        ...prev,
-        [id]: value,
-      }));
+      
+      setEditProductData((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          [id]: value
+        };
+      });
 
       // Clear error for this field
-      if (editProductErrors[id]) {
+      if (editProductErrors[id as keyof ProductErrorsState]) {
         setEditProductErrors((prev) => ({
           ...prev,
           [id]: null,
@@ -744,42 +759,51 @@ export default function CompanyProfile() {
 
   // Handle product image upload in edit mode
   const handleEditProductImageUpload = useCallback(
-    (e, index) => {
-      const file = e.target.files[0];
-      if (file) {
+    (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+      const files = e.target.files;
+      if (files && files[0]) {
+        const file = files[0];
         // Create a preview URL
         const imagePreview = URL.createObjectURL(file);
 
-        // Create a copy of the current images array
-        const updatedImages = [...editProductData.images];
-        updatedImages[index] = imagePreview;
-
-        // Update the editProductData state
-        setEditProductData((prev) => ({
-          ...prev,
-          images: updatedImages,
-        }));
+        // Update the editProductData state with the new file
+        setEditProductData((prev) => {
+          if (!prev) return prev;
+          const updatedImages = [...prev.images];
+          updatedImages[index] = file;
+          return {
+            ...prev,
+            images: updatedImages,
+          };
+        });
       }
     },
     [editProductData]
   );
 
   // Set primary image in edit product mode
-  const setEditPrimaryImage = useCallback((index) => {
-    setEditProductData((prev) => ({
-      ...prev,
-      primaryImageIndex: index,
-    }));
+  const setEditPrimaryImage = useCallback((index: number) => {
+    setEditProductData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        primaryImageIndex: index,
+      };
+    });
   }, []);
 
   // Validate edit product form
   const validateEditProductForm = useCallback(() => {
-    const errors = {};
+    const errors: FormErrors = {};
 
-    if (!editProductData.name.trim()) errors.name = "Product name is required";
-    if (!editProductData.description.trim())
-      errors.description = "Product description is required";
-    if (!editProductData.price.trim()) errors.price = "Price is required";
+    if (editProductData) {
+      if (!editProductData.name.trim()) errors.name = "Product name is required";
+      if (!editProductData.description.trim())
+        errors.description = "Product description is required";
+      if (!editProductData.price.trim()) errors.price = "Price is required";
+      if (!editProductData.keyFeatures.trim())
+        errors.keyFeatures = "Key features are required";
+    }
 
     setEditProductErrors(errors);
     return Object.keys(errors).length === 0;
@@ -795,7 +819,14 @@ export default function CompanyProfile() {
     setTimeout(() => {
       // Update products array with edited values
       const updatedProducts = products.map((product) =>
-        product.id === editProductData.id ? editProductData : product
+        product.id === editProductData?.id && editProductData ? 
+          {
+            ...editProductData,
+            images: editProductData.images.map(img => 
+              img instanceof File ? URL.createObjectURL(img) : img
+            )
+          } as Product 
+          : product
       );
 
       setProducts(updatedProducts);
@@ -808,7 +839,7 @@ export default function CompanyProfile() {
   return (
     <div className='min-h-screen bg-black text-white'>
       {/* Toast notification */}
-      {showToast && <Toast message={toastMessage} />}
+      {showToast && <Toast message={toastMessage} onClose={() => setShowToast(false)} />}
 
       {/* Welcome banner */}
       {showWelcomeBanner && (
@@ -824,7 +855,7 @@ export default function CompanyProfile() {
           <div className='flex flex-col md:flex-row items-start md:items-center gap-6'>
             {/* Company logo */}
             <CompanyLogo
-              logo={companyData.logo}
+              logo={companyData.logo ?? undefined}
               companyName={companyData.companyName}
             />
 
@@ -1594,10 +1625,12 @@ export default function CompanyProfile() {
                 <div className='flex items-start gap-4'>
                   <div className='w-24 h-24 bg-black border border-white/15 rounded-lg flex items-center justify-center overflow-hidden'>
                     {editData.logo ? (
-                      <img
-                        src={editData.logo}
+                      <Image
+                        src={editData.logo || '/placeholder-logo.jpg'}
                         alt='Company logo'
                         className='w-full h-full object-cover'
+                        width={200}
+                        height={200}
                       />
                     ) : (
                       <span className='text-white/30 text-xs text-center p-2'>
@@ -1813,7 +1846,7 @@ export default function CompanyProfile() {
                     <ImageUploadSlot
                       key={index}
                       index={index}
-                      image={editProductData.images[index]}
+                      image={editProductData.images[index] instanceof File ? URL.createObjectURL(editProductData.images[index] as File) : editProductData.images[index]}
                       isPrimary={editProductData.primaryImageIndex === index}
                       onImageUpload={handleEditProductImageUpload}
                       onSetPrimary={setEditPrimaryImage}
