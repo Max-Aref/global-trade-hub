@@ -1,14 +1,10 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
 import { twMerge } from "tailwind-merge";
 import { Analytics } from "@vercel/analytics/react";
 import { getCurrentLocale } from "@/lib/i18n";
 import { getDirection } from "@/config/i18n";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Global Trade Hub - Wholesale Suppliers from Egypt to the U.S.",
@@ -79,8 +75,7 @@ export default function RootLayout({
     <html lang={locale} dir={dir}>
       <body
         className={twMerge(
-          inter.className,
-          "bg-black text-white antialiased",
+          "bg-black text-white antialiased font-sans",
           dir === "rtl" ? "text-right" : "text-left"
         )}
       >
