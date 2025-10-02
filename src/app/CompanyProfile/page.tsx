@@ -256,7 +256,24 @@ export default function CompanyProfile() {
 
   // ===== STATE MANAGEMENT =====
   // Company data state
-  const [companyData, setCompanyData] = useState({
+  const [companyData, setCompanyData] = useState<{
+    companyName: string;
+    shortBio: string;
+    companyHistory: string;
+    manufacturingExpertise: string;
+    qualityStandards: string;
+    businessType: string;
+    industryCategory: string;
+    country: string;
+    city: string;
+    email: string;
+    phoneNumber: string;
+    website: string;
+    logo: string | null;
+    productsCount: string;
+    leadTime: string;
+    fullDescription: string;
+  }>({
     companyName: "Global Textiles Egypt",
     shortBio:
       "Premium Egyptian textile manufacturer specializing in cotton products for international markets.",
@@ -431,7 +448,7 @@ export default function CompanyProfile() {
       if (formErrors[id]) {
         setFormErrors((prev) => ({
           ...prev,
-          [id]: null,
+          [id]: undefined,
         }));
       }
     },
@@ -593,7 +610,7 @@ export default function CompanyProfile() {
       if (editErrors[id]) {
         setEditErrors((prev) => ({
           ...prev,
-          [id]: null,
+          [id]: undefined,
         }));
       }
     },
@@ -728,7 +745,7 @@ export default function CompanyProfile() {
       ...product,
       images: product.images.map(img => img ? new File([img], img, { type: 'image/jpeg' }) : null)
     };
-    setEditProductData(product);
+    setEditProductData(productFormData);
     setShowEditProductModal(true);
     setEditProductErrors({});
   }, []);
@@ -750,7 +767,7 @@ export default function CompanyProfile() {
       if (editProductErrors[id as keyof ProductErrorsState]) {
         setEditProductErrors((prev) => ({
           ...prev,
-          [id]: null,
+          [id]: undefined,
         }));
       }
     },
