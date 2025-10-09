@@ -1,35 +1,17 @@
-import dynamic from "next/dynamic";
+import { CallToAction } from "@/sections/CallToAction";
+import { Features } from "@/sections/Features";
+import Footer from "@/sections/Footer";
 import { Header } from "@/sections/Header";
 import { Hero } from "@/sections/Hero";
+import HowItWorks from "@/sections/HowItWorks";
 import { LogoTicker } from "@/sections/LogoTicker";
-import { Features } from "@/sections/Features";
+import ManufacturersShowcase from "@/sections/ManufacturersShowcase";
 import { WhyToJoinUS } from "@/sections/WhyToJoinUS";
-import Footer from "@/sections/Footer";
+import { WhyExportersChooseUs } from "@/sections/WhyExportersChooseUs";
+import { PricingTransparency } from "@/sections/PricingTransparency";
+import { SecurityTrustFeatures } from "@/sections/SecurityTrustFeatures";
+import { BuyerNetworkShowcase } from "@/sections/BuyerNetworkShowcase";
 import { localeConfig, type Locale } from "@/config/i18n";
-import Loading from "@/components/Loading";
-
-// Lazy load heavy sections below the fold for better performance
-const HowItWorks = dynamic(() => import("@/sections/HowItWorks"), {
-  loading: () => <Loading />,
-});
-const ManufacturersShowcase = dynamic(() => import("@/sections/ManufacturersShowcase"), {
-  loading: () => <Loading />,
-});
-const WhyExportersChooseUs = dynamic(() => import("@/sections/WhyExportersChooseUs"), {
-  loading: () => <Loading />,
-});
-const BuyerNetworkShowcase = dynamic(() => import("@/sections/BuyerNetworkShowcase"), {
-  loading: () => <Loading />,
-});
-const SecurityTrustFeatures = dynamic(() => import("@/sections/SecurityTrustFeatures"), {
-  loading: () => <Loading />,
-});
-const PricingTransparency = dynamic(() => import("@/sections/PricingTransparency"), {
-  loading: () => <Loading />,
-});
-const CallToAction = dynamic(() => import("@/sections/CallToAction"), {
-  loading: () => <Loading />,
-});
 
 export async function generateStaticParams() {
   return localeConfig.locales.map((lang) => ({ lang }));

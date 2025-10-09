@@ -787,5 +787,3 @@ export const PricingTransparency = () => {
     </section>
   );
 };
-
-export default PricingTransparency;
