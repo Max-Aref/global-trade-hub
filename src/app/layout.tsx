@@ -11,6 +11,57 @@ export const metadata: Metadata = {
   title: "Global Trade Hub - Wholesale Suppliers from Egypt to the U.S.",
   description:
     "Discover a comprehensive resource hub connecting wholesale suppliers in Egypt with the American market. Explore high-quality products, streamline international trade, and grow your business with our AI-powered platform tailored for global trade success.",
+  keywords: [
+    "wholesale suppliers",
+    "Egypt exporters",
+    "US market",
+    "international trade",
+    "B2B platform",
+    "global trade",
+    "AI-powered trade",
+    "export business",
+    "manufacturing",
+    "suppliers directory"
+  ],
+  authors: [{ name: "Global Trade Hub" }],
+  creator: "Global Trade Hub",
+  publisher: "Global Trade Hub",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://global-trade-hub.vercel.app",
+    title: "Global Trade Hub - Wholesale Suppliers from Egypt to the U.S.",
+    description:
+      "Connect wholesale suppliers in Egypt with the American market through our AI-powered platform.",
+    siteName: "Global Trade Hub",
+    images: [
+      {
+        url: "/favicon/android-chrome-512x512.png",
+        width: 512,
+        height: 512,
+        alt: "Global Trade Hub Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Global Trade Hub - Wholesale Suppliers from Egypt to the U.S.",
+    description:
+      "Connect wholesale suppliers in Egypt with the American market through our AI-powered platform.",
+    images: ["/favicon/android-chrome-512x512.png"],
+    creator: "@GlobalTradeHub",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -61,6 +112,9 @@ export const metadata: Metadata = {
         type: "image/png",
       },
     ],
+  },
+  verification: {
+    google: "your-google-verification-code", // Replace with actual verification code
   },
 };
 
