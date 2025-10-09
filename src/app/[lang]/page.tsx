@@ -15,19 +15,19 @@ const HowItWorks = dynamic(() => import("@/sections/HowItWorks"), {
 const ManufacturersShowcase = dynamic(() => import("@/sections/ManufacturersShowcase"), {
   loading: () => <Loading />,
 });
-const WhyExportersChooseUs = dynamic(() => import("@/sections/WhyExportersChooseUs").then(mod => ({ default: mod.WhyExportersChooseUs })), {
+const WhyExportersChooseUs = dynamic(() => import("@/sections/WhyExportersChooseUs"), {
   loading: () => <Loading />,
 });
-const BuyerNetworkShowcase = dynamic(() => import("@/sections/BuyerNetworkShowcase").then(mod => ({ default: mod.BuyerNetworkShowcase })), {
+const BuyerNetworkShowcase = dynamic(() => import("@/sections/BuyerNetworkShowcase"), {
   loading: () => <Loading />,
 });
-const SecurityTrustFeatures = dynamic(() => import("@/sections/SecurityTrustFeatures").then(mod => ({ default: mod.SecurityTrustFeatures })), {
+const SecurityTrustFeatures = dynamic(() => import("@/sections/SecurityTrustFeatures"), {
   loading: () => <Loading />,
 });
-const PricingTransparency = dynamic(() => import("@/sections/PricingTransparency").then(mod => ({ default: mod.PricingTransparency })), {
+const PricingTransparency = dynamic(() => import("@/sections/PricingTransparency"), {
   loading: () => <Loading />,
 });
-const CallToAction = dynamic(() => import("@/sections/CallToAction").then(mod => ({ default: mod.CallToAction })), {
+const CallToAction = dynamic(() => import("@/sections/CallToAction"), {
   loading: () => <Loading />,
 });
 
