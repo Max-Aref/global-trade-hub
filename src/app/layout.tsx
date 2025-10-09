@@ -1,19 +1,67 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
 import { twMerge } from "tailwind-merge";
 import { Analytics } from "@vercel/analytics/react";
 import { getCurrentLocale } from "@/lib/i18n";
 import { getDirection } from "@/config/i18n";
-
-const inter = Inter({ subsets: ["latin"] });
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 export const metadata: Metadata = {
   title: "Global Trade Hub - Wholesale Suppliers from Egypt to the U.S.",
   description:
     "Discover a comprehensive resource hub connecting wholesale suppliers in Egypt with the American market. Explore high-quality products, streamline international trade, and grow your business with our AI-powered platform tailored for global trade success.",
+  keywords: [
+    "wholesale suppliers",
+    "Egypt exporters",
+    "US market",
+    "international trade",
+    "B2B platform",
+    "global trade",
+    "AI-powered trade",
+    "export business",
+    "manufacturing",
+    "suppliers directory"
+  ],
+  authors: [{ name: "Global Trade Hub" }],
+  creator: "Global Trade Hub",
+  publisher: "Global Trade Hub",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://global-trade-hub.vercel.app",
+    title: "Global Trade Hub - Wholesale Suppliers from Egypt to the U.S.",
+    description:
+      "Connect wholesale suppliers in Egypt with the American market through our AI-powered platform.",
+    siteName: "Global Trade Hub",
+    images: [
+      {
+        url: "/favicon/android-chrome-512x512.png",
+        width: 512,
+        height: 512,
+        alt: "Global Trade Hub Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Global Trade Hub - Wholesale Suppliers from Egypt to the U.S.",
+    description:
+      "Connect wholesale suppliers in Egypt with the American market through our AI-powered platform.",
+    images: ["/favicon/android-chrome-512x512.png"],
+    creator: "@GlobalTradeHub",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -65,6 +113,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  verification: {
+    google: "your-google-verification-code", // Replace with actual verification code
+  },
 };
 
 export default function RootLayout({
@@ -79,12 +130,13 @@ export default function RootLayout({
     <html lang={locale} dir={dir}>
       <body
         className={twMerge(
-          inter.className,
-          "bg-black text-white antialiased",
+          "bg-black text-white antialiased font-sans",
           dir === "rtl" ? "text-right" : "text-left"
         )}
       >
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
       </body>
     </html>
   );

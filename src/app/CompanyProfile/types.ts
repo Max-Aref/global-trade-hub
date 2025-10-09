@@ -63,15 +63,6 @@ export interface EditErrors {
   [key: string]: string | null;
 }
 
-export interface ProductFormData {
-  name: string;
-  description: string;
-  price: string;
-  keyFeatures: string;
-  images: (File | null)[];
-  primaryImageIndex: number;
-}
-
 export interface DisplayToast {
   (message: string): void;
 }

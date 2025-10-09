@@ -778,7 +778,7 @@ export default function CompanyProfile() {
         });
       }
     },
-    [editProductData]
+    []
   );
 
   // Set primary image in edit product mode
