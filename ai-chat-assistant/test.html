@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTH Chat Assistant - Basic Test</title>
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      background: #000;
+      color: #fff;
+      padding: 40px;
+      line-height: 1.6;
+    }
+    h1 { color: #8c45ff; }
+    .status { 
+      background: #190d2e; 
+      padding: 20px; 
+      border-radius: 8px; 
+      border: 1px solid rgba(255,255,255,0.15);
+      margin: 20px 0;
+    }
+    .success { color: #00ff00; }
+    .error { color: #ff0000; }
+    button {
+      background: linear-gradient(to bottom, #190d2e, #4a208a);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      box-shadow: 0 0 12px #8c45ff;
+    }
+  </style>
+</head>
+<body>
+  <h1>GTH Chat Assistant - Component Test</h1>
+  
+  <div class="status">
+    <h2>Component Status</h2>
+    <p id="load-status">Loading...</p>
+    <p id="init-status">Waiting for initialization...</p>
+  </div>
+  
+  <div class="status">
+    <h2>Test Controls</h2>
+    <button onclick="testOpen()">Open Chat</button>
+    <button onclick="testClose()">Close Chat</button>
+    <button onclick="testClear()">Clear History</button>
+    <button onclick="testDestroy()">Destroy Widget</button>
+    <button onclick="testReinit()">Re-initialize</button>
+  </div>
+  
+  <div class="status">
+    <h2>Test Results</h2>
+    <pre id="test-results"></pre>
+  </div>
+  
+  <script src="./index.js"></script>
+  <script>
+    let testLog = [];
+    
+    function log(message, isError = false) {
+      const timestamp = new Date().toLocaleTimeString();
+      testLog.push(`[${timestamp}] ${message}`);
+      document.getElementById('test-results').textContent = testLog.join('\n');
+      console.log(message);
+    }
+    
+    // Check if component loaded
+    document.getElementById('load-status').innerHTML = 
+      window.GTHChat ? 
+      '<span class="success">✓ Component loaded successfully</span>' :
+      '<span class="error">✗ Component failed to load</span>';
+    
+    // Initialize
+    try {
+      GTHChat.init({
+        apiKey: 'test-key-placeholder', // Placeholder for testing
+        theme: {
+          primaryColor: '#8c45ff',
+          position: 'bottom-right'
+        }
+      });
+      
+      document.getElementById('init-status').innerHTML = 
+        '<span class="success">✓ Component initialized</span>';
+      log('Component initialized successfully');
+      
+      // Check if button exists
+      setTimeout(() => {
+        const button = document.querySelector('.gth-chat-button');
+        if (button) {
+          log('✓ Chat button created in DOM');
+        } else {
+          log('✗ Chat button NOT found in DOM', true);
+        }
+        
+        const widget = document.querySelector('.gth-chat-widget');
+        if (widget) {
+          log('✓ Chat widget created in DOM');
+        } else {
+          log('✗ Chat widget NOT found in DOM', true);
+        }
+        
+        const styles = document.getElementById('gth-chat-styles');
+        if (styles) {
+          log('✓ Styles loaded');
+        } else {
+          log('✗ Styles NOT loaded', true);
+        }
+      }, 1000);
+      
+    } catch (error) {
+      document.getElementById('init-status').innerHTML = 
+        '<span class="error">✗ Initialization failed: ' + error.message + '</span>';
+      log('✗ Initialization error: ' + error.message, true);
+    }
+    
+    // Test functions
+    function testOpen() {
+      try {
+        GTHChat.open();
+        log('✓ Open method called');
+        
+        setTimeout(() => {
+          const widget = document.querySelector('.gth-chat-widget');
+          const isVisible = widget && !widget.classList.contains('gth-chat-hidden');
+          if (isVisible) {
+            log('✓ Widget is visible');
+          } else {
+            log('✗ Widget is NOT visible', true);
+          }
+        }, 500);
+      } catch (error) {
+        log('✗ Open error: ' + error.message, true);
+      }
+    }
+    
+    function testClose() {
+      try {
+        GTHChat.close();
+        log('✓ Close method called');
+        
+        setTimeout(() => {
+          const widget = document.querySelector('.gth-chat-widget');
+          const isHidden = widget && widget.classList.contains('gth-chat-hidden');
+          if (isHidden) {
+            log('✓ Widget is hidden');
+          } else {
+            log('✗ Widget is NOT hidden', true);
+          }
+        }, 500);
+      } catch (error) {
+        log('✗ Close error: ' + error.message, true);
+      }
+    }
+    
+    function testClear() {
+      try {
+        GTHChat.clearHistory();
+        log('✓ Clear history method called');
+        
+        // Check localStorage
+        const history = localStorage.getItem('gth-chat-history');
+        if (!history) {
+          log('✓ History cleared from localStorage');
+        } else {
+          log('✗ History still in localStorage', true);
+        }
+      } catch (error) {
+        log('✗ Clear error: ' + error.message, true);
+      }
+    }
+    
+    function testDestroy() {
+      try {
+        GTHChat.destroy();
+        log('✓ Destroy method called');
+        
+        setTimeout(() => {
+          const button = document.querySelector('.gth-chat-button');
+          const widget = document.querySelector('.gth-chat-widget');
+          
+          if (!button && !widget) {
+            log('✓ All elements removed from DOM');
+          } else {
+            log('✗ Elements still in DOM', true);
+          }
+        }, 500);
+      } catch (error) {
+        log('✗ Destroy error: ' + error.message, true);
+      }
+    }
+    
+    function testReinit() {
+      try {
+        GTHChat.init({
+          apiKey: 'test-key-placeholder',
+          theme: { primaryColor: '#8c45ff' }
+        });
+        log('✓ Re-initialization attempted');
+        
+        setTimeout(() => {
+          const button = document.querySelector('.gth-chat-button');
+          if (button) {
+            log('✓ Component re-created');
+          } else {
+            log('✗ Component NOT re-created', true);
+          }
+        }, 1000);
+      } catch (error) {
+        log('✗ Re-init error: ' + error.message, true);
+      }
+    }
+  </script>
+</body>
+</html>
