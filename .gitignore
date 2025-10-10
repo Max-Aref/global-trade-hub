@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI Chat Assistant - exclude documentation from public
+/public/ai-chat-assistant/*.md
+/public/ai-chat-assistant/example.html
+/public/ai-chat-assistant/test.html

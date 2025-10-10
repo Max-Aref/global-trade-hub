@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 
 import { twMerge } from "tailwind-merge";
 import { Analytics } from "@vercel/analytics/react";
@@ -85,6 +86,34 @@ export default function RootLayout({
         )}
       >
         {children}
+        
+        {/* Global Trade Hub AI Chat Assistant */}
+        <Script 
+          src="/ai-chat-assistant/index.js" 
+          strategy="afterInteractive"
+        />
+        <Script id="gth-chat-init" strategy="afterInteractive">
+          {`
+            if (typeof window !== 'undefined') {
+              window.addEventListener('load', function() {
+                if (window.GTHChat) {
+                  window.GTHChat.init({
+                    apiKey: process.env.NEXT_PUBLIC_CLAUDE_API_KEY || 'demo-mode',
+                    theme: {
+                      primaryColor: '#8c45ff',
+                      secondaryColor: '#190d2e',
+                      accentColor: '#4a208a',
+                      position: 'bottom-right'
+                    },
+                    greeting: 'Welcome to Global Trade Hub! How can I assist you with your trade inquiries today?',
+                    placeholder: 'Ask about trade, logistics, regulations...',
+                    persistHistory: true
+                  });
+                }
+              });
+            }
+          `}
+        </Script>
       </body>
     </html>
   );
