@@ -98,7 +98,7 @@ export default function RootLayout({
               window.addEventListener('load', function() {
                 if (window.GTHChat) {
                   window.GTHChat.init({
-                    apiKey: process.env.NEXT_PUBLIC_CLAUDE_API_KEY || 'demo-mode',
+                    apiKey: '${process.env.NEXT_PUBLIC_CLAUDE_API_KEY || 'demo-mode'}',
                     theme: {
                       primaryColor: '#8c45ff',
                       secondaryColor: '#190d2e',
