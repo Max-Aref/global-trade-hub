@@ -1,5 +1,29 @@
+# Global Trade Hub
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with
 [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## 🤖 AI Chat Assistant
+
+A production-ready AI chat assistant component is now available in `/ai-chat-assistant/`. 
+
+**Features:**
+- Trade-focused AI powered by Claude
+- GTH brand-aligned design
+- Zero dependencies
+- 5-minute integration
+
+**Quick Start:**
+```html
+<script src="/ai-chat-assistant/index.js"></script>
+<script>
+  GTHChat.init({ apiKey: 'your-claude-api-key' });
+</script>
+```
+
+📖 **Full Documentation**: See `/ai-chat-assistant/README.md`
+
+---
 
 ## Getting Started
 
