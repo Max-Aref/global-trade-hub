@@ -1,10 +1,17 @@
 "use client";
-import { DotLottiePlayer } from "@dotlottie/react-player";
+import { memo } from "react";
 import Image from "next/image";
 import productImage from "@/assets/product-image.png";
+import {
+  FaTachometerAlt,
+  FaMousePointer,
+  FaStar,
+  FaHandshake,
+} from "react-icons/fa";
+
 const tabs = [
   {
-    icon: "/assets/lottie/vroom.lottie",
+    icon: FaTachometerAlt,
     title: "User-friendly dashboard",
     isNew: false,
     backgroundPositionX: 0,
@@ -12,7 +19,7 @@ const tabs = [
     backgroundSizeX: 150,
   },
   {
-    icon: "/assets/lottie/click.lottie",
+    icon: FaMousePointer,
     title: "One-click product optimization",
     isNew: false,
     backgroundPositionX: 98,
@@ -20,7 +27,7 @@ const tabs = [
     backgroundSizeX: 135,
   },
   {
-    icon: "/assets/lottie/stars.lottie",
+    icon: FaStar,
     title: "Smart analytics and insights",
     isNew: true,
     backgroundPositionX: 100,
@@ -28,7 +35,7 @@ const tabs = [
     backgroundSizeX: 177,
   },
   {
-    icon: "/assets/lottie/vroom.lottie",
+    icon: FaHandshake,
     title: "Verified buyers and deals negotiations",
     isNew: false,
     backgroundPositionX: 0,
@@ -37,7 +44,7 @@ const tabs = [
   },
 ];
 
-export const Features = () => {
+export const Features = memo(function Features() {
   return (
     <section className='py-20 md:py-24'>
       <div className='container'>
@@ -52,23 +59,26 @@ export const Features = () => {
           their products
         </p>
         <div className='mt-10 flex flex-col lg:flex-row gap-3'>
-          {tabs.map((tab) => (
-            <div
-              key={tab.title}
-              className='border border-white/15 flex p-2.5 rounded-xl gap-2.5 items-center lg:flex-1'
-            >
-              <div className='h-12 w-12 border border-white/15 rounded-lg inline-flex items-center justify-center'>
-                <DotLottiePlayer src={tab.icon} className='h-5 w-5' autoplay />
-              </div>
-
-              <div className='font-medium'>{tab.title}</div>
-              {tab.isNew && (
-                <div className='text-xs rounded-full px-2 py-0.5 bg-[#8c44ff] text-black font-semibold'>
-                  new
+          {tabs.map((tab) => {
+            const IconComponent = tab.icon;
+            return (
+              <div
+                key={tab.title}
+                className='border border-white/15 flex p-2.5 rounded-xl gap-2.5 items-center lg:flex-1'
+              >
+                <div className='h-12 w-12 border border-white/15 rounded-lg inline-flex items-center justify-center'>
+                  <IconComponent className='h-5 w-5 text-white' />
                 </div>
-              )}
-            </div>
-          ))}
+
+                <div className='font-medium'>{tab.title}</div>
+                {tab.isNew && (
+                  <div className='text-xs rounded-full px-2 py-0.5 bg-[#8c44ff] text-black font-semibold'>
+                    new
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
         <div className='border border-white/20 p-2.5 rounded-xl mt-3'>
           <div
@@ -81,4 +91,4 @@ export const Features = () => {
       </div>
     </section>
   );
-};
+});

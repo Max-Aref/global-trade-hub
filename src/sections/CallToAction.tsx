@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import { Button } from "../components";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 import gridLinesBg from "../assets/grid-lines.png";

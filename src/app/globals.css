@@ -1,3 +1,142 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "../styles/animations.css";
+
+/* ─── CSS Custom Properties (Brand Tokens) ───────────────────────────────────
+   All values mirror src/lib/brand.ts. Update both if you change a value.
+   Reference these vars in any CSS that can't use Tailwind classes.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Primary brand color scale */
+  --color-brand-50:  #f7efff;
+  --color-brand-100: #eedbff;
+  --color-brand-200: #ddb3ff;
+  --color-brand-300: #c987ff;
+  --color-brand-400: #b665ff;
+  --color-brand-500: #8c45ff;   /* main brand purple */
+  --color-brand-600: #6b2fd9;   /* hover */
+  --color-brand-700: #4a208a;   /* active / dark button base */
+  --color-brand-800: #2a1548;   /* card / panel bg */
+  --color-brand-900: #0a0514;   /* sidebar / deep bg */
+  --color-brand-950: #190d2e;   /* darkest bg */
+
+  /* Semantic */
+  --color-success:       #10b981;
+  --color-success-light: #d1fae5;
+  --color-success-dark:  #059669;
+  --color-warning:       #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-warning-dark:  #d97706;
+  --color-error:         #ef4444;
+  --color-error-light:   #fee2e2;
+  --color-error-dark:    #dc2626;
+
+  /* Social */
+  --color-whatsapp: #25D366;
+
+  /* Surfaces (dark theme defaults) */
+  --surface-page:    #000000;
+  --surface-card:    var(--color-brand-950);
+  --surface-panel:   var(--color-brand-800);
+  --surface-sidebar: var(--color-brand-900);
+
+  /* Text */
+  --text-primary:   #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.70);
+  --text-muted:     rgba(255, 255, 255, 0.50);
+  --text-faint:     rgba(255, 255, 255, 0.30);
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.10);
+  --border-light:  rgba(255, 255, 255, 0.15);
+  --border-medium: rgba(255, 255, 255, 0.20);
+  --border-strong: rgba(255, 255, 255, 0.30);
+
+  /* Radius */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-brand-sm: 0 0 12px rgba(140, 69, 255, 0.7);
+  --shadow-brand-md: 0 0 20px rgba(140, 69, 255, 0.8);
+  --shadow-brand-inset: 0 0 10px rgb(140 69 255 / 0.7) inset;
+
+  /* Animation */
+  --duration-fast:   100ms;
+  --duration-normal: 200ms;
+  --duration-slow:   300ms;
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ─── Base Layer ─────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    /* RTL support: set dir="rtl" on <html> for Arabic mode */
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Arabic text contexts — apply font-arabic class to switch fonts */
+  .font-arabic,
+  [lang="ar"],
+  [dir="rtl"] {
+    font-family: "Cairo", "Noto Sans Arabic", sans-serif;
+  }
+
+  /* Focus-visible ring using brand color — overrides browser default blue */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+
+  /* Scrollbar styling (WebKit) */
+  ::-webkit-scrollbar        { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  { background: rgba(140, 69, 255, 0.4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(140, 69, 255, 0.7); }
+}
+
+/* ─── Component Layer ────────────────────────────────────────────────────── */
+@layer components {
+  /* Range input brand styling (used in PricingTransparency calculator) */
+  input[type="range"] {
+    accent-color: var(--color-brand-500);
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    background: var(--color-brand-500);
+  }
+
+  /* Radio input brand styling */
+  input[type="radio"] {
+    accent-color: var(--color-brand-500);
+  }
+
+  /* Checkbox brand styling */
+  input[type="checkbox"] {
+    accent-color: var(--color-brand-500);
+  }
+
+  /* Selection highlight */
+  ::selection {
+    background-color: rgba(140, 69, 255, 0.3);
+    color: #ffffff;
+  }
+}
+
+/* ─── Section Spacing ────────────────────────────────────────────────────── */
+section + section {
+  margin-top: 100px;
+}
+
+.logo-ticker-spacing ~ section {
+  margin-top: 200px;
+}

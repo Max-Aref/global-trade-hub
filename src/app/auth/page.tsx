@@ -236,7 +236,6 @@ export default function AuthPage() {
 
                 <Input
                   label='Company Name'
-                  labelAr='اسم الشركة'
                   id='companyName'
                   type='text'
                   value={formData.companyName}

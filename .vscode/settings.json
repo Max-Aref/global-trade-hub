@@ -1,3 +1,18 @@
 {
-  "cSpell.words": ["Aldi", "dotlottie"]
+  "cSpell.words": [
+    "Aldi", "dotlottie",
+    "GOEIC", "incoterms", "Incoterms",
+    "antialiased", "twMerge",
+    "Cairo", "arabي"
+  ],
+  "cSpell.allowCompoundWords": true,
+  "cSpell.languageSettings": [
+    { "languageId": "typescriptreact", "locale": "en,ar" },
+    { "languageId": "typescript", "locale": "en,ar" }
+  ],
+  "cSpell.ignoreRegExpList": [
+    "/[\\u0600-\\u06FF]+/g"
+  ],
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore"
 }
