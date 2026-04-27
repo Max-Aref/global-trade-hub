@@ -104,7 +104,7 @@ export const Footer = () => {
         {/* Bottom bar */}
         <div className='border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4'>
           <p className='text-white/50 text-xs'>
-            © 2026 Global Trade Hub. All rights reserved.
+            © {new Date().getFullYear()} Global Trade Hub. All rights reserved.
           </p>
           <p className='text-white/30 text-xs font-arabic' dir='rtl'>
             جميع الحقوق محفوظة · المنصة العالمية للتجارة

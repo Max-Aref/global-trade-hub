@@ -1,7 +1,11 @@
 import { ChangeEvent } from "react";
 
 export interface FormErrors {
-  [key: string]: string | null | undefined;
+  [key: string]: string | undefined;
+}
+
+export interface EditErrors {
+  [key: string]: string | undefined;
 }
 
 export interface Product {
@@ -20,7 +24,8 @@ export interface ProductFormData {
   description: string;
   price: string;
   keyFeatures: string;
-  images: (File | null)[];
+  /** Accepts File objects (new uploads) or strings (existing URLs) */
+  images: (File | string | null)[];
   primaryImageIndex: number;
 }
 
@@ -37,7 +42,10 @@ export interface CompanyData {
   address: string;
   email: string;
   phoneNumber: string;
-  logo: string | null;
+  website: string;
+  logo: string | undefined;
+  productsCount: string;
+  leadTime: string;
   fullDescription: string;
 }
 
@@ -57,19 +65,6 @@ export interface ImageUploadProps {
   isPrimary: boolean;
   onImageUpload: (e: ChangeEvent<HTMLInputElement>, index: number) => void;
   onSetPrimary: (index: number) => void;
-}
-
-export interface EditErrors {
-  [key: string]: string | null;
-}
-
-export interface ProductFormData {
-  name: string;
-  description: string;
-  price: string;
-  keyFeatures: string;
-  images: (File | null)[];
-  primaryImageIndex: number;
 }
 
 export interface DisplayToast {

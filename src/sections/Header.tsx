@@ -1,8 +1,8 @@
 "use client";
 
 import { LiaGlobeAmericasSolid } from "react-icons/lia";
-import MenuIcon from "@/assets/icon-menu.svg";
-import Button from "@/components/Button";
+import MenuIcon from "@/components/MenuIcon";
+import { Button } from "@/components/Button";
 import Link from "next/link";
 
 export const Header = () => {
@@ -12,11 +12,13 @@ export const Header = () => {
       <div className='container max-w-full mx-auto px-4'>
         <div className='flex justify-between items-center border border-white/15 md:p-2.5 rounded-xl w-90% mx-auto md:backdrop-blur '>
           <div>
-            <Link
-              href='/'
-              className='border h-12 w-12 rounded-lg inline-flex justify-center border-[#2A2A2A] hover:border-[#8c45ff]/40 transition-colors duration-300 p-2 items-center'
-            >
-              <LiaGlobeAmericasSolid className='h-10 w-10 text-[#8c45ff]' />
+            <Link href='/' className='inline-flex items-center gap-3 group'>
+              <span className='border h-12 w-12 rounded-lg inline-flex justify-center border-[#2A2A2A] group-hover:border-[#8c45ff]/40 transition-colors duration-300 p-2 items-center'>
+                <LiaGlobeAmericasSolid className='h-10 w-10 text-[#8c45ff]' />
+              </span>
+              <span className='hidden sm:inline-block text-[#8c45ff] font-semibold text-lg tracking-tight whitespace-nowrap'>
+                Global Trade Hub
+              </span>
             </Link>
           </div>
           {/* navigation menu */}

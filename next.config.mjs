@@ -6,12 +6,17 @@ const withAnalyzer = withBundleAnalyzer({
 });
 
 const nextConfig = withAnalyzer({
-  // Performance optimizations
+  // ─── Security ────────────────────────────────────────────────────────────
+  poweredByHeader: false,
   reactStrictMode: true,
-  swcMinify: true,
 
-  // Optimize production build
+  // ─── Performance ─────────────────────────────────────────────────────────
+  compress: true,
   productionBrowserSourceMaps: false,
+
+  experimental: {
+    optimizePackageImports: ["react-icons", "framer-motion"],
+  },
 
   // Optimize images
   images: {

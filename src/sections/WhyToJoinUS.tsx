@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { CARD_ASSETS, CARD_ASSET_ORDER, type CardId } from "@/lib/card-assets";
 
 /**
@@ -127,14 +128,13 @@ export const WhyToJoinUS = () => {
                 >
                   {/* ── Card illustration ── */}
                   <div className="relative w-full aspect-[8/5] overflow-hidden rounded-t-2xl bg-black/30">
-                    <img
+                    <Image
                       src={asset.src}
                       alt={asset.alt}
-                      width={asset.width}
-                      height={asset.height}
-                      loading={index < 2 ? "eager" : "lazy"}
-                      decoding="async"
-                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
+                      fill
+                      priority={index < 2}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                      className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
                     />
 
                     {/* Bottom gradient so card text reads against the illustration */}

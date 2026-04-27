@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none">
+  <!-- Globe icon mark -->
+  <circle cx="24" cy="24" r="22" stroke="#8c45ff" stroke-width="2" fill="none"/>
+  <ellipse cx="24" cy="24" rx="22" ry="9" stroke="#8c45ff" stroke-width="1.5" fill="none"/>
+  <ellipse cx="24" cy="24" rx="9" ry="22" stroke="#8c45ff" stroke-width="1.5" fill="none"/>
+  <path d="M 4 16 Q 24 22 44 16" stroke="#8c45ff" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M 4 32 Q 24 26 44 32" stroke="#8c45ff" stroke-width="1" fill="none" opacity="0.5"/>
+  <circle cx="24" cy="24" r="2.5" fill="#8c45ff"/>
+  <!-- Wordmark -->
+  <text x="58" y="19" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#ffffff" letter-spacing="-0.3">Global Trade Hub</text>
+  <text x="58" y="34" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="400" fill="#8c45ff" letter-spacing="1.5">EGYPT EXPORTS</text>
+</svg>

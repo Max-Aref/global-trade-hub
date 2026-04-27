@@ -256,7 +256,7 @@ export default function CompanyProfile() {
 
   // ===== STATE MANAGEMENT =====
   // Company data state
-  const [companyData, setCompanyData] = useState({
+  const [companyData, setCompanyData] = useState<CompanyData>({
     companyName: "Global Textiles Egypt",
     shortBio:
       "Premium Egyptian textile manufacturer specializing in cotton products for international markets.",
@@ -270,10 +270,11 @@ export default function CompanyProfile() {
     industryCategory: "Textiles & Apparel",
     country: "Egypt",
     city: "Alexandria",
+    address: "Industrial Zone, Alexandria, Egypt",
     email: "contact@globaltextiles.com",
     phoneNumber: "+20 123 456 7890",
     website: "www.globaltextiles.com",
-    logo: null,
+    logo: undefined,
     productsCount: "24",
     leadTime: "45",
     fullDescription: "", // Added missing property
@@ -431,7 +432,7 @@ export default function CompanyProfile() {
       if (formErrors[id]) {
         setFormErrors((prev) => ({
           ...prev,
-          [id]: null,
+          [id]: undefined,
         }));
       }
     },
@@ -593,7 +594,7 @@ export default function CompanyProfile() {
       if (editErrors[id]) {
         setEditErrors((prev) => ({
           ...prev,
-          [id]: null,
+          [id]: undefined,
         }));
       }
     },
@@ -778,7 +779,7 @@ export default function CompanyProfile() {
         });
       }
     },
-    [editProductData]
+    []
   );
 
   // Set primary image in edit product mode
