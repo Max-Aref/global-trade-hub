@@ -1,4 +1,4 @@
-import { Inter, Roboto_Mono, Cairo } from "next/font/google";
+import { Inter, Cairo } from "next/font/google";
 
 /** Primary UI font — Latin subset, Inter */
 export const inter = Inter({
@@ -8,15 +8,6 @@ export const inter = Inter({
   fallback: ["system-ui", "sans-serif"],
   adjustFontFallback: true,
   variable: "--font-inter",
-});
-
-/** Monospace font — IDs, codes, numeric data */
-export const robotoMono = Roboto_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  preload: false,
-  fallback: ["monospace"],
-  variable: "--font-roboto-mono",
 });
 
 /**
@@ -32,7 +23,6 @@ export const cairo = Cairo({
 });
 
 export const fontVariables = {
-  inter:      inter.variable,
-  robotoMono: robotoMono.variable,
-  cairo:      cairo.variable,
+  inter: inter.variable,
+  cairo: cairo.variable,
 };

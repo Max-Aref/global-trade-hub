@@ -1,9 +1,8 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { inter, cairo, robotoMono } from "@/lib/fonts";
+import { inter, cairo } from "@/lib/fonts";
 // cairo.variable → --font-cairo  (available for font-arabic class)
-// robotoMono.variable → --font-roboto-mono (available for font-mono class)
 
 import { twMerge } from "tailwind-merge";
 import { Analytics } from "@vercel/analytics/react";
@@ -158,7 +157,6 @@ export default function RootLayout({
         className={twMerge(
           inter.className,
           cairo.variable, // exposes --font-cairo for font-arabic class
-          robotoMono.variable, // exposes --font-roboto-mono for font-mono class
           "bg-black text-white antialiased",
           dir === "rtl" ? "text-right" : "text-left",
         )}
