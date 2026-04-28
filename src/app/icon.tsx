@@ -1,11 +1,7 @@
 import { LiaGlobeAmericasSolid } from "react-icons/lia";
 import { ImageResponse } from "next/og";
 
-// Define brand colors
-const BRAND_PRIMARY = "#8c45ff"; // Purple brand color
-const BRAND_BG = "#190d2e"; // Dark background
-
-// Define icon sizes
+// Match header icon styling
 export const size = {
   width: 32,
   height: 32,
@@ -19,22 +15,20 @@ export default async function Icon() {
       <div
         style={{
           fontSize: 24,
-          background: BRAND_BG,
+          background: "transparent",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: "6px",
-          border: `1px solid ${BRAND_PRIMARY}40`, // 40 = 25% opacity
+          color: "#8c45ff", // Match header icon color
         }}
       >
         {/* Using the same LiaGlobeAmericasSolid icon as in the header */}
         <LiaGlobeAmericasSolid
           style={{
-            color: BRAND_PRIMARY,
-            width: "70%",
-            height: "70%",
+            width: "100%",
+            height: "100%",
           }}
         />
       </div>

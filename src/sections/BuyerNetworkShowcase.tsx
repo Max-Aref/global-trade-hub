@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import { useState, memo } from "react";
+import Link from "next/link";
 import {
   FaBuilding,
   FaStore,
@@ -14,7 +15,7 @@ import {
   FaHandshake,
   FaTrophy,
 } from "react-icons/fa";
-import Button from "@/components/Button";
+import { Button } from "@/components";
 
 interface BuyerCategory {
   id: string;
@@ -38,7 +39,7 @@ interface RegionData {
   growth: string;
 }
 
-export const BuyerNetworkShowcase = () => {
+export const BuyerNetworkShowcase = memo(function BuyerNetworkShowcase() {
   const [activeCategory, setActiveCategory] = useState("enterprise");
 
   const buyerCategories: BuyerCategory[] = [
@@ -161,17 +162,17 @@ export const BuyerNetworkShowcase = () => {
 
   const successStories = [
     {
-      industry: "Manufacturing Company, Germany",
+      industry: "Rug & Home Décor Importer, Texas, USA",
       quote:
-        "We've sourced $2M+ in electronics components through this platform",
+        "We've sourced $2M+ in handcrafted rugs and floor coverings through this platform",
       results: [
         "40% cost reduction compared to traditional sourcing",
-        "15+ reliable suppliers identified in Asia",
-        "99.2% delivery success rate",
+        "15+ reliable rug manufacturers identified globally",
+        "99.2% on-time delivery success rate",
       ],
     },
     {
-      industry: "Retail Chain, USA",
+      industry: "Retail Chain, California, USA",
       quote:
         "Found suppliers for our private label products that exceeded expectations",
       results: [
@@ -450,7 +451,9 @@ export const BuyerNetworkShowcase = () => {
             </div>
 
             <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-              <Button>Access Buyer Network</Button>
+              <Link href='/auth'>
+                <Button>Access Buyer Network</Button>
+              </Link>
               <button className='relative py-3 px-8 rounded-lg font-medium text-lg border border-white/30 hover:border-white/50 transition-colors'>
                 Browse Buyer Industries
               </button>
@@ -465,6 +468,6 @@ export const BuyerNetworkShowcase = () => {
       </div>
     </section>
   );
-};
+});
 
 export default BuyerNetworkShowcase;

@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-import Button from "@/components/Button";
-import { useRouter } from "next/navigation"; // Import router for navigation
+import { Button } from "@/components";
+import { useRouter } from "next/navigation";
 
 export const HowItWorks = () => {
   const router = useRouter(); // Initialize router
@@ -90,11 +89,14 @@ export const HowItWorks = () => {
         </div>
 
         <div className='text-center'>
-          <Button>Join Now – Connect with Active U.S. Buyers</Button>
+          <Button onClick={handleJoinNowClick}>
+            Join Now – Connect with Active U.S. Buyers
+          </Button>
         </div>
       </div>
     </section>
   );
 };
 
-export default HowItWorks;
+// Using named export as per standardization
+// export default HowItWorks;

@@ -1,3 +1,62 @@
+/* @import must be the very first statement — CSS spec requires it before all other rules */
+@import "../styles/animations.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ─── CSS Custom Properties (Brand Tokens) ─────────────────────────────────
+   Mirror of src/lib/brand.ts. Reference these vars wherever Tailwind classes
+   aren't available (e.g. inline SVG, third-party components).
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Brand purple scale */
+  --color-brand-50:  #f7efff;
+  --color-brand-100: #eedbff;
+  --color-brand-200: #ddb3ff;
+  --color-brand-300: #c987ff;
+  --color-brand-400: #b665ff;
+  --color-brand-500: #8c45ff;
+  --color-brand-600: #6b2fd9;
+  --color-brand-700: #4a208a;
+  --color-brand-800: #2a1548;
+  --color-brand-900: #0a0514;
+  --color-brand-950: #190d2e;
+
+  /* Semantic */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error:   #ef4444;
+
+  /* Shadows */
+  --shadow-brand-sm:    0 0 12px rgba(140, 69, 255, 0.7);
+  --shadow-brand-md:    0 0 20px rgba(140, 69, 255, 0.8);
+  --shadow-brand-inset: 0 0 10px rgb(140 69 255 / 0.7) inset;
+}
+
+/* ─── Base overrides ────────────────────────────────────────────────────── */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar        { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  { background: rgba(140, 69, 255, 0.4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(140, 69, 255, 0.7); }
+
+  ::selection {
+    background-color: rgba(140, 69, 255, 0.3);
+    color: #ffffff;
+  }
+}
+
+/* ─── Section spacing ───────────────────────────────────────────────────── */
+section + section {
+  margin-top: 100px;
+}
+
+.logo-ticker-spacing ~ section {
+  margin-top: 200px;
+}

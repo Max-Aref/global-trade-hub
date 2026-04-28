@@ -1,7 +1,8 @@
-import React from "react";
-import Button from "@/components/Button";
+import { memo } from "react";
+import Link from "next/link";
+import { Button } from "@/components";
 
-export const ManufacturersShowcase = () => {
+export const ManufacturersShowcase = memo(function ManufacturersShowcase() {
   const categories = [
     {
       title: "Textiles & Apparel",
@@ -81,12 +82,15 @@ export const ManufacturersShowcase = () => {
             empowering you to control your brand and your bottom line.
           </p>
           <div className='mt-10'>
-            <Button>Get Started Today</Button>
+            <Link href='/auth'>
+              <Button>Get Started Today</Button>
+            </Link>
           </div>
         </div>
       </div>
     </section>
   );
-};
+});
 
-export default ManufacturersShowcase;
+// Using named export as per standardization
+// export default ManufacturersShowcase;

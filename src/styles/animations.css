@@ -1,0 +1,77 @@
+/* Animation keyframes for WhyToJoinUS section */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-20px) rotate(1deg) scale(1.05);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-1deg) scale(1.02);
+  }
+  75% {
+    transform: translateY(-15px) rotate(0.5deg) scale(1.03);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .why-join-us-card {
+    min-height: 320px !important;
+  }
+
+  .why-join-us-card .card-content {
+    padding: 1.5rem !important;
+  }
+
+  .why-join-us-card h4 {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .why-join-us-card,
+  .why-join-us-card * {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .why-join-us-card:hover {
+    transform: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .why-join-us-card {
+    border-color: #ffffff !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+
+  .why-join-us-card h4,
+  .why-join-us-card p {
+    color: #ffffff !important;
+  }
+}

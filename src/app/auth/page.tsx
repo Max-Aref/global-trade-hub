@@ -2,361 +2,439 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Ensure this import exists
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Logo } from "@/components/ui/Logo";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { loginSchema, registerSchema } from "@/lib/validations/auth";
+import type { ZodError } from "zod";
+
+/* ─── Types ──────────────────────────────────────────────────────────────── */
+
+type Tab = "signup" | "login";
+type FieldErrors = Record<string, string>;
+
+function parseZodError(err: ZodError): FieldErrors {
+  const errors: FieldErrors = {};
+  for (const issue of err.issues) {
+    const key = issue.path[0]?.toString() ?? "_form";
+    if (!errors[key]) errors[key] = issue.message;
+  }
+  return errors;
+}
+
+/* ─── Password visibility toggle ─────────────────────────────────────────── */
+
+function EyeToggle({
+  show,
+  onToggle,
+  label,
+}: {
+  show: boolean;
+  onToggle: () => void;
+  label: string;
+}) {
+  return (
+    /* icon-only toggle inside Input rightIcon slot — intentional raw button */
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-label={label}
+      className="text-white/40 hover:text-white/80 transition-colors focus-visible:outline-none"
+    >
+      {show ? <FaEyeSlash className="w-4 h-4" /> : <FaEye className="w-4 h-4" />}
+    </button>
+  );
+}
+
+/* ─── Main page ──────────────────────────────────────────────────────────── */
 
 export default function AuthPage() {
-  const router = useRouter(); // Make sure this is initialized
-  const [activeTab, setActiveTab] = useState("signup");
-  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState<Tab>("signup");
+
+  /* Password visibility */
+  const [showPassword,        setShowPassword]        = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Your existing form state
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
+  /* Loading states */
+  const [signupLoading, setSignupLoading] = useState(false);
+  const [loginLoading,  setLoginLoading]  = useState(false);
+
+  /* Form errors */
+  const [signupErrors, setSignupErrors] = useState<FieldErrors>({});
+  const [loginErrors,  setLoginErrors]  = useState<FieldErrors>({});
+
+  /* Signup form data */
+  const [signupData, setSignupData] = useState({
+    fullName:        "",
+    email:           "",
+    phone:           "",
+    companyName:     "",
+    password:        "",
     confirmPassword: "",
-    companyName: "",
+    acceptTerms:     false,
   });
 
-  // Handle input changes (existing)
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /* Login form data */
+  const [loginData, setLoginData] = useState({
+    email:    "",
+    password: "",
+  });
+
+  /* Demo credentials — replace with real auth integration */
+  const DEMO = { email: "demo@globaltradehub.com", password: "demo1234" };
+
+  /* ── Handlers ────────────────────────────────────────────────────────── */
+
+  function handleSignupChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { id, value, type, checked } = e.target;
+    setSignupData((prev) => ({ ...prev, [id]: type === "checkbox" ? checked : value }));
+    if (signupErrors[id]) setSignupErrors((prev) => ({ ...prev, [id]: "" }));
+  }
+
+  function handleLoginChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, value } = e.target;
-    setFormData({
-      ...formData,
-      [id]: value,
-    });
-  };
+    setLoginData((prev) => ({ ...prev, [id]: value }));
+    if (loginErrors[id]) setLoginErrors((prev) => ({ ...prev, [id]: "" }));
+  }
 
-  // Updated form submission handler
-  const handleSignUpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSignupSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setSignupErrors({});
 
-    // Basic validation
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+    const result = registerSchema.safeParse({
+      ...signupData,
+      phone:       signupData.phone || undefined,
+      companyName: signupData.companyName || undefined,
+    });
+
+    if (!result.success) {
+      setSignupErrors(parseZodError(result.error));
       return;
     }
 
-    // Create query parameters with user data
-    const queryParams = new URLSearchParams({
-      fullName: formData.fullName,
-      email: formData.email,
-      companyName: formData.companyName || "",
-    }).toString();
+    setSignupLoading(true);
+    try {
+      const queryParams = new URLSearchParams({
+        fullName:    result.data.fullName,
+        email:       result.data.email,
+        companyName: result.data.companyName ?? "",
+      }).toString();
+      router.push(`/CompanyRegisteration?${queryParams}`);
+    } finally {
+      setSignupLoading(false);
+    }
+  }
 
-    // Navigate to the company registration page
-    // Note the exact spelling "CompanyRegisteration" matches your file structure
-    router.push(`/CompanyRegisteration?${queryParams}`);
-  };
+  async function handleLoginSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoginErrors({});
+
+    const result = loginSchema.safeParse(loginData);
+    if (!result.success) {
+      setLoginErrors(parseZodError(result.error));
+      return;
+    }
+
+    setLoginLoading(true);
+    try {
+      /* Demo login — replace with real auth call */
+      await new Promise((r) => setTimeout(r, 600));
+      const match =
+        result.data.email.toLowerCase() === DEMO.email &&
+        result.data.password === DEMO.password;
+
+      if (match) {
+        try {
+          sessionStorage.setItem(
+            "gth_demo_user",
+            JSON.stringify({ email: DEMO.email, loggedInAt: Date.now() })
+          );
+        } catch {
+          /* sessionStorage unavailable — continue */
+        }
+        router.push("/CompanyProfile");
+      } else {
+        setLoginErrors({
+          _form:
+            "Invalid email or password. Use demo@globaltradehub.com / demo1234 to try the dashboard.",
+        });
+      }
+    } finally {
+      setLoginLoading(false);
+    }
+  }
+
+  /* ── Render ──────────────────────────────────────────────────────────── */
 
   return (
-    <div className='min-h-screen flex flex-col md:flex-row bg-black text-white'>
-      {/* Left panel - Branding */}
-      <div className='md:w-1/2 p-8 md:p-16 flex flex-col justify-center relative overflow-hidden'>
-        {/* Background gradient */}
-        <div className='absolute inset-0 bg-gradient-to-br from-[#190d2e] to-black -z-10'></div>
-        <div className='absolute top-0 right-0 w-3/4 h-3/4 bg-[#8c45ff]/10 rounded-bl-[200px] transform -rotate-12 -z-10'></div>
+    <div className="min-h-screen flex flex-col md:flex-row bg-black text-white">
 
-        {/* Logo */}
-        <Link href='/' className='mb-16 inline-block'>
-          <div className='border h-14 w-14 rounded-lg inline-flex justify-center border-[#2A2A2A] p-2 items-center'>
-            {/* <!-- IMAGE: Logo, company-logo.svg --> */}
-            <div className='h-10 w-10 bg-[#8c45ff]/50 rounded-full'></div>
-          </div>
+      {/* ── Left panel: branding ─────────────────────────────────────────── */}
+      <div className="md:w-1/2 p-8 md:p-16 flex flex-col justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-950 to-black -z-10" />
+        <div className="absolute top-0 right-0 w-3/4 h-3/4 bg-brand-500/10 rounded-bl-[200px] transform -rotate-12 -z-10" />
+
+        <Link href="/" className="mb-16 inline-block" aria-label="Go to home page">
+          <Logo size="lg" />
         </Link>
 
-        {/* Copy */}
-        <h1 className='text-4xl md:text-5xl lg:text-6xl font-medium tracking-tighter mb-6'>
-          Your Gateway to Global Trade Success
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tighter mb-6 leading-tight">
+          Your Gateway to<br />Global Trade Success
         </h1>
-        <p className='text-xl text-white/70 mb-8 max-w-lg'>
-          Join thousands of exporters connecting directly with U.S. buyers on
-          our trusted platform.
+        <p className="text-lg text-white/60 mb-8 max-w-lg leading-relaxed">
+          Join thousands of Egyptian exporters connecting directly with verified
+          international buyers on our trusted platform.
         </p>
 
-        {/* Trust indicators */}
-        <div className='mt-auto'>
-          <p className='text-sm text-white/50 mb-3'>
-            TRUSTED BY LEADING BUSINESSES
+        <div className="mt-auto">
+          <p className="text-xs text-white/40 mb-3 uppercase tracking-widest">
+            Trusted by leading businesses
           </p>
-          <div className='flex space-x-6'>
-            {/* Company logos with text until you add actual SVG logos */}
-            <div className='h-8 w-auto px-3 bg-white/10 rounded flex items-center justify-center'>
-              <span className='text-white/80 text-xs font-medium'>WALMART</span>
-            </div>
-            <div className='h-8 w-auto px-3 bg-white/10 rounded flex items-center justify-center'>
-              <span className='text-white/80 text-xs font-medium'>AMAZON</span>
-            </div>
-            <div className='h-8 w-auto px-3 bg-white/10 rounded flex items-center justify-center'>
-              <span className='text-white/80 text-xs font-medium'>TARGET</span>
-            </div>
+          <div className="flex gap-3 flex-wrap">
+            {["Walmart", "Target", "Costco", "Home Depot"].map((name) => (
+              <div key={name} className="h-8 px-4 bg-white/5 border border-white/10 rounded-lg flex items-center">
+                <span className="text-white/60 text-xs font-medium">{name}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Right panel - Authentication form */}
-      <div className='md:w-1/2 p-8 md:p-16 flex items-center justify-center'>
-        <div className='w-full max-w-md'>
-          {/* Auth card */}
-          <div className='border border-white/15 rounded-xl p-8 bg-gradient-to-br from-[#190d2e] to-black shadow-[0_0_25px_rgba(140,69,255,0.15)]'>
-            {/* Tabs */}
-            <div className='flex mb-8 border border-white/15 rounded-lg p-1'>
-              <button
-                className={`flex-1 py-2 px-4 rounded-md text-center transition-all ${
-                  activeTab === "signup"
-                    ? "bg-[#8c45ff]/20 text-white"
-                    : "text-white/50 hover:text-white"
-                }`}
-                onClick={() => setActiveTab("signup")}
-              >
-                Sign Up
-              </button>
-              <button
-                className={`flex-1 py-2 px-4 rounded-md text-center transition-all ${
-                  activeTab === "login"
-                    ? "bg-[#8c45ff]/20 text-white"
-                    : "text-white/50 hover:text-white"
-                }`}
-                onClick={() => setActiveTab("login")}
-              >
-                Login
-              </button>
+      {/* ── Right panel: forms ───────────────────────────────────────────── */}
+      <div className="md:w-1/2 p-8 md:p-16 flex items-center justify-center">
+        <div className="w-full max-w-md">
+          <div className="border border-white/10 rounded-2xl p-8 bg-gradient-to-br from-brand-950 to-black shadow-[0_0_25px_rgba(140,69,255,0.15)]">
+
+            {/* Tab switcher */}
+            <div className="flex mb-8 border border-white/10 rounded-xl p-1 gap-1" role="tablist">
+              {(["signup", "login"] as const).map((tab) => (
+                <button
+                  key={tab}
+                  role="tab"
+                  aria-selected={activeTab === tab}
+                  onClick={() => { setActiveTab(tab); setSignupErrors({}); setLoginErrors({}); }}
+                  className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium text-center transition-all duration-200 ${
+                    activeTab === tab
+                      ? "bg-brand-500/20 text-white border border-brand-500/30"
+                      : "text-white/50 hover:text-white"
+                  }`}
+                >
+                  {tab === "signup" ? "Sign Up" : "Log In"}
+                </button>
+              ))}
             </div>
 
-            {/* Forms */}
-            {activeTab === "signup" ? (
-              <form className='space-y-4' onSubmit={handleSignUpSubmit}>
-                <div>
-                  <label
-                    htmlFor='fullName'
-                    className='block text-sm font-medium mb-1'
-                  >
-                    Full Name
-                  </label>
-                  <input
-                    type='text'
-                    id='fullName'
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
-                    placeholder='Enter your full name'
-                    required
-                  />
-                </div>
+            {/* ── Sign Up form ──────────────────────────────────────────── */}
+            {activeTab === "signup" && (
+              <form className="space-y-4" onSubmit={handleSignupSubmit} noValidate>
+                <Input
+                  label="Full Name"
+                  labelAr="الاسم الكامل"
+                  id="fullName"
+                  type="text"
+                  autoComplete="name"
+                  value={signupData.fullName}
+                  onChange={handleSignupChange}
+                  placeholder="Enter your full name"
+                  error={signupErrors.fullName}
+                  required
+                />
 
-                <div>
-                  <label
-                    htmlFor='email'
-                    className='block text-sm font-medium mb-1'
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type='email'
-                    id='email'
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
-                    placeholder='Enter your email'
-                    required
-                  />
-                </div>
+                <Input
+                  label="Email Address"
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  value={signupData.email}
+                  onChange={handleSignupChange}
+                  placeholder="Enter your email"
+                  error={signupErrors.email}
+                  required
+                />
 
-                <div>
-                  <label
-                    htmlFor='password'
-                    className='block text-sm font-medium mb-1'
-                  >
-                    Password
-                  </label>
-                  <div className='relative'>
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      id='password'
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
-                      placeholder='Create a password'
-                      required
+                <Input
+                  label="Password"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="new-password"
+                  value={signupData.password}
+                  onChange={handleSignupChange}
+                  placeholder="Min. 8 chars, 1 uppercase, 1 number"
+                  error={signupErrors.password}
+                  required
+                  rightIcon={
+                    <EyeToggle
+                      show={showPassword}
+                      onToggle={() => setShowPassword((v) => !v)}
+                      label={showPassword ? "Hide password" : "Show password"}
                     />
-                    <button
-                      type='button'
-                      className='absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white'
-                      onClick={() => setShowPassword(!showPassword)}
-                      aria-label={
-                        showPassword ? "Hide password" : "Show password"
-                      }
-                    >
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </button>
-                  </div>
-                </div>
+                  }
+                />
 
-                <div>
-                  <label
-                    htmlFor='confirmPassword'
-                    className='block text-sm font-medium mb-1'
-                  >
-                    Confirm Password
-                  </label>
-                  <div className='relative'>
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      id='confirmPassword'
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                      className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
-                      placeholder='Confirm your password'
-                      required
+                <Input
+                  label="Confirm Password"
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  autoComplete="new-password"
+                  value={signupData.confirmPassword}
+                  onChange={handleSignupChange}
+                  placeholder="Repeat your password"
+                  error={signupErrors.confirmPassword}
+                  required
+                  rightIcon={
+                    <EyeToggle
+                      show={showConfirmPassword}
+                      onToggle={() => setShowConfirmPassword((v) => !v)}
+                      label={showConfirmPassword ? "Hide password" : "Show password"}
                     />
-                    <button
-                      type='button'
-                      className='absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white'
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
-                      aria-label={
-                        showConfirmPassword ? "Hide password" : "Show password"
-                      }
-                    >
-                      {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                    </button>
-                  </div>
-                </div>
+                  }
+                />
 
+                <Input
+                  label="Company Name"
+                  labelAr="اسم الشركة"
+                  id="companyName"
+                  type="text"
+                  autoComplete="organization"
+                  value={signupData.companyName}
+                  onChange={handleSignupChange}
+                  placeholder="Your company name (optional)"
+                  hint="You can add this later in your profile"
+                />
+
+                {/* Terms checkbox */}
                 <div>
-                  <label
-                    htmlFor='companyName'
-                    className='block text-sm font-medium mb-1'
-                  >
-                    Company Name{" "}
-                    <span className='text-white/50'>(Optional)</span>
-                  </label>
-                  <input
-                    type='text'
-                    id='companyName'
-                    value={formData.companyName}
-                    onChange={handleInputChange}
-                    className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
-                    placeholder='Enter your company name'
-                  />
-                </div>
-
-                <div className='pt-4'>
-                  <button
-                    type='submit'
-                    className='w-full relative py-3 px-4 rounded-lg font-medium text-sm bg-gradient-to-b from-[#190d2e] to-[#4a208a] shadow-[0px_0px_12px_#8c45ff] hover:shadow-[0px_0px_16px_#8c45ff] transition-all'
-                  >
-                    <div className='absolute inset-0'>
-                      <div className='rounded-lg border border-white/20 absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]'></div>
-                      <div className='rounded-lg border absolute inset-0 border-white/40 [mask-image:linear-gradient(to_top,black,transparent)]'></div>
-                      <div className='absolute inset-0 shadow-[0_0_10px_rgb(140,69,255,.7)_inset] rounded-lg'></div>
-                    </div>
-                    <span className='relative'>Register Now</span>
-                  </button>
-                </div>
-
-                <p className='text-sm text-white/50 text-center pt-2'>
-                  By signing up, you agree to our{" "}
-                  <Link
-                    href='/terms'
-                    className='text-[#8c45ff] hover:underline'
-                  >
-                    Terms of Service
-                  </Link>{" "}
-                  and{" "}
-                  <Link
-                    href='/privacy'
-                    className='text-[#8c45ff] hover:underline'
-                  >
-                    Privacy Policy
-                  </Link>
-                </p>
-              </form>
-            ) : (
-              <form className='space-y-4'>
-                {/* Login form unchanged */}
-                <div>
-                  <label
-                    htmlFor='loginEmail'
-                    className='block text-sm font-medium mb-1'
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type='email'
-                    id='loginEmail'
-                    className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
-                    placeholder='Enter your email'
-                    required
-                  />
-                </div>
-
-                <div>
-                  <div className='flex justify-between mb-1'>
-                    <label
-                      htmlFor='loginPassword'
-                      className='block text-sm font-medium'
-                    >
-                      Password
-                    </label>
-                    <Link
-                      href='/forgot-password'
-                      className='text-sm text-[#8c45ff] hover:underline'
-                    >
-                      Forgot Password?
-                    </Link>
-                  </div>
-                  <div className='relative'>
+                  <label className="flex items-start gap-3 cursor-pointer">
                     <input
-                      type={showPassword ? "text" : "password"}
-                      id='loginPassword'
-                      className='w-full bg-[#190d2e] border border-white/15 rounded-lg px-4 py-3 focus:border-[#8c45ff] focus:outline-none focus:ring-1 focus:ring-[#8c45ff] transition-all'
-                      placeholder='Enter your password'
-                      required
+                      id="acceptTerms"
+                      type="checkbox"
+                      checked={signupData.acceptTerms}
+                      onChange={handleSignupChange}
+                      className="mt-0.5 h-4 w-4 rounded shrink-0 accent-brand-500"
                     />
-                    <button
-                      type='button'
-                      className='absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white'
-                      onClick={() => setShowPassword(!showPassword)}
-                      aria-label={
-                        showPassword ? "Hide password" : "Show password"
-                      }
-                    >
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </button>
-                  </div>
+                    <span className="text-xs text-white/60 leading-relaxed">
+                      I agree to the{" "}
+                      <Link href="/terms" className="text-brand-400 hover:underline">
+                        Terms of Service
+                      </Link>{" "}
+                      and{" "}
+                      <Link href="/privacy" className="text-brand-400 hover:underline">
+                        Privacy Policy
+                      </Link>
+                    </span>
+                  </label>
+                  {signupErrors.acceptTerms && (
+                    <p className="mt-1 text-xs text-error">{signupErrors.acceptTerms}</p>
+                  )}
                 </div>
 
-                <div className='pt-4'>
-                  <button
-                    type='submit'
-                    className='w-full relative py-3 px-4 rounded-lg font-medium text-sm bg-gradient-to-b from-[#190d2e] to-[#4a208a] shadow-[0px_0px_12px_#8c45ff] hover:shadow-[0px_0px_16px_#8c45ff] transition-all'
-                  >
-                    <div className='absolute inset-0'>
-                      <div className='rounded-lg border border-white/20 absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]'></div>
-                      <div className='rounded-lg border absolute inset-0 border-white/40 [mask-image:linear-gradient(to_top,black,transparent)]'></div>
-                      <div className='absolute inset-0 shadow-[0_0_10px_rgb(140,69,255,.7)_inset] rounded-lg'></div>
-                    </div>
-                    <span className='relative'>Log In</span>
-                  </button>
-                </div>
+                {signupErrors._form && (
+                  <p className="text-xs text-error bg-error/10 border border-error/30 rounded-lg px-3 py-2">
+                    {signupErrors._form}
+                  </p>
+                )}
 
-                <p className='text-sm text-white/50 text-center pt-2'>
-                  Don&apos;t have an account?{" "}
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  loading={signupLoading}
+                >
+                  Create Free Account
+                </Button>
+
+                <p className="text-xs text-white/40 text-center pt-1">
+                  Already have an account?{" "}
                   <button
-                    type='button'
-                    className='text-[#8c45ff] hover:underline'
-                    onClick={() => setActiveTab("signup")}
+                    type="button"
+                    onClick={() => setActiveTab("login")}
+                    className="text-brand-400 hover:underline focus-visible:outline-none"
                   >
-                    Sign up now
+                    Sign in
                   </button>
                 </p>
               </form>
             )}
+
+            {/* ── Log In form ───────────────────────────────────────────── */}
+            {activeTab === "login" && (
+              <form className="space-y-4" onSubmit={handleLoginSubmit} noValidate>
+                <Input
+                  label="Email Address"
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  value={loginData.email}
+                  onChange={handleLoginChange}
+                  placeholder="Enter your email"
+                  error={loginErrors.email}
+                  required
+                />
+
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label htmlFor="password" className="text-sm font-medium text-white/90">
+                      Password <span className="text-error ml-0.5" aria-hidden="true">*</span>
+                    </label>
+                    <Link
+                      href="/forgot-password"
+                      className="text-xs text-brand-400 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
+                    value={loginData.password}
+                    onChange={handleLoginChange}
+                    placeholder="Enter your password"
+                    error={loginErrors.password}
+                    required
+                    rightIcon={
+                      <EyeToggle
+                        show={showPassword}
+                        onToggle={() => setShowPassword((v) => !v)}
+                        label={showPassword ? "Hide password" : "Show password"}
+                      />
+                    }
+                  />
+                </div>
+
+                {loginErrors._form && (
+                  <p className="text-xs text-error bg-error/10 border border-error/30 rounded-lg px-3 py-2">
+                    {loginErrors._form}
+                  </p>
+                )}
+
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  loading={loginLoading}
+                >
+                  Log In
+                </Button>
+
+                <p className="text-xs text-white/40 text-center pt-1">
+                  Don&apos;t have an account?{" "}
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("signup")}
+                    className="text-brand-400 hover:underline focus-visible:outline-none"
+                  >
+                    Create one free
+                  </button>
+                </p>
+              </form>
+            )}
+
           </div>
         </div>
       </div>

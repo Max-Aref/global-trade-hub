@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(node -e \"const sharp = require\\('sharp'\\); sharp\\('./public/brand/gth-og-image.svg'\\).resize\\(1200, 630\\).png\\(\\).toFile\\('./public/brand/gth-og-image.png'\\).then\\(\\(\\) => console.log\\('Done'\\)\\).catch\\(e => console.error\\(e\\)\\);\")",
+      "Bash(npm run *)"
+    ]
+  }
+}

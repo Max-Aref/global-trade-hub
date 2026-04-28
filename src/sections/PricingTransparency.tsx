@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 
 export const PricingTransparency = () => {
   // State for the interactive calculator
@@ -179,9 +181,7 @@ export const PricingTransparency = () => {
           <div className='bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-6 flex flex-col h-full hover:border-white/20 transition-all hover:shadow-[0_0_20px_rgba(140,69,255,0.2)] hover:translate-y-[-5px]'>
             <div className='mb-4 flex justify-between items-start'>
               <h3 className='text-2xl font-semibold text-white'>Start Free</h3>
-              <span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800'>
-                Free Forever
-              </span>
+              <Badge variant='success' size='sm'>Free Forever</Badge>
             </div>
 
             <div className='mb-6'>
@@ -260,20 +260,15 @@ export const PricingTransparency = () => {
               </p>
             </div>
 
-            <button className='relative py-2 px-3 rounded-lg font-medium text-sm bg-gradient-to-b from-[#190d2e] to-[#4a208a] shadow-[0px_0px_12px_#8c45ff] w-full'>
-              <div className='absolute inset-0'>
-                <div className='rounded-lg border border-white/20 absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]'></div>
-                <div className='rounded-lg border absolute inset-0 border-white/40 [mask-image:linear-gradient(to_top,black,transparent)]'></div>
-                <div className='absolute inset-0 shadow-[0_0_10px_rgb(140,69,255,.7)_inset] rounded-lg'></div>
-              </div>
-              <span>Get Started Free</span>
-            </button>
+            <Button variant='primary' size='md' fullWidth>
+              Get Started Free
+            </Button>
           </div>
 
           {/* Success-Based Pricing Tier */}
-          <div className='bg-black/30 backdrop-blur-sm border border-purple-500/30 rounded-xl p-6 flex flex-col h-full relative hover:border-purple-500/50 transition-all hover:shadow-[0_0_25px_rgba(140,69,255,0.3)] hover:translate-y-[-5px]'>
+          <div className='bg-black/30 backdrop-blur-sm border border-brand-500/30 rounded-xl p-6 flex flex-col h-full relative hover:border-brand-500/50 transition-all hover:shadow-[0_0_25px_rgba(140,69,255,0.3)] hover:translate-y-[-5px]'>
             {/* Popular badge */}
-            <div className='absolute top-0 right-6 transform -translate-y-1/2 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold'>
+            <div className='absolute top-0 right-6 transform -translate-y-1/2 bg-brand-600 text-white px-3 py-1 rounded-full text-xs font-semibold'>
               Most Popular
             </div>
 
@@ -380,14 +375,9 @@ export const PricingTransparency = () => {
               </p>
             </div>
 
-            <button className='relative py-2 px-3 rounded-lg font-medium text-sm bg-gradient-to-b from-[#190d2e] to-[#4a208a] shadow-[0px_0px_12px_#8c45ff] w-full'>
-              <div className='absolute inset-0'>
-                <div className='rounded-lg border border-white/20 absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]'></div>
-                <div className='rounded-lg border absolute inset-0 border-white/40 [mask-image:linear-gradient(to_top,black,transparent)]'></div>
-                <div className='absolute inset-0 shadow-[0_0_10px_rgb(140,69,255,.7)_inset] rounded-lg'></div>
-              </div>
-              <span>Calculate Your Costs</span>
-            </button>
+            <Button variant='primary' size='md' fullWidth>
+              Calculate Your Costs
+            </Button>
           </div>
 
           {/* Enterprise Tier */}
@@ -491,9 +481,9 @@ export const PricingTransparency = () => {
               </p>
             </div>
 
-            <button className='relative py-2 px-3 rounded-lg font-medium text-sm border border-white/30 hover:border-white/50 transition-colors w-full'>
-              <span>Contact Sales</span>
-            </button>
+            <Button variant='outline' size='md' fullWidth>
+              Contact Sales
+            </Button>
           </div>
         </div>
 
@@ -554,7 +544,7 @@ export const PricingTransparency = () => {
                     min='100'
                     value={averageOrder}
                     onChange={handleAverageOrderChange}
-                    className='w-full py-2 pl-8 pr-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-500'
+                    className='w-full py-2 pl-8 pr-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-brand-500'
                   />
                 </div>
               </div>
@@ -567,7 +557,7 @@ export const PricingTransparency = () => {
                 <select
                   value={productCategory}
                   onChange={(e) => setProductCategory(e.target.value)}
-                  className='w-full py-2 px-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-purple-500'
+                  className='w-full py-2 px-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-brand-500'
                 >
                   <option value='general'>General Products</option>
                   <option value='electronics'>Electronics</option>
@@ -590,7 +580,7 @@ export const PricingTransparency = () => {
                       value='international'
                       checked={transactionType === "international"}
                       onChange={() => setTransactionType("international")}
-                      className='h-4 w-4 text-purple-600 focus:ring-purple-500 border-white/30 bg-white/10'
+                      className='h-4 w-4 text-brand-600 focus:ring-brand-500 border-white/30 bg-white/10'
                     />
                     <span className='ml-2 text-white'>International</span>
                   </label>
@@ -601,7 +591,7 @@ export const PricingTransparency = () => {
                       value='local'
                       checked={transactionType === "local"}
                       onChange={() => setTransactionType("local")}
-                      className='h-4 w-4 text-purple-600 focus:ring-purple-500 border-white/30 bg-white/10'
+                      className='h-4 w-4 text-brand-600 focus:ring-brand-500 border-white/30 bg-white/10'
                     />
                     <span className='ml-2 text-white'>Local</span>
                   </label>
@@ -664,14 +654,9 @@ export const PricingTransparency = () => {
               </div>
 
               <div className='mt-auto'>
-                <button className='relative py-2 px-3 rounded-lg font-medium text-sm bg-gradient-to-b from-[#190d2e] to-[#4a208a] shadow-[0px_0px_12px_#8c45ff] w-full'>
-                  <div className='absolute inset-0'>
-                    <div className='rounded-lg border border-white/20 absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]'></div>
-                    <div className='rounded-lg border absolute inset-0 border-white/40 [mask-image:linear-gradient(to_top,black,transparent)]'></div>
-                    <div className='absolute inset-0 shadow-[0_0_10px_rgb(140,69,255,.7)_inset] rounded-lg'></div>
-                  </div>
-                  <span>Start With These Settings</span>
-                </button>
+                <Button variant='primary' size='md' fullWidth>
+                  Start With These Settings
+                </Button>
               </div>
             </div>
           </div>
@@ -778,7 +763,7 @@ export const PricingTransparency = () => {
         >
           <a
             href='#'
-            className='text-purple-400 hover:text-purple-300 font-medium'
+            className='text-brand-400 hover:text-purple-300 font-medium'
           >
             View Full Pricing Details →
           </a>
