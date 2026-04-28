@@ -54,6 +54,10 @@ function getPreferredLocale(request: NextRequest): string {
   return localeConfig.defaultLocale;
 }
 
+// Initial launch: only serve users from Egypt.
+// Set ALLOW_ALL_COUNTRIES=true in env to disable the geo-gate.
+const ALLOWED_COUNTRIES = ["EG"];
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -65,6 +69,23 @@ export function middleware(request: NextRequest) {
     pathname.includes(".") // Files like favicon.ico, etc.
   ) {
     return;
+  }
+
+  // Geo-restrict to Egypt during initial launch.
+  // Vercel populates `request.geo` and `x-vercel-ip-country` automatically.
+  if (process.env.ALLOW_ALL_COUNTRIES !== "true" && pathname !== "/unavailable") {
+    const country =
+      request.geo?.country ||
+      request.headers.get("x-vercel-ip-country") ||
+      "";
+
+    // Only enforce when we actually have a country signal (skips localhost/dev).
+    if (country && !ALLOWED_COUNTRIES.includes(country)) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/unavailable";
+      url.search = "";
+      return NextResponse.rewrite(url);
+    }
   }
 
   // Get the first path segment (if any)
