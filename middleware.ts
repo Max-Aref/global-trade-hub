@@ -10,7 +10,7 @@ function matchLocaleVariant(locale: string): string | undefined {
 
   // Then check locale redirects
   for (const [pattern, target] of Object.entries(
-    localeConfig.localeRedirects
+    localeConfig.localeRedirects,
   )) {
     if (pattern.endsWith("*")) {
       const prefix = pattern.slice(0, -1);
@@ -73,11 +73,12 @@ export function middleware(request: NextRequest) {
 
   // Geo-restrict to Egypt during initial launch.
   // Vercel populates `request.geo` and `x-vercel-ip-country` automatically.
-  if (process.env.ALLOW_ALL_COUNTRIES !== "true" && pathname !== "/unavailable") {
+  if (
+    process.env.ALLOW_ALL_COUNTRIES !== "true" &&
+    pathname !== "/unavailable"
+  ) {
     const country =
-      request.geo?.country ||
-      request.headers.get("x-vercel-ip-country") ||
-      "";
+      request.geo?.country || request.headers.get("x-vercel-ip-country") || "";
 
     // Only enforce when we actually have a country signal (skips localhost/dev).
     if (country && !ALLOWED_COUNTRIES.includes(country)) {
