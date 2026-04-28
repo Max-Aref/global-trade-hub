@@ -1,5 +1,4 @@
 import { memo } from "react";
-import Link from "next/link";
 import { Button } from "@/components";
 
 export const ManufacturersShowcase = memo(function ManufacturersShowcase() {
@@ -82,9 +81,7 @@ export const ManufacturersShowcase = memo(function ManufacturersShowcase() {
             empowering you to control your brand and your bottom line.
           </p>
           <div className='mt-10'>
-            <Link href='/auth'>
-              <Button>Get Started Today</Button>
-            </Link>
+            <Button href='/auth'>Get Started Today</Button>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 /**
  * GTH Button Component — the only button primitive in the app.
@@ -20,17 +21,29 @@ import React from "react";
  * so existing usages of the old Button component keep their appearance.
  */
 
-export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger" | "link";
-export type ButtonSize    = "xs" | "sm" | "md" | "lg" | "xl";
+export type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "danger"
+  | "link";
+export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?:   ButtonVariant;
-  size?:      ButtonSize;
-  loading?:   boolean;
-  leftIcon?:  React.ReactNode;
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  loading?: boolean;
+  leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   fullWidth?: boolean;
+  /**
+   * When provided, the button renders as a Next.js `<Link>` (anchor) styled
+   * identically to a button. This avoids the `<a><button></button></a>`
+   * invalid-nesting hydration error that occurs when wrapping a `<Button>`
+   * in `<Link>`. Always prefer `<Button href="...">` over `<Link><Button/></Link>`.
+   */
+  href?: string;
 }
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {
@@ -74,10 +87,10 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
 /** Decorative glass border layers — only for the primary variant */
 function PrimaryDecor() {
   return (
-    <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div className="rounded-lg border border-white/20 absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
-      <div className="rounded-lg border border-white/40 absolute inset-0 [mask-image:linear-gradient(to_top,black,transparent)]" />
-      <div className="absolute inset-0 shadow-brand-inset rounded-lg" />
+    <div className='absolute inset-0 pointer-events-none' aria-hidden='true'>
+      <div className='rounded-lg border border-white/20 absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]' />
+      <div className='rounded-lg border border-white/40 absolute inset-0 [mask-image:linear-gradient(to_top,black,transparent)]' />
+      <div className='absolute inset-0 shadow-brand-inset rounded-lg' />
     </div>
   );
 }
@@ -86,37 +99,41 @@ function PrimaryDecor() {
 function Spinner() {
   return (
     <svg
-      className="animate-spin h-4 w-4 shrink-0"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
+      className='animate-spin h-4 w-4 shrink-0'
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      aria-hidden='true'
     >
       <circle
-        className="opacity-25"
-        cx="12" cy="12" r="10"
-        stroke="currentColor" strokeWidth="4"
+        className='opacity-25'
+        cx='12'
+        cy='12'
+        r='10'
+        stroke='currentColor'
+        strokeWidth='4'
       />
       <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        className='opacity-75'
+        fill='currentColor'
+        d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
       />
     </svg>
   );
 }
 
 export function Button({
-  variant   = "primary",
-  size      = "md",
-  loading   = false,
+  variant = "primary",
+  size = "md",
+  loading = false,
   leftIcon,
   rightIcon,
   fullWidth = false,
   disabled,
   children,
   className = "",
-  type      = "button",
+  type = "button",
+  href,
   ...rest
 }: ButtonProps) {
   const isDisabled = disabled || loading;
@@ -126,31 +143,73 @@ export function Button({
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
     SIZE_CLASSES[size],
     VARIANT_CLASSES[variant],
-    fullWidth  ? "w-full" : "",
-    isDisabled ? "opacity-60 cursor-not-allowed pointer-events-none" : "cursor-pointer",
+    fullWidth ? "w-full" : "",
+    isDisabled
+      ? "opacity-60 cursor-not-allowed pointer-events-none"
+      : "cursor-pointer",
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
-  return (
-    <button type={type} disabled={isDisabled} className={base} {...rest}>
+  const inner = (
+    <>
       {variant === "primary" && <PrimaryDecor />}
-
-      {/* Content layer — sits above the decorative overlay */}
-      <span className="relative inline-flex items-center justify-center gap-[inherit]">
+      <span className='relative inline-flex items-center justify-center gap-[inherit]'>
         {loading ? (
           <Spinner />
         ) : leftIcon ? (
-          <span className="shrink-0">{leftIcon}</span>
+          <span className='shrink-0'>{leftIcon}</span>
         ) : null}
-
         {children && <span>{children}</span>}
-
-        {!loading && rightIcon && (
-          <span className="shrink-0">{rightIcon}</span>
-        )}
+        {!loading && rightIcon && <span className='shrink-0'>{rightIcon}</span>}
       </span>
+    </>
+  );
+
+  if (href && !isDisabled) {
+    // Strip button-only props that don't apply to anchors.
+    const {
+      onClick,
+      onFocus,
+      onBlur,
+      onKeyDown,
+      onKeyUp,
+      tabIndex,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
+    } = rest as React.ButtonHTMLAttributes<HTMLButtonElement>;
+    return (
+      <Link
+        href={href}
+        className={base}
+        onClick={
+          onClick as unknown as React.MouseEventHandler<HTMLAnchorElement>
+        }
+        onFocus={
+          onFocus as unknown as React.FocusEventHandler<HTMLAnchorElement>
+        }
+        onBlur={onBlur as unknown as React.FocusEventHandler<HTMLAnchorElement>}
+        onKeyDown={
+          onKeyDown as unknown as React.KeyboardEventHandler<HTMLAnchorElement>
+        }
+        onKeyUp={
+          onKeyUp as unknown as React.KeyboardEventHandler<HTMLAnchorElement>
+        }
+        tabIndex={tabIndex}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+      >
+        {inner}
+      </Link>
+    );
+  }
+
+  return (
+    <button type={type} disabled={isDisabled} className={base} {...rest}>
+      {inner}
     </button>
   );
 }

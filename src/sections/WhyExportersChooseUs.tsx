@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Button } from "@/components";
 import { FaCheck } from "react-icons/fa";
 
@@ -81,9 +80,7 @@ export const WhyExportersChooseUs = () => {
 
           {/* Call to Action */}
           <div className='text-center'>
-            <Link href='/auth'>
-              <Button>Start Exporting Today</Button>
-            </Link>
+            <Button href='/auth'>Start Exporting Today</Button>
           </div>
         </div>
       </div>

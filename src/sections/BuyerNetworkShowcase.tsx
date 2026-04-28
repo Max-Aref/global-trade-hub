@@ -1,6 +1,5 @@
 "use client";
 import { useState, memo } from "react";
-import Link from "next/link";
 import {
   FaBuilding,
   FaStore,
@@ -451,9 +450,7 @@ export const BuyerNetworkShowcase = memo(function BuyerNetworkShowcase() {
             </div>
 
             <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-              <Link href='/auth'>
-                <Button>Access Buyer Network</Button>
-              </Link>
+              <Button href='/auth'>Access Buyer Network</Button>
               <button className='relative py-3 px-8 rounded-lg font-medium text-lg border border-white/30 hover:border-white/50 transition-colors'>
                 Browse Buyer Industries
               </button>

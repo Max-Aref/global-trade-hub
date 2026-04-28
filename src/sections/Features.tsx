@@ -1,5 +1,3 @@
-"use client";
-import { memo } from "react";
 import Image from "next/image";
 import productImage from "@/assets/product-image.png";
 import {
@@ -44,7 +42,7 @@ const tabs = [
   },
 ];
 
-export const Features = memo(function Features() {
+export function Features() {
   return (
     <section className='py-20 md:py-24'>
       <div className='container'>
@@ -91,4 +89,4 @@ export const Features = memo(function Features() {
       </div>
     </section>
   );
-});
+}

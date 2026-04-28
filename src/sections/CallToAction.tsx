@@ -12,11 +12,12 @@ const SecondaryButton = ({
   href?: string;
 }) => {
   return (
-    <Link href={href}>
-      <button className='relative py-2 px-4 rounded-lg font-medium text-sm border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 flex items-center gap-2 group'>
-        <span>{children}</span>
-        <FaArrowRight className='h-3 w-3 transform group-hover:translate-x-1 transition-transform duration-300' />
-      </button>
+    <Link
+      href={href}
+      className='relative py-2 px-4 rounded-lg font-medium text-sm border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 inline-flex items-center gap-2 group'
+    >
+      <span>{children}</span>
+      <FaArrowRight className='h-3 w-3 transform group-hover:translate-x-1 transition-transform duration-300' />
     </Link>
   );
 };
@@ -56,9 +57,9 @@ export const CallToAction = () => {
             </div>
 
             <div className='flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6'>
-              <Link href='/auth' className='w-full md:w-auto'>
-                <Button>Get Started Now</Button>
-              </Link>
+              <Button href='/auth' className='w-full md:w-auto'>
+                Get Started Now
+              </Button>
               <SecondaryButton href='/about'>Learn More</SecondaryButton>
             </div>
 

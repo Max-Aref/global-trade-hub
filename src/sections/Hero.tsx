@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Button } from "@/components";
 import { starsBg } from "@/assets";
 
@@ -52,9 +51,7 @@ export const Hero = () => {
         </p>
         {/* button section */}
         <div className=' inline-flex gap-4 items-center justify-center mt-10'>
-          <Link href='/auth'>
-            <Button>Learn More</Button>
-          </Link>{" "}
+          <Button href='/auth'>Learn More</Button>{" "}
           <p className='text-lg text-white/70'>It&rsquo; s Free!</p>
         </div>
       </div>

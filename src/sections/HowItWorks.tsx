@@ -1,16 +1,6 @@
-"use client";
-
 import { Button } from "@/components";
-import { useRouter } from "next/navigation";
 
 export const HowItWorks = () => {
-  const router = useRouter(); // Initialize router
-
-  // Handler function to navigate to auth page
-  const handleJoinNowClick = () => {
-    router.push("/auth"); // Navigate to the auth page
-  };
-
   return (
     <section id='gth-how-it-works' className='py-20 md:py-24'>
       <div className='container mx-auto px-4'>
@@ -89,7 +79,7 @@ export const HowItWorks = () => {
         </div>
 
         <div className='text-center'>
-          <Button onClick={handleJoinNowClick}>
+          <Button href='/auth'>
             Join Now – Connect with Active U.S. Buyers
           </Button>
         </div>
