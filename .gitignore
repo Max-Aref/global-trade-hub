@@ -63,3 +63,4 @@ next-env.d.ts
 # ─── Test artifacts ──────────────────────────────────────────
 test-results/
 playwright-report/
+.menu-test.png
