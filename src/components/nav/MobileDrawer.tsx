@@ -134,12 +134,12 @@ export function MobileDrawer({ open, onClose, lang }: MobileDrawerProps) {
     <AnimatePresence>
       {open && (
         <motion.div
+          id='mobile-drawer'
           className='fixed inset-0 z-[100] md:hidden'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.18 }}
-          aria-hidden={!open}
         >
           {/* Overlay */}
           <button

@@ -24,11 +24,36 @@ const VIEW_ALL: Record<Locale, string> = {
 
 const CATEGORY_ORDER: LearnCategory[] = ["sourcing", "logistics", "compliance"];
 
+const HOVER_OPEN_DELAY = 80;
+const HOVER_CLOSE_DELAY = 150;
+
 export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
+  const isRtl = lang === "ar";
+
+  // Hover intent timers — prevents flicker when crossing the gap between
+  // trigger and panel, and avoids accidental open from synthetic
+  // mouseenter on touch devices.
+  const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearTimers = () => {
+    if (openTimer.current) clearTimeout(openTimer.current);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    openTimer.current = null;
+    closeTimer.current = null;
+  };
+  const scheduleOpen = () => {
+    clearTimers();
+    openTimer.current = setTimeout(() => setOpen(true), HOVER_OPEN_DELAY);
+  };
+  const scheduleClose = () => {
+    clearTimers();
+    closeTimer.current = setTimeout(() => setOpen(false), HOVER_CLOSE_DELAY);
+  };
+  useEffect(() => () => clearTimers(), []);
 
   const articles = learnNavManifest;
   const byCategory: Record<LearnCategory, typeof articles> = {
@@ -71,19 +96,30 @@ export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
   }, [open, close]);
 
   return (
-    <div ref={containerRef} className='relative'>
+    <div
+      ref={containerRef}
+      className='relative'
+      onMouseEnter={scheduleOpen}
+      onMouseLeave={scheduleClose}
+    >
       <button
         ref={triggerRef}
         type='button'
-        onClick={() => setOpen((p) => !p)}
-        onMouseEnter={() => setOpen(true)}
+        onClick={() => {
+          clearTimers();
+          setOpen((p) => !p);
+        }}
+        onFocus={() => setOpen(true)}
         aria-expanded={open}
+        aria-haspopup='true'
         aria-controls='educational-menu-panel'
-        className='inline-flex items-center gap-1.5 text-white/70 hover:text-white transition'
+        className='inline-flex items-center gap-1.5 text-white/70 hover:text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-md px-1 py-1 -mx-1'
       >
         {TRIGGER_LABEL[lang]}
         <FaChevronDown
-          className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`h-3 w-3 transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
           aria-hidden='true'
         />
       </button>
@@ -95,10 +131,18 @@ export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className='absolute top-full ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2 mt-3 w-[min(95vw,920px)] z-50'
+            className='absolute top-full left-1/2 -translate-x-1/2 pt-3 w-screen max-w-[min(95vw,920px)] z-50'
             id='educational-menu-panel'
-            onMouseLeave={() => setOpen(false)}
+            aria-label={TRIGGER_LABEL[lang]}
+            onMouseEnter={clearTimers}
+            onMouseLeave={scheduleClose}
           >
+            {/* Invisible hover bridge so the cursor can travel from trigger
+                to panel without the gap closing the menu. */}
+            <div
+              aria-hidden='true'
+              className='absolute -top-1 inset-x-0 h-3'
+            />
             <div className='rounded-2xl border border-white/15 bg-gradient-to-br from-brand-950/95 to-brand-900/95 backdrop-blur-xl shadow-2xl p-6 md:p-8'>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
                 {CATEGORY_ORDER.map((cat) => (
@@ -130,7 +174,7 @@ export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
                 >
                   {VIEW_ALL[lang]}
                   <FaArrowRight
-                    className='h-3 w-3 rtl:rotate-180'
+                    className={`h-3 w-3 ${isRtl ? "rotate-180" : ""}`}
                     aria-hidden='true'
                   />
                 </Link>

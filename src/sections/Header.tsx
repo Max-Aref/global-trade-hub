@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { LiaGlobeAmericasSolid } from "react-icons/lia";
 import MenuIcon from "@/components/MenuIcon";
@@ -17,6 +17,12 @@ const MobileDrawer = dynamic(
   { ssr: false },
 );
 
+// Eagerly request the drawer chunk on hover/focus of the burger so the
+// first tap feels instant on slow connections.
+const prefetchDrawer = () => {
+  void import("@/components/nav/MobileDrawer");
+};
+
 function detectLang(pathname: string | null): Locale {
   if (!pathname) return "en";
   if (pathname.startsWith("/ar")) return "ar";
@@ -28,49 +34,54 @@ export const Header = () => {
   const lang = detectLang(pathname);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerMounted, setDrawerMounted] = useState(false);
-  const openDrawer = () => {
+  const openDrawer = useCallback(() => {
     setDrawerMounted(true);
     setDrawerOpen(true);
-  };
+  }, []);
+  const closeDrawer = useCallback(() => setDrawerOpen(false), []);
   return (
-    <header className='py-4 border-b border-b-[#2A2A2A] md:border-none sticky top-0 z-50  '>
+    <header className='py-4 border-b border-b-[#2A2A2A] md:border-none sticky top-0 z-50'>
       <div className='absolute inset-0 backdrop-blur -z-10 md:hidden'></div>
       <div className='container max-w-full mx-auto px-4'>
-        <div className='flex justify-between items-center border border-white/15 md:p-2.5 rounded-xl w-90% mx-auto md:backdrop-blur '>
-          <div>
+        <div className='flex justify-between items-center gap-3 border border-white/15 p-2 md:p-2.5 rounded-xl md:backdrop-blur'>
+          <div className='shrink-0'>
             <Link href='/' className='inline-flex items-center gap-3 group'>
-              <span className='border h-12 w-12 rounded-lg inline-flex justify-center border-[#2A2A2A] group-hover:border-[#8c45ff]/40 transition-colors duration-300 p-2 items-center'>
-                <LiaGlobeAmericasSolid className='h-10 w-10 text-[#8c45ff]' />
+              <span className='border h-10 w-10 md:h-12 md:w-12 rounded-lg inline-flex justify-center border-[#2A2A2A] group-hover:border-[#8c45ff]/40 transition-colors duration-300 p-1.5 md:p-2 items-center'>
+                <LiaGlobeAmericasSolid className='h-7 w-7 md:h-10 md:w-10 text-[#8c45ff]' />
               </span>
-              <span className='hidden sm:inline-block text-[#8c45ff] font-semibold text-lg tracking-tight whitespace-nowrap'>
+              <span className='hidden sm:inline-block text-[#8c45ff] font-semibold text-base md:text-lg tracking-tight whitespace-nowrap'>
                 Global Trade Hub
               </span>
             </Link>
           </div>
-          {/* navigation menu */}
-          <div>
-            <nav className=' gap-8 text-lg font-medium hidden md:flex items-center'>
-              <a href='#' className='text-white/70 hover:text-white transition'>
-                Mission
-              </a>
-              <a href='#' className='text-white/70 hover:text-white transition'>
-                Features
-              </a>
-              <EducationalMegaMenu lang={lang} />
-              <a href='#' className='text-white/70 hover:text-white transition'>
-                policies
-              </a>
-            </nav>
-          </div>
-          <div className='flex items-center gap-4'>
-            <Button href='/auth'>Register</Button>
+          {/* Desktop navigation */}
+          <nav className='gap-8 text-base lg:text-lg font-medium hidden md:flex items-center'>
+            <a href='#' className='text-white/70 hover:text-white transition'>
+              Mission
+            </a>
+            <a href='#' className='text-white/70 hover:text-white transition'>
+              Features
+            </a>
+            <EducationalMegaMenu lang={lang} />
+            <a href='#' className='text-white/70 hover:text-white transition'>
+              Policies
+            </a>
+          </nav>
+          <div className='flex items-center gap-2 md:gap-4 shrink-0'>
+            {/* Register: hidden on mobile — drawer has its own primary CTA. */}
+            <div className='hidden md:inline-flex'>
+              <Button href='/auth'>Register</Button>
+            </div>
             <button
               type='button'
               aria-label='Open menu'
               aria-expanded={drawerOpen}
               aria-controls='mobile-drawer'
               onClick={openDrawer}
-              className='md:hidden h-10 w-10 inline-flex items-center justify-center rounded-lg text-white/80 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500'
+              onMouseEnter={prefetchDrawer}
+              onFocus={prefetchDrawer}
+              onTouchStart={prefetchDrawer}
+              className='md:hidden h-11 w-11 inline-flex items-center justify-center rounded-lg text-white/80 hover:text-white hover:bg-white/5 active:bg-white/10 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500'
             >
               <MenuIcon className='h-7 w-7' />
             </button>
@@ -78,11 +89,7 @@ export const Header = () => {
         </div>
       </div>
       {drawerMounted && (
-        <MobileDrawer
-          open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-          lang={lang}
-        />
+        <MobileDrawer open={drawerOpen} onClose={closeDrawer} lang={lang} />
       )}
     </header>
   );
