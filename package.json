@@ -30,7 +30,6 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^14.2.35",
     "@playwright/test": "^1.59.1",
-    "@rolldown/binding-win32-x64-msvc": "^1.0.0-rc.17",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
