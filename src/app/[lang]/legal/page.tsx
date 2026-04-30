@@ -19,16 +19,9 @@ const COPY = {
   en: {
     eyebrow: "Legal",
     heading: "Legal & policies",
-    sub: "Working drafts of our policies, prepared bilingually for transparency. Final versions will follow counsel review.",
+    sub: "Working drafts of our policies, prepared for transparency. Final versions will follow counsel review.",
     updated: "Updated",
     draft: "Draft",
-  },
-  ar: {
-    eyebrow: "الشؤون القانونية",
-    heading: "السياسات والوثائق القانونية",
-    sub: "مسودّات عمل لسياساتنا، مُعدّة بصيغة ثنائية اللغة من أجل الشفافية. ستتبع الإصدارات النهائية مراجعة المحامين.",
-    updated: "آخر تحديث",
-    draft: "مسودة",
   },
 } as const;
 
@@ -46,10 +39,7 @@ export async function generateStaticParams() {
 export function generateMetadata({ params }: Props): Metadata {
   const lang = (params.lang as Locale) ?? "en";
   const url = `${siteUrl}/${lang}/legal`;
-  const title =
-    lang === "ar"
-      ? "السياسات والوثائق القانونية — Global Trade Hub"
-      : "Legal & Policies — Global Trade Hub";
+  const title = "Legal & Policies — Global Trade Hub";
   const description = COPY[lang].sub;
   return {
     title,
@@ -58,7 +48,6 @@ export function generateMetadata({ params }: Props): Metadata {
       canonical: url,
       languages: {
         "en-US": `${siteUrl}/en/legal`,
-        "ar-EG": `${siteUrl}/ar/legal`,
       },
     },
     openGraph: {
@@ -66,7 +55,7 @@ export function generateMetadata({ params }: Props): Metadata {
       description,
       url,
       type: "website",
-      locale: lang === "ar" ? "ar_EG" : "en_US",
+      locale: "en_US",
     },
   };
 }
@@ -75,7 +64,6 @@ export default function LegalIndexPage({ params }: Props) {
   const lang = (params.lang as Locale) ?? "en";
   const docs = getAllLegalDocs();
   const c = COPY[lang];
-  const isRtl = lang === "ar";
 
   const grouped = CATEGORY_ORDER.map((cat) => ({
     category: cat,
@@ -87,10 +75,7 @@ export default function LegalIndexPage({ params }: Props) {
       <Header />
       <main className='min-h-screen'>
         <section className='container max-w-6xl mx-auto px-4 py-14 md:py-20'>
-          <div
-            className={`mb-12 ${isRtl ? "font-arabic text-end" : ""}`}
-            dir={isRtl ? "rtl" : "ltr"}
-          >
+          <div className='mb-12' dir='ltr'>
             <p className='text-xs uppercase tracking-wider text-brand-400 mb-3'>
               {c.eyebrow}
             </p>
@@ -102,10 +87,7 @@ export default function LegalIndexPage({ params }: Props) {
             </p>
           </div>
 
-          <div
-            className={`space-y-12 ${isRtl ? "font-arabic" : ""}`}
-            dir={isRtl ? "rtl" : "ltr"}
-          >
+          <div className='space-y-12' dir='ltr'>
             {grouped.map((g) => (
               <div key={g.category}>
                 <h2 className='text-sm uppercase tracking-wider text-brand-400 mb-4'>
@@ -129,7 +111,7 @@ export default function LegalIndexPage({ params }: Props) {
                           <span>
                             {c.updated}:{" "}
                             {new Date(d.lastUpdated).toLocaleDateString(
-                              lang === "ar" ? "ar-EG" : "en-US",
+                              "en-US",
                               {
                                 year: "numeric",
                                 month: "short",

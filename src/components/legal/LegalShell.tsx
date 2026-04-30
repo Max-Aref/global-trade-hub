@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaCalendarAlt, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaCalendarAlt, FaArrowLeft } from "react-icons/fa";
 import type { LegalDoc } from "@/content/legal/types";
 import { LEGAL_CATEGORY_LABELS } from "@/content/legal/types";
 import type { Locale } from "@/config/i18n";
@@ -20,34 +20,18 @@ const COPY = {
     draftBody:
       "This document is a working draft prepared by Global Trade Hub. It has not yet been reviewed by qualified Egyptian or international counsel. Do not rely on it as legal advice. The final, binding version will be published after counsel review.",
   },
-  ar: {
-    home: "الرئيسية",
-    legal: "الشؤون القانونية",
-    backToIndex: "كل المستندات القانونية",
-    updated: "آخر تحديث",
-    draftTitle: "مسودة — قيد المراجعة القانونية",
-    draftBody:
-      "هذا المستند مسودة عمل أعدّها فريق Global Trade Hub ولم تتم مراجعته بعد بواسطة محامين مصريين أو دوليين مؤهلين. يُرجى عدم الاعتماد عليه كمشورة قانونية. سيتم نشر الإصدار النهائي الملزم بعد مراجعة المحامين.",
-  },
 } as const;
 
 export function LegalShell({ doc, lang }: LegalShellProps) {
   const c = COPY[lang];
-  const isRtl = lang === "ar";
-  const Arrow = isRtl ? FaArrowRight : FaArrowLeft;
 
   const updatedFormatted = new Date(doc.lastUpdated).toLocaleDateString(
-    lang === "ar" ? "ar-EG" : "en-US",
+    "en-US",
     { year: "numeric", month: "long", day: "numeric" },
   );
 
   return (
-    <article
-      className={`mx-auto w-full max-w-3xl px-4 py-10 md:py-16 ${
-        isRtl ? "font-arabic" : ""
-      }`}
-      dir={isRtl ? "rtl" : "ltr"}
-    >
+    <article className='mx-auto w-full max-w-3xl px-4 py-10 md:py-16' dir='ltr'>
       <nav aria-label='Breadcrumb' className='mb-6 text-xs text-white/50'>
         <ol className='flex flex-wrap items-center gap-1.5'>
           <li>
@@ -103,9 +87,7 @@ export function LegalShell({ doc, lang }: LegalShellProps) {
       )}
 
       <div
-        className={`prose-gth ${
-          isRtl ? "text-end" : "text-start"
-        } text-white/80 leading-relaxed space-y-5
+        className={`prose-gth text-start text-white/80 leading-relaxed space-y-5
           [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-white [&_h2]:tracking-tight
           [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-white
           [&_p]:leading-relaxed
@@ -123,7 +105,7 @@ export function LegalShell({ doc, lang }: LegalShellProps) {
           href={`/${lang}/legal`}
           className='inline-flex items-center gap-2 text-sm text-brand-300 hover:text-brand-200 transition-colors'
         >
-          <Arrow className='h-3 w-3' aria-hidden='true' />
+          <FaArrowLeft className='h-3 w-3' aria-hidden='true' />
           {c.backToIndex}
         </Link>
       </div>

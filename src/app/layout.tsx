@@ -1,8 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { inter, cairo } from "@/lib/fonts";
-// cairo.variable → --font-cairo  (available for font-arabic class)
+import { inter } from "@/lib/fonts";
 
 import { twMerge } from "tailwind-merge";
 import { Analytics } from "@vercel/analytics/react";
@@ -156,9 +155,7 @@ export default function RootLayout({
       <body
         className={twMerge(
           inter.className,
-          cairo.variable, // exposes --font-cairo for font-arabic class
-          "bg-black text-white antialiased",
-          dir === "rtl" ? "text-right" : "text-left",
+          "bg-black text-white antialiased text-left",
         )}
       >
         {children}

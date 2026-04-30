@@ -22,15 +22,6 @@ describe("MobileDrawer", () => {
     expect(within(dialog).getByText("Legal")).toBeInTheDocument();
   });
 
-  it("renders RTL attributes and arabic labels in ar", () => {
-    render(<MobileDrawer open onClose={() => {}} lang='ar' />);
-    const dialog = screen.getByRole("dialog");
-    expect(dialog).toHaveAttribute("dir", "rtl");
-    expect(dialog.className).toMatch(/font-arabic/);
-    expect(within(dialog).getByText("التعليمية")).toBeInTheDocument();
-    expect(within(dialog).getByText("الشؤون القانونية")).toBeInTheDocument();
-  });
-
   it("locks body scroll while open", () => {
     const { unmount } = render(
       <MobileDrawer open onClose={() => {}} lang='en' />,
@@ -73,6 +64,6 @@ describe("MobileDrawer", () => {
       <MobileDrawer open onClose={() => {}} lang='en' />,
     );
     const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    expect(results.violations).toEqual([]);
   });
 });

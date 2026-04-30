@@ -102,117 +102,16 @@ const ImprintEN = (
   </>
 );
 
-const ImprintAR = (
-  <>
-    <p>
-      توفّر هذه الصفحة المعلومات الخاصة بالشركة Global Trade Hub، وفقًا لأعراف
-      الإفصاح التجاري في مصر ولمعايير الشفافية الدولية (مثل المادة 5 من توجيه
-      التجارة الإلكترونية الأوروبي 2000/31/EC). تفاصيل التسجيل التجاري النهائية
-      ستُؤكَّد عند التأسيس؛ والعناصر المؤقّتة أدناه موضّحة.
-    </p>
-
-    <h2>1. الكيان المُشغِّل</h2>
-    <ul>
-      <li>
-        <strong>الاسم التجاري:</strong> Global Trade Hub
-      </li>
-      <li>
-        <strong>الكيان القانوني:</strong> [يُؤكَّد عند التأسيس]
-      </li>
-      <li>
-        <strong>رقم السجل التجاري:</strong> [يُؤكَّد لاحقًا]
-      </li>
-      <li>
-        <strong>الرقم الضريبي (مصر):</strong> [يُؤكَّد لاحقًا]
-      </li>
-      <li>
-        <strong>المقر المسجّل:</strong> القاهرة، جمهورية مصر العربية (العنوان
-        الكامل لاحقًا)
-      </li>
-    </ul>
-
-    <h2>2. التواصل</h2>
-    <ul>
-      <li>
-        استفسارات عامة:{" "}
-        <a href='mailto:hello@globaltradehub.com'>hello@globaltradehub.com</a>
-      </li>
-      <li>
-        الخصوصية والبيانات:{" "}
-        <a href='mailto:privacy@globaltradehub.com'>
-          privacy@globaltradehub.com
-        </a>
-      </li>
-      <li>
-        الفوترة:{" "}
-        <a href='mailto:billing@globaltradehub.com'>
-          billing@globaltradehub.com
-        </a>
-      </li>
-      <li>
-        إساءة الاستخدام / انتهاك الملكية الفكرية:{" "}
-        <a href='mailto:abuse@globaltradehub.com'>abuse@globaltradehub.com</a>
-      </li>
-      <li>
-        الصحافة:{" "}
-        <a href='mailto:press@globaltradehub.com'>press@globaltradehub.com</a>
-      </li>
-    </ul>
-
-    <h2>3. الممثّلون المفوّضون</h2>
-    <p>
-      ستُدرَج هنا أسماء الأشخاص المخوّلين بتمثيل الشركة بعد التأسيس، مع أدوارهم.
-      وستنعكس التحديثات في تاريخ &quot;آخر تحديث&quot;.
-    </p>
-
-    <h2>4. الإفصاحات التنظيمية</h2>
-    <p>
-      Global Trade Hub منصّة تجارية بين الشركات. لسنا مؤسّسة مالية مرخّصة ولا
-      مؤسّسة مدفوعات ولا وكيل شحن ولا مخلِّصًا جمركيًّا. وعندما يتعامل
-      المستخدمون مباشرة مع مثل هذه الجهات المرخّصة عبر شراكات مُعلَنة على
-      المنصّة، فإن الجهة المرخّصة تقدّم خدماتها بموجب ترخيصها وشروطها.
-    </p>
-
-    <h2>5. الاستضافة والتقنية</h2>
-    <ul>
-      <li>شريك الاستضافة: Vercel Inc. (المنطقة: فرانكفورت، ألمانيا — fra1).</li>
-      <li>
-        تُدرَج المعالجات الفرعية للتحليلات والأمان وإرسال البريد في ملحق معالجة
-        البيانات المتاح عند الطلب.
-      </li>
-    </ul>
-
-    <h2>6. تقديم الشكاوى</h2>
-    <p>
-      لتقديم شكوى بشأن المحتوى أو الخصوصية أو سلوك المنصّة، تواصل عبر العنوان
-      المناسب أعلاه. نهدف إلى الإقرار بالاستلام خلال 3 أيام عمل. ويمكنك أيضًا
-      التواصل مع:
-    </p>
-    <ul>
-      <li>
-        المركز المصري لحماية البيانات الشخصية — لشكاوى البيانات الشخصية وفقًا
-        للقانون 151/2020.
-      </li>
-      <li>
-        جهاز حماية المستهلك المصري — لمسائل حماية المستهلك (مع ملاحظة أن معظم
-        المعاملات بين الشركات تقع خارج نطاقه).
-      </li>
-    </ul>
-  </>
-);
-
 export const imprint: LegalDoc = {
   slug: "imprint",
   category: "company",
   title: {
-    en: "Imprint & Company Information",
-    ar: "المعلومات القانونية للشركة",
+    en: "Imprint & Company Information",
   },
   description: {
-    en: "Legal entity, contact details, regulatory disclosures, and authorised representatives of Global Trade Hub.",
-    ar: "الكيان القانوني وبيانات التواصل والإفصاحات التنظيمية والممثلون المفوّضون لـ Global Trade Hub.",
+    en: "Legal entity, contact details, regulatory disclosures, and authorised representatives of Global Trade Hub.",
   },
   lastUpdated: "2026-04-26",
   reviewStatus: "draft",
-  body: { en: ImprintEN, ar: ImprintAR },
+  body: { en: ImprintEN },
 };

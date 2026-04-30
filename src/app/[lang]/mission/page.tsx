@@ -21,12 +21,10 @@ interface Props {
 
 const TITLE: Record<Locale, string> = {
   en: "Mission & Vision — Global Trade Hub",
-  ar: "المهمة والرؤية — Global Trade Hub",
 };
 
 const DESC: Record<Locale, string> = {
   en: "Our mission is to unlock global markets for Egyptian exporters with verified U.S. buyer access, AI analytics, and transparent trade infrastructure.",
-  ar: "مهمتنا هي فتح الأسواق العالمية أمام المصدّرين المصريين عبر وصول موثّق للمشترين الأمريكيين، وتحليلات الذكاء الاصطناعي، وبنية تجارية شفافة.",
 };
 
 interface Pillar {
@@ -120,68 +118,6 @@ const COPY: Record<
     ctaPrimary: "Get started",
     ctaSecondary: "Read the guides",
   },
-  ar: {
-    eyebrow: "هدفنا",
-    heading: "ربط الصناعة المصرية بالطلب العالمي",
-    sub: "تأسست Global Trade Hub لإزالة الحواجز بين المصدّرين المصريين والمشترين والموزّعين العالميين الذين يبحثون عن منتجاتهم.",
-    missionEyebrow: "المهمة",
-    missionHeading: "تجارة عابرة للحدود — بسيطة وشفافة وعادلة",
-    missionBody: [
-      "نمنح المصنّعين والمزارعين والمنتجين المصريين خطًا مباشرًا للمشترين الموثّقين في الولايات المتحدة والعالم — بدون وسطاء أو تسعير غامض أو تخمين.",
-      "من خلال تحليلات السوق بالذكاء الاصطناعي، والتعليم ثنائي اللغة، والبنية التجارية الشاملة، نحوّل طموح التصدير إلى إيرادات متكررة.",
-    ],
-    visionEyebrow: "الرؤية",
-    visionHeading: "مصر ضمن أكبر خمس اقتصادات تصدير عالميًا بحلول 2035",
-    visionBody: [
-      "نرى مستقبلًا تستطيع فيه أي شركة مصرية صغيرة الوصول إلى موزّع أمريكي قبل الغداء، والشحن خلال الأسبوع، والحصول على مدفوعاتها بالدولار دون فقدان 30٪ للوسطاء.",
-      "نحن نبني السكك — التحقق، اللوجستيات، المدفوعات، والامتثال — التي تجعل هذا المستقبل حتميًا.",
-    ],
-    valuesEyebrow: "ما نلتزم به",
-    valuesHeading: "ست التزامات تشكّل كل قرار منتج",
-    pillars: [
-      {
-        icon: <FaBullseye className='h-5 w-5' />,
-        title: "موجّهون بالنتائج",
-        body: "نقيس النجاح بالحاويات المشحونة وأوامر الشراء الموقّعة، لا بالمقاييس الزائفة.",
-      },
-      {
-        icon: <FaShieldAlt className='h-5 w-5' />,
-        title: "موثّقون بشكل تلقائي",
-        body: "كل مشترٍ ومورّد يُفحص قبل ظهوره في شبكتك. بدون استثناءات.",
-      },
-      {
-        icon: <FaHandshake className='h-5 w-5' />,
-        title: "تسعير عادل",
-        body: "رسوم شفافة بدون اقتطاعات مخفية على هوامشك. تجارتك، قيمتك.",
-      },
-      {
-        icon: <FaCompass className='h-5 w-5' />,
-        title: "ثنائية اللغة بالتصميم",
-        body: "العربية والإنجليزية بنفس الأولوية — في المحتوى والدعم والعقود.",
-      },
-      {
-        icon: <FaGlobeAfrica className='h-5 w-5' />,
-        title: "مصر أولًا، العالم بعدها",
-        body: "مبني لواقع الامتثال المصري، ومصمَّم ليطابق معايير الولايات المتحدة والاتحاد الأوروبي.",
-      },
-      {
-        icon: <FaChartLine className='h-5 w-5' />,
-        title: "البيانات قبل الحدس",
-        body: "يكشف الذكاء الاصطناعي نوافذ التعرفة، وتدفّقات الطلب، واقتصاديات الخطوط الملاحية لتتصرّف بناءً على الحقائق.",
-      },
-    ],
-    statsHeading: "ما نعمل على بنائه",
-    stats: [
-      { value: "+50 ألف", label: "مشترٍ أمريكي موثّق" },
-      { value: "2.4 مليار $", label: "هدف حجم التجارة بحلول 2030" },
-      { value: "12", label: "قطاعًا تصديريًا" },
-      { value: "0", label: "رسوم مخفية على الهامش" },
-    ],
-    ctaHeading: "انضم إلى المصدّرين الذين يبنون فصل مصر القادم",
-    ctaSub: "البدء مجاني. وصول موثّق للمشترين خلال دقائق.",
-    ctaPrimary: "ابدأ الآن",
-    ctaSecondary: "اقرأ الأدلة",
-  },
 };
 
 export async function generateStaticParams() {
@@ -198,7 +134,6 @@ export function generateMetadata({ params }: Props): Metadata {
       canonical: url,
       languages: {
         "en-US": `${siteUrl}/en/mission`,
-        "ar-EG": `${siteUrl}/ar/mission`,
       },
     },
     openGraph: {
@@ -206,7 +141,7 @@ export function generateMetadata({ params }: Props): Metadata {
       description: DESC[lang],
       url,
       type: "website",
-      locale: lang === "ar" ? "ar_EG" : "en_US",
+      locale: "en_US",
     },
   };
 }
@@ -214,19 +149,15 @@ export function generateMetadata({ params }: Props): Metadata {
 export default function MissionPage({ params }: Props) {
   const lang = (params.lang as Locale) ?? "en";
   const c = COPY[lang];
-  const isRtl = lang === "ar";
-  const dirCls = isRtl ? "font-arabic text-end" : "";
 
   return (
     <>
       <Header />
-      <main className='min-h-screen' dir={isRtl ? "rtl" : "ltr"}>
+      <main className='min-h-screen' dir='ltr'>
         {/* Hero */}
         <section className='relative overflow-hidden'>
           <div className='absolute inset-0 -z-10 bg-[radial-gradient(75%_75%_at_center_top,rgb(140,69,255,0.18)_0%,transparent_60%)]' />
-          <div
-            className={`container max-w-5xl mx-auto px-4 py-16 md:py-24 ${dirCls}`}
-          >
+          <div className='container max-w-5xl mx-auto px-4 py-16 md:py-24'>
             <p className='text-xs uppercase tracking-wider text-brand-400 mb-3'>
               {c.eyebrow}
             </p>
@@ -242,9 +173,7 @@ export default function MissionPage({ params }: Props) {
         {/* Mission + Vision */}
         <section className='container max-w-6xl mx-auto px-4 pb-16 md:pb-20'>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-            <article
-              className={`rounded-2xl border border-white/10 bg-gradient-to-br from-brand-950/60 to-brand-900/30 p-7 md:p-9 ${dirCls}`}
-            >
+            <article className='rounded-2xl border border-white/10 bg-gradient-to-br from-brand-950/60 to-brand-900/30 p-7 md:p-9'>
               <div className='inline-flex items-center gap-2 rounded-full border border-brand-500/40 bg-brand-500/10 px-3 py-1 text-xs uppercase tracking-wider text-brand-300'>
                 <FaBullseye className='h-3 w-3' aria-hidden='true' />
                 {c.missionEyebrow}
@@ -259,9 +188,7 @@ export default function MissionPage({ params }: Props) {
               </div>
             </article>
 
-            <article
-              className={`rounded-2xl border border-white/10 bg-gradient-to-br from-brand-950/60 to-brand-900/30 p-7 md:p-9 ${dirCls}`}
-            >
+            <article className='rounded-2xl border border-white/10 bg-gradient-to-br from-brand-950/60 to-brand-900/30 p-7 md:p-9'>
               <div className='inline-flex items-center gap-2 rounded-full border border-brand-500/40 bg-brand-500/10 px-3 py-1 text-xs uppercase tracking-wider text-brand-300'>
                 <FaCompass className='h-3 w-3' aria-hidden='true' />
                 {c.visionEyebrow}
@@ -280,7 +207,7 @@ export default function MissionPage({ params }: Props) {
 
         {/* Values / Pillars */}
         <section className='container max-w-6xl mx-auto px-4 pb-16 md:pb-20'>
-          <div className={`mb-10 ${dirCls}`}>
+          <div className='mb-10'>
             <p className='text-xs uppercase tracking-wider text-brand-400 mb-3'>
               {c.valuesEyebrow}
             </p>
@@ -292,7 +219,7 @@ export default function MissionPage({ params }: Props) {
             {c.pillars.map((p) => (
               <li
                 key={p.title}
-                className={`group rounded-xl border border-white/10 bg-white/[0.02] p-6 hover:border-brand-500/40 hover:bg-white/[0.04] transition ${dirCls}`}
+                className='group rounded-xl border border-white/10 bg-white/[0.02] p-6 hover:border-brand-500/40 hover:bg-white/[0.04] transition'
               >
                 <div className='inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/15 text-brand-300 group-hover:bg-brand-500/25 transition'>
                   {p.icon}
@@ -310,9 +237,7 @@ export default function MissionPage({ params }: Props) {
 
         {/* Stats */}
         <section className='container max-w-6xl mx-auto px-4 pb-16 md:pb-20'>
-          <div
-            className={`rounded-2xl border border-white/10 bg-gradient-to-br from-brand-950/70 to-brand-900/40 p-8 md:p-10 ${dirCls}`}
-          >
+          <div className='rounded-2xl border border-white/10 bg-gradient-to-br from-brand-950/70 to-brand-900/40 p-8 md:p-10'>
             <h2 className='text-xl md:text-2xl font-semibold text-white tracking-tight'>
               {c.statsHeading}
             </h2>
@@ -331,11 +256,7 @@ export default function MissionPage({ params }: Props) {
 
         {/* CTA */}
         <section className='container max-w-4xl mx-auto px-4 pb-20 md:pb-28'>
-          <div
-            className={`rounded-2xl border border-brand-500/30 bg-gradient-to-br from-brand-700/30 to-brand-950/40 p-8 md:p-10 text-center ${
-              isRtl ? "font-arabic" : ""
-            }`}
-          >
+          <div className='rounded-2xl border border-brand-500/30 bg-gradient-to-br from-brand-700/30 to-brand-950/40 p-8 md:p-10 text-center'>
             <h2 className='text-2xl md:text-3xl font-semibold text-white tracking-tight'>
               {c.ctaHeading}
             </h2>

@@ -14,12 +14,10 @@ interface EducationalMegaMenuProps {
 
 const TRIGGER_LABEL: Record<Locale, string> = {
   en: "Educational",
-  ar: "التعليمية",
 };
 
 const VIEW_ALL: Record<Locale, string> = {
   en: "View all articles",
-  ar: "كل المقالات",
 };
 
 const CATEGORY_ORDER: LearnCategory[] = ["sourcing", "logistics", "compliance"];
@@ -37,7 +35,6 @@ export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
-  const isRtl = lang === "ar";
 
   // Compute panel position clamped to viewport so it never overflows.
   const computePos = useCallback(() => {
@@ -210,10 +207,7 @@ export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
                   className='inline-flex items-center gap-2 text-sm text-brand-300 hover:text-brand-200 transition'
                 >
                   {VIEW_ALL[lang]}
-                  <FaArrowRight
-                    className={`h-3 w-3 ${isRtl ? "rotate-180" : ""}`}
-                    aria-hidden='true'
-                  />
+                  <FaArrowRight className='h-3 w-3' aria-hidden='true' />
                 </Link>
               </div>
             </div>

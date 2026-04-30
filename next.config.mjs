@@ -92,6 +92,23 @@ const nextConfig = withAnalyzer({
       },
     ];
   },
+  // ─── Redirects ───────────────────────────────────────────────────────────
+  // Preserve SEO equity from the legacy Arabic locale: 301 every /ar/* URL
+  // to its English equivalent. Required after dropping the `ar` locale.
+  async redirects() {
+    return [
+      {
+        source: "/ar",
+        destination: "/en",
+        permanent: true,
+      },
+      {
+        source: "/ar/:path*",
+        destination: "/en/:path*",
+        permanent: true,
+      },
+    ];
+  },
 });
 
 // Security & caching headers for production

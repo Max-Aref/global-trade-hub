@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -232,7 +232,6 @@ export default function AuthPage() {
               <form className="space-y-4" onSubmit={handleSignupSubmit} noValidate>
                 <Input
                   label="Full Name"
-                  labelAr="الاسم الكامل"
                   id="fullName"
                   type="text"
                   autoComplete="name"
@@ -295,7 +294,6 @@ export default function AuthPage() {
 
                 <Input
                   label="Company Name"
-                  labelAr="اسم الشركة"
                   id="companyName"
                   type="text"
                   autoComplete="organization"

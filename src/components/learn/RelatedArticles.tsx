@@ -11,7 +11,6 @@ interface RelatedArticlesProps {
 
 const HEADING: Record<Locale, string> = {
   en: "Related articles",
-  ar: "مقالات ذات صلة",
 };
 
 export function RelatedArticles({ slugs, lang }: RelatedArticlesProps) {
@@ -28,9 +27,7 @@ export function RelatedArticles({ slugs, lang }: RelatedArticlesProps) {
     >
       <h2
         id='related-heading'
-        className={`text-lg font-semibold text-white mb-4 ${
-          lang === "ar" ? "font-arabic text-end" : ""
-        }`}
+        className='text-lg font-semibold text-white mb-4'
       >
         {HEADING[lang]}
       </h2>
@@ -44,19 +41,12 @@ export function RelatedArticles({ slugs, lang }: RelatedArticlesProps) {
               <p className='text-xs text-brand-400 uppercase tracking-wide mb-1'>
                 {CATEGORY_LABELS[a.category][lang]}
               </p>
-              <p
-                className={`text-sm font-medium text-white group-hover:text-brand-300 transition-colors ${
-                  lang === "ar" ? "font-arabic text-end" : ""
-                }`}
-              >
+              <p className='text-sm font-medium text-white group-hover:text-brand-300 transition-colors'>
                 {a.title[lang]}
               </p>
               <span className='mt-3 inline-flex items-center gap-1.5 text-xs text-white/50 group-hover:text-brand-300 transition-colors'>
-                {lang === "ar" ? "اقرأ المقال" : "Read article"}
-                <FaArrowRight
-                  className={`h-3 w-3 ${lang === "ar" ? "rotate-180" : ""}`}
-                  aria-hidden='true'
-                />
+                Read article
+                <FaArrowRight className='h-3 w-3' aria-hidden='true' />
               </span>
             </Link>
           </li>

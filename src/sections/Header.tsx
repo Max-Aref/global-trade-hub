@@ -19,7 +19,6 @@ const MobileDrawer = dynamic(
 
 function detectLang(pathname: string | null): Locale {
   if (!pathname) return "en";
-  if (pathname.startsWith("/ar")) return "ar";
   return "en";
 }
 

@@ -22,7 +22,7 @@ const LEGAL_SLUGS = [
   "imprint",
 ];
 
-const LANGS = ["en", "ar"];
+const LANGS = ["en"];
 const SITE_URL = process.env.SITE_URL || "https://globaltradehub.com";
 
 module.exports = {
@@ -40,7 +40,7 @@ module.exports = {
     const buildAlternates = (path) =>
       LANGS.map((l) => ({
         href: `${SITE_URL}/${l}${path}`,
-        hreflang: l === "ar" ? "ar-EG" : "en-US",
+        hreflang: "en-US",
       }));
 
     // /<lang>/learn (index)

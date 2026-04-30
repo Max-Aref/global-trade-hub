@@ -15,9 +15,4 @@ test.describe("learn hub", () => {
     await firstArticle.click();
     await expect(page).toHaveURL(new RegExp(href!));
   });
-
-  test("/ar/learn renders Arabic with rtl footer", async ({ page }) => {
-    await page.goto("/ar/learn");
-    await expect(page.locator("footer").first()).toHaveAttribute("dir", "rtl");
-  });
 });

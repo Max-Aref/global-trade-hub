@@ -19,12 +19,6 @@ const COPY = {
     minutes: "min",
     empty: "No articles match your search.",
   },
-  ar: {
-    searchPlaceholder: "ابحث في المقالات…",
-    all: "الكل",
-    minutes: "دقيقة",
-    empty: "لا توجد مقالات تطابق بحثك.",
-  },
 } as const;
 
 const CATEGORIES: LearnCategory[] = ["sourcing", "logistics", "compliance"];
@@ -44,10 +38,8 @@ export function LearnIndexClient({ articles, lang }: LearnIndexClientProps) {
     });
   }, [articles, query, activeCat, lang]);
 
-  const isRtl = lang === "ar";
-
   return (
-    <div dir={isRtl ? "rtl" : "ltr"} className={isRtl ? "font-arabic" : ""}>
+    <div dir='ltr'>
       <div className='mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
         <input
           type='search'

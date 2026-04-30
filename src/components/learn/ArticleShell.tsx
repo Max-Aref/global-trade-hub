@@ -1,10 +1,5 @@
 import Link from "next/link";
-import {
-  FaClock,
-  FaCalendarAlt,
-  FaArrowLeft,
-  FaArrowRight,
-} from "react-icons/fa";
+import { FaClock, FaCalendarAlt, FaArrowLeft } from "react-icons/fa";
 import type { Article } from "@/content/learn/types";
 import { CATEGORY_LABELS } from "@/content/learn/types";
 import type { Locale } from "@/config/i18n";
@@ -23,22 +18,13 @@ const COPY = {
     minutes: "min read",
     reviewed: "Last reviewed",
   },
-  ar: {
-    home: "الرئيسية",
-    learn: "التعليمية",
-    backToIndex: "كل المقالات",
-    minutes: "دقيقة قراءة",
-    reviewed: "آخر مراجعة",
-  },
 } as const;
 
 export function ArticleShell({ article, lang }: ArticleShellProps) {
   const c = COPY[lang];
-  const isRtl = lang === "ar";
-  const Arrow = isRtl ? FaArrowRight : FaArrowLeft;
 
   const reviewedFormatted = new Date(article.reviewedDate).toLocaleDateString(
-    lang === "ar" ? "ar-EG" : "en-US",
+    "en-US",
     { year: "numeric", month: "long", day: "numeric" },
   );
 
@@ -48,7 +34,7 @@ export function ArticleShell({ article, lang }: ArticleShellProps) {
     "@type": "Article",
     headline: article.title[lang],
     description: article.description[lang],
-    inLanguage: lang === "ar" ? "ar-EG" : "en-US",
+    inLanguage: "en-US",
     datePublished: article.reviewedDate,
     dateModified: article.reviewedDate,
     author: {
@@ -63,12 +49,7 @@ export function ArticleShell({ article, lang }: ArticleShellProps) {
   };
 
   return (
-    <article
-      className={`mx-auto w-full max-w-3xl px-4 py-10 md:py-16 ${
-        isRtl ? "font-arabic" : ""
-      }`}
-      dir={isRtl ? "rtl" : "ltr"}
-    >
+    <article className='mx-auto w-full max-w-3xl px-4 py-10 md:py-16' dir='ltr'>
       {/* JSON-LD */}
       <script
         type='application/ld+json'
@@ -132,9 +113,7 @@ export function ArticleShell({ article, lang }: ArticleShellProps) {
 
       {/* Body */}
       <div
-        className={`prose-gth ${
-          isRtl ? "text-end" : "text-start"
-        } text-white/80 leading-relaxed space-y-5
+        className={`prose-gth text-start text-white/80 leading-relaxed space-y-5
           [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-white [&_h2]:tracking-tight
           [&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-white
           [&_p]:leading-relaxed
@@ -154,7 +133,7 @@ export function ArticleShell({ article, lang }: ArticleShellProps) {
           href={`/${lang}/learn`}
           className='inline-flex items-center gap-2 text-sm text-brand-300 hover:text-brand-200 transition-colors'
         >
-          <Arrow className='h-3 w-3' aria-hidden='true' />
+          <FaArrowLeft className='h-3 w-3' aria-hidden='true' />
           {c.backToIndex}
         </Link>
       </div>

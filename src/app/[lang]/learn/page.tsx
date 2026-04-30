@@ -14,12 +14,10 @@ interface Props {
 
 const TITLE: Record<Locale, string> = {
   en: "Educational — Global Trade Hub",
-  ar: "التعليمية — Global Trade Hub",
 };
 
 const DESC: Record<Locale, string> = {
   en: "Practical guides for Egyptian exporters and overseas buyers: sourcing, shipping, customs, payment, IP, and ESG.",
-  ar: "أدلة عملية للمصدّرين المصريين والمشترين الخارجيين: التوريد، الشحن، الجمارك، الدفع، الملكية الفكرية، والاستدامة.",
 };
 
 const HERO: Record<Locale, { eyebrow: string; heading: string; sub: string }> =
@@ -27,12 +25,7 @@ const HERO: Record<Locale, { eyebrow: string; heading: string; sub: string }> =
     en: {
       eyebrow: "Educational",
       heading: "Trade knowledge built for Egypt",
-      sub: "Bilingual, practitioner-grade guides on sourcing, logistics, and compliance.",
-    },
-    ar: {
-      eyebrow: "التعليمية",
-      heading: "معرفة تجارية مبنية لمصر",
-      sub: "أدلة ثنائية اللغة بمستوى الممارسين حول التوريد واللوجستيات والامتثال.",
+      sub: "Practitioner-grade guides on sourcing, logistics, and compliance.",
     },
   };
 
@@ -50,7 +43,6 @@ export function generateMetadata({ params }: Props): Metadata {
       canonical: url,
       languages: {
         "en-US": `${siteUrl}/en/learn`,
-        "ar-EG": `${siteUrl}/ar/learn`,
       },
     },
     openGraph: {
@@ -58,7 +50,7 @@ export function generateMetadata({ params }: Props): Metadata {
       description: DESC[lang],
       url,
       type: "website",
-      locale: lang === "ar" ? "ar_EG" : "en_US",
+      locale: "en_US",
     },
   };
 }
@@ -73,10 +65,7 @@ export default function LearnIndexPage({ params }: Props) {
       <Header />
       <main className='min-h-screen'>
         <section className='container max-w-6xl mx-auto px-4 py-14 md:py-20'>
-          <div
-            className={`mb-10 ${lang === "ar" ? "font-arabic text-end" : ""}`}
-            dir={lang === "ar" ? "rtl" : "ltr"}
-          >
+          <div className='mb-10' dir='ltr'>
             <p className='text-xs uppercase tracking-wider text-brand-400 mb-3'>
               {hero.eyebrow}
             </p>

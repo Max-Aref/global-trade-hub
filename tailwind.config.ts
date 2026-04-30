@@ -87,7 +87,6 @@ const config: Config = {
       fontFamily: {
         display: ["Inter", "system-ui", "sans-serif"],
         body:    ["Inter", "system-ui", "sans-serif"],
-        arabic:  ["Cairo", "Noto Sans Arabic", "sans-serif"],
         mono:    ["Roboto Mono", "Courier New", "monospace"],
       },
 

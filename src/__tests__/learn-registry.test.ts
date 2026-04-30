@@ -32,12 +32,10 @@ describe("learn registry", () => {
     }
   });
 
-  it("has bilingual title and description for every article", () => {
+  it("has English title and description for every article", () => {
     for (const a of articles) {
       expect(a.title.en.length).toBeGreaterThan(0);
-      expect(a.title.ar.length).toBeGreaterThan(0);
       expect(a.description.en.length).toBeGreaterThan(0);
-      expect(a.description.ar.length).toBeGreaterThan(0);
     }
   });
 

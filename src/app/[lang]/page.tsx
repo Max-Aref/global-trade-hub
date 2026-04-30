@@ -25,8 +25,6 @@ export const metadata: Metadata = {
     "US market access",
     "import export",
     "global trade",
-    "منصة تجارة دولية",
-    "تصدير مصر",
   ],
   authors: [{ name: "Global Trade Hub" }],
   creator: "Global Trade Hub",
@@ -34,7 +32,6 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    alternateLocale: "ar_EG",
     url: siteUrl,
     siteName: "Global Trade Hub",
     title: "Global Trade Hub — Unlock the U.S. Market",
@@ -70,7 +67,6 @@ export const metadata: Metadata = {
     canonical: siteUrl,
     languages: {
       "en-US": `${siteUrl}/en`,
-      "ar-EG": `${siteUrl}/ar`,
     },
   },
 };

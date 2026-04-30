@@ -20,80 +20,70 @@ export const learnNavManifest: LearnNavEntry[] = [
     slug: "sourcing-guide-egypt",
     category: "sourcing",
     title: {
-      en: "The complete buyer's guide to sourcing wholesale from Egypt",
-      ar: "الدليل الكامل للمشتري للتوريد بالجملة من مصر",
+      en: "The complete buyer's guide to sourcing wholesale from Egypt",
     },
   },
   {
     slug: "egyptian-cotton-grades",
     category: "sourcing",
     title: {
-      en: "Egyptian cotton grades explained: Giza 86, 87, 88, 92, 94, 96 and the CES trademark",
-      ar: "شرح أصناف القطن المصري: جيزة ٨٦، ٨٧، ٨٨، ٩٢، ٩٤، ٩٦ وعلامة CES التجارية",
+      en: "Egyptian cotton grades explained: Giza 86, 87, 88, 92, 94, 96 and the CES trademark",
     },
   },
   {
     slug: "manufacturer-vetting-checklist",
     category: "sourcing",
     title: {
-      en: "Manufacturer vetting checklist for Egyptian suppliers",
-      ar: "قائمة فحص المصنعين لتقييم الموردين المصريين",
+      en: "Manufacturer vetting checklist for Egyptian suppliers",
     },
   },
   {
     slug: "incoterms-2020-explained",
     category: "logistics",
     title: {
-      en: "Incoterms 2020 explained for Egyptian export buyers",
-      ar: "شرح Incoterms 2020 للمشترين من الصادرات المصرية",
+      en: "Incoterms 2020 explained for Egyptian export buyers",
     },
   },
   {
     slug: "shipping-from-egypt",
     category: "logistics",
     title: {
-      en: "Shipping from Egypt: ports, transit times, FCL vs LCL, and Suez Canal economics",
-      ar: "الشحن من مصر: الموانئ، أوقات العبور، FCL مقابل LCL، واقتصاديات قناة السويس",
+      en: "Shipping from Egypt: ports, transit times, FCL vs LCL, and Suez Canal economics",
     },
   },
   {
     slug: "customs-and-export-procedures",
     category: "logistics",
     title: {
-      en: "Egyptian customs & export procedures: NAFEZA, ACI, HS codes, and free zones",
-      ar: "الجمارك وإجراءات التصدير المصرية: نافذة، ACI، أكواد HS، والمناطق الحرة",
+      en: "Egyptian customs & export procedures: NAFEZA, ACI, HS codes, and free zones",
     },
   },
   {
     slug: "quality-inspection-standards",
     category: "compliance",
     title: {
-      en: "Quality inspection standards: PSI, third-party labs, and AQL sampling under ISO 2859-1",
-      ar: "معايير فحص الجودة: PSI، مختبرات الطرف الثالث، وأخذ العينات AQL وفق ISO 2859-1",
+      en: "Quality inspection standards: PSI, third-party labs, and AQL sampling under ISO 2859-1",
     },
   },
   {
     slug: "payment-and-trade-finance",
     category: "compliance",
     title: {
-      en: "Payment terms and trade finance for Egyptian export deals",
-      ar: "شروط الدفع والتمويل التجاري لعقود التصدير المصرية",
+      en: "Payment terms and trade finance for Egyptian export deals",
     },
   },
   {
     slug: "intellectual-property-protection",
     category: "compliance",
     title: {
-      en: "Intellectual property protection for Egyptian exports: trademarks, designs, and customs recordation",
-      ar: "حماية الملكية الفكرية للصادرات المصرية: العلامات والتصميمات والتسجيل الجمركي",
+      en: "Intellectual property protection for Egyptian exports: trademarks, designs, and customs recordation",
     },
   },
   {
     slug: "sustainability-and-esg",
     category: "compliance",
     title: {
-      en: "Sustainability and ESG for Egyptian exporters: GOTS, OEKO-TEX, BCI, and EU CBAM",
-      ar: "الاستدامة وحوكمة ESG للمصدّرين المصريين: GOTS و OEKO-TEX و BCI و CBAM الأوروبي",
+      en: "Sustainability and ESG for Egyptian exporters: GOTS, OEKO-TEX, BCI, and EU CBAM",
     },
   },
 ];

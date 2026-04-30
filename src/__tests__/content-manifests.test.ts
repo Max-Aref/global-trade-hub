@@ -16,7 +16,7 @@ describe("learn nav manifest", () => {
     expect(new Set(slugs).size).toBe(slugs.length);
   });
 
-  it("matches every article on slug, category, and bilingual title", () => {
+  it("matches every article on slug, category, and title", () => {
     for (const article of articles) {
       const entry = learnNavManifest.find((m) => m.slug === article.slug);
       expect(
@@ -25,7 +25,6 @@ describe("learn nav manifest", () => {
       ).toBeDefined();
       expect(entry!.category).toBe(article.category);
       expect(entry!.title.en).toBe(article.title.en);
-      expect(entry!.title.ar).toBe(article.title.ar);
     }
   });
 
@@ -58,7 +57,6 @@ describe("legal nav manifest", () => {
       ).toBeDefined();
       expect(entry!.category).toBe(doc.category);
       expect(entry!.title.en).toBe(doc.title.en);
-      expect(entry!.title.ar).toBe(doc.title.ar);
       expect(entry!.reviewStatus).toBe(doc.reviewStatus);
     }
   });

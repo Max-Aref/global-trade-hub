@@ -2,14 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import {
-  FaTimes,
-  FaChevronDown,
-  FaArrowRight,
-  FaArrowLeft,
-} from "react-icons/fa";
+import { FaTimes, FaChevronDown, FaArrowRight } from "react-icons/fa";
 import { Button } from "@/components/Button";
 import { Logo } from "@/components/ui/Logo";
 import { learnNavManifest } from "@/content/learn/nav-manifest";
@@ -38,25 +32,9 @@ const COPY = {
     educational: "Educational",
     legal: "Legal",
     viewAll: "View all",
-    languageLabel: "Language",
     register: "Register",
     signIn: "Sign in",
     home: "Home",
-  },
-  ar: {
-    close: "إغلاق القائمة",
-    primary: [
-      { label: "المهمة", href: "/mission", localized: true },
-      { label: "الميزات", href: "#features", localized: false },
-      { label: "الأسعار", href: "#pricing", localized: false },
-    ],
-    educational: "التعليمية",
-    legal: "الشؤون القانونية",
-    viewAll: "عرض الكل",
-    languageLabel: "اللغة",
-    register: "سجّل الآن",
-    signIn: "تسجيل الدخول",
-    home: "الرئيسية",
   },
 } as const;
 
@@ -75,10 +53,7 @@ const LEGAL_CATEGORY_ORDER: LegalCategory[] = [
 
 export function MobileDrawer({ open, onClose, lang }: MobileDrawerProps) {
   const reduceMotion = useReducedMotion();
-  const pathname = usePathname();
   const c = COPY[lang];
-  const isRtl = lang === "ar";
-  const Arrow = isRtl ? FaArrowLeft : FaArrowRight;
 
   const [learnOpen, setLearnOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState(false);
@@ -117,18 +92,8 @@ export function MobileDrawer({ open, onClose, lang }: MobileDrawerProps) {
   }, [open, onClose]);
 
   // Compute language switcher target by mirroring pathname
-  const otherLang: Locale = lang === "en" ? "ar" : "en";
-  const switchHref = (() => {
-    if (!pathname || pathname === "/") return `/${otherLang}`;
-    if (pathname.startsWith("/en/") || pathname === "/en")
-      return pathname.replace(/^\/en/, "/ar");
-    if (pathname.startsWith("/ar/") || pathname === "/ar")
-      return pathname.replace(/^\/ar/, "/en");
-    return `/${otherLang}${pathname}`;
-  })();
-
-  const slideFrom = isRtl ? "-100%" : "100%";
-  const side = isRtl ? "left-0" : "right-0";
+  const slideFrom = "100%";
+  const side = "right-0";
 
   return (
     <AnimatePresence>
@@ -155,12 +120,8 @@ export function MobileDrawer({ open, onClose, lang }: MobileDrawerProps) {
             role='dialog'
             aria-modal='true'
             aria-label='Site navigation'
-            dir={isRtl ? "rtl" : "ltr"}
-            className={`absolute top-0 ${side} h-full w-[88%] max-w-sm bg-[#0b061f] ${
-              isRtl ? "border-r" : "border-l"
-            } border-white/10 shadow-2xl flex flex-col ${
-              isRtl ? "font-arabic" : ""
-            }`}
+            dir='ltr'
+            className={`absolute top-0 ${side} h-full w-[88%] max-w-sm bg-[#0b061f] border-l border-white/10 shadow-2xl flex flex-col`}
             initial={{ x: slideFrom }}
             animate={{ x: 0 }}
             exit={{ x: slideFrom }}
@@ -273,7 +234,7 @@ export function MobileDrawer({ open, onClose, lang }: MobileDrawerProps) {
                             className='inline-flex items-center gap-2 px-2 py-2 text-sm font-medium text-brand-300 hover:text-brand-200 transition'
                           >
                             {c.viewAll}
-                            <Arrow className='h-3 w-3' aria-hidden='true' />
+                            <FaArrowRight className='h-3 w-3' aria-hidden='true' />
                           </Link>
                         </div>
                       </motion.div>
@@ -342,7 +303,7 @@ export function MobileDrawer({ open, onClose, lang }: MobileDrawerProps) {
                             className='inline-flex items-center gap-2 px-2 py-2 text-sm font-medium text-brand-300 hover:text-brand-200 transition'
                           >
                             {c.viewAll}
-                            <Arrow className='h-3 w-3' aria-hidden='true' />
+                            <FaArrowRight className='h-3 w-3' aria-hidden='true' />
                           </Link>
                         </div>
                       </motion.div>
@@ -352,38 +313,8 @@ export function MobileDrawer({ open, onClose, lang }: MobileDrawerProps) {
               </ul>
             </nav>
 
-            {/* Footer: language + CTAs */}
+            {/* Footer: CTAs */}
             <div className='border-t border-white/10 px-5 py-5 space-y-4'>
-              <div>
-                <p className='text-xs text-white/40 mb-2'>{c.languageLabel}</p>
-                <div className='flex gap-2'>
-                  <Link
-                    href={lang === "en" ? "#" : switchHref}
-                    aria-current={lang === "en" ? "page" : undefined}
-                    onClick={lang === "en" ? undefined : onClose}
-                    className={
-                      lang === "en"
-                        ? "text-xs px-3 py-1.5 rounded-lg bg-brand-500/20 border border-brand-500/40 text-brand-300 font-medium"
-                        : "text-xs px-3 py-1.5 rounded-lg border border-white/10 text-white/60 hover:border-white/20 hover:text-white transition"
-                    }
-                  >
-                    EN
-                  </Link>
-                  <Link
-                    href={lang === "ar" ? "#" : switchHref}
-                    aria-current={lang === "ar" ? "page" : undefined}
-                    onClick={lang === "ar" ? undefined : onClose}
-                    className={
-                      lang === "ar"
-                        ? "text-xs px-3 py-1.5 rounded-lg bg-brand-500/20 border border-brand-500/40 text-brand-300 font-medium font-arabic"
-                        : "text-xs px-3 py-1.5 rounded-lg border border-white/10 text-white/60 hover:border-white/20 hover:text-white transition font-arabic"
-                    }
-                  >
-                    عربي
-                  </Link>
-                </div>
-              </div>
-
               <div className='flex flex-col gap-2'>
                 <Button href='/auth' onClick={onClose}>
                   {c.register}

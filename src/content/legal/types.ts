@@ -5,12 +5,10 @@ export type LegalCategory = "privacy" | "terms" | "platform" | "company";
 
 export interface BilingualText {
   en: string;
-  ar: string;
 }
 
 export interface BilingualBody {
   en: ReactNode;
-  ar: ReactNode;
 }
 
 export interface LegalDoc {
@@ -24,8 +22,8 @@ export interface LegalDoc {
 }
 
 export const LEGAL_CATEGORY_LABELS: Record<LegalCategory, BilingualText> = {
-  privacy: { en: "Privacy & Data", ar: "الخصوصية والبيانات" },
-  terms: { en: "Terms & Conditions", ar: "الشروط والأحكام" },
-  platform: { en: "Platform Policies", ar: "سياسات المنصة" },
-  company: { en: "Company Information", ar: "معلومات الشركة" },
+  privacy: { en: "Privacy & Data" },
+  terms: { en: "Terms & Conditions" },
+  platform: { en: "Platform Policies" },
+  company: { en: "Company Information" },
 };

@@ -24,12 +24,10 @@ describe("legal registry", () => {
     }
   });
 
-  it("has bilingual title and description on every doc", () => {
+  it("has English title and description on every doc", () => {
     for (const d of docs) {
       expect(d.title.en).toBeTruthy();
-      expect(d.title.ar).toBeTruthy();
       expect(d.description.en).toBeTruthy();
-      expect(d.description.ar).toBeTruthy();
     }
   });
 

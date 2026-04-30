@@ -36,7 +36,6 @@ export function generateMetadata({ params }: Props): Metadata {
       canonical: url,
       languages: {
         "en-US": `${siteUrl}/en/legal/${doc.slug}`,
-        "ar-EG": `${siteUrl}/ar/legal/${doc.slug}`,
       },
     },
     openGraph: {
@@ -44,7 +43,7 @@ export function generateMetadata({ params }: Props): Metadata {
       description: doc.description[lang],
       url,
       type: "article",
-      locale: lang === "ar" ? "ar_EG" : "en_US",
+      locale: "en_US",
     },
     robots:
       doc.reviewStatus === "draft" ? { index: false, follow: true } : undefined,

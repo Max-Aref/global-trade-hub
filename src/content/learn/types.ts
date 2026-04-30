@@ -5,12 +5,10 @@ export type LearnCategory = "sourcing" | "logistics" | "compliance";
 
 export interface BilingualText {
   en: string;
-  ar: string;
 }
 
 export interface BilingualBody {
   en: ReactNode;
-  ar: ReactNode;
 }
 
 export interface Article {
@@ -26,9 +24,9 @@ export interface Article {
 }
 
 export const CATEGORY_LABELS: Record<LearnCategory, BilingualText> = {
-  sourcing: { en: "Sourcing from Egypt", ar: "التوريد من مصر" },
-  logistics: { en: "Trade & Logistics", ar: "التجارة واللوجستيات" },
-  compliance: { en: "Compliance & Quality", ar: "الامتثال والجودة" },
+  sourcing: { en: "Sourcing from Egypt" },
+  logistics: { en: "Trade & Logistics" },
+  compliance: { en: "Compliance & Quality" },
 };
 
 export function getLocalized<T extends BilingualText | BilingualBody>(

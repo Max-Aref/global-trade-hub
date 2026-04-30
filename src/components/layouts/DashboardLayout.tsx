@@ -28,22 +28,21 @@ interface Breadcrumb {
 }
 
 interface DashboardLayoutProps {
-  children:      React.ReactNode;
-  pageTitle:     string;
-  pageTitleAr?:  string;
-  breadcrumbs?:  Breadcrumb[];
-  currentPath?:  string;
-  companyName?:  string;
+  children: React.ReactNode;
+  pageTitle: string;
+  breadcrumbs?: Breadcrumb[];
+  currentPath?: string;
+  companyName?: string;
   /** Called when a sidebar nav item is clicked — use to switch active tab */
-  onNavClick?:   (id: string) => void;
+  onNavClick?: (id: string) => void;
 }
 
 export function DashboardLayout({
   children,
   pageTitle,
-  breadcrumbs  = [],
-  currentPath  = "overview",
-  companyName  = "Company",
+  breadcrumbs = [],
+  currentPath = "overview",
+  companyName = "Company",
   onNavClick,
 }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -61,7 +60,7 @@ export function DashboardLayout({
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex">
+    <div className='min-h-screen bg-black text-white flex'>
       {/* Sidebar */}
       <DashboardSidebar
         currentPath={currentPath}
@@ -74,14 +73,14 @@ export function DashboardLayout({
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+          className='fixed inset-0 bg-black/60 z-40 lg:hidden'
           onClick={() => setSidebarOpen(false)}
-          aria-hidden="true"
+          aria-hidden='true'
         />
       )}
 
       {/* Main content column */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className='flex-1 flex flex-col min-w-0'>
         <DashboardTopBar
           pageTitle={pageTitle}
           breadcrumbs={crumbs}
@@ -89,10 +88,8 @@ export function DashboardLayout({
           userInitial={userInitial}
         />
 
-        <main className="flex-1 overflow-auto bg-[radial-gradient(75%_75%_at_center_center,rgb(140,69,255,.08)_15%,rgb(14,0,36,.5)_78%,transparent)]">
-          <div className="px-4 lg:px-8 py-6 max-w-7xl mx-auto">
-            {children}
-          </div>
+        <main className='flex-1 overflow-auto bg-[radial-gradient(75%_75%_at_center_center,rgb(140,69,255,.08)_15%,rgb(14,0,36,.5)_78%,transparent)]'>
+          <div className='px-4 lg:px-8 py-6 max-w-7xl mx-auto'>{children}</div>
         </main>
       </div>
     </div>
