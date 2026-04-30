@@ -27,13 +27,6 @@ const nextConfig = withAnalyzer({
     // domains: ['assets.example.com'],
   },
 
-  // Optimize bundle
-  modularizeImports: {
-    "@dotlottie/react-player": {
-      transform: "@dotlottie/react-player",
-    },
-  },
-
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
