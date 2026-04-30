@@ -17,12 +17,6 @@ const MobileDrawer = dynamic(
   { ssr: false },
 );
 
-// Eagerly request the drawer chunk on hover/focus of the burger so the
-// first tap feels instant on slow connections.
-const prefetchDrawer = () => {
-  void import("@/components/nav/MobileDrawer");
-};
-
 function detectLang(pathname: string | null): Locale {
   if (!pathname) return "en";
   if (pathname.startsWith("/ar")) return "ar";
@@ -33,7 +27,13 @@ export const Header = () => {
   const pathname = usePathname();
   const lang = detectLang(pathname);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // Mount the drawer on first hover/focus/touch so the chunk is ready
+  // before the user clicks. Click also forces mount as a fallback.
   const [drawerMounted, setDrawerMounted] = useState(false);
+  const mountDrawer = useCallback(() => {
+    setDrawerMounted(true);
+    void import("@/components/nav/MobileDrawer");
+  }, []);
   const openDrawer = useCallback(() => {
     setDrawerMounted(true);
     setDrawerOpen(true);
@@ -78,9 +78,9 @@ export const Header = () => {
               aria-expanded={drawerOpen}
               aria-controls='mobile-drawer'
               onClick={openDrawer}
-              onMouseEnter={prefetchDrawer}
-              onFocus={prefetchDrawer}
-              onTouchStart={prefetchDrawer}
+              onMouseEnter={mountDrawer}
+              onFocus={mountDrawer}
+              onTouchStart={mountDrawer}
               className='md:hidden h-11 w-11 inline-flex items-center justify-center rounded-lg text-white/80 hover:text-white hover:bg-white/5 active:bg-white/10 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500'
             >
               <MenuIcon className='h-7 w-7' />

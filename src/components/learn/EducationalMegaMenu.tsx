@@ -139,10 +139,7 @@ export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
           >
             {/* Invisible hover bridge so the cursor can travel from trigger
                 to panel without the gap closing the menu. */}
-            <div
-              aria-hidden='true'
-              className='absolute -top-1 inset-x-0 h-3'
-            />
+            <div aria-hidden='true' className='absolute -top-1 inset-x-0 h-3' />
             <div className='rounded-2xl border border-white/15 bg-gradient-to-br from-brand-950/95 to-brand-900/95 backdrop-blur-xl shadow-2xl p-6 md:p-8'>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
                 {CATEGORY_ORDER.map((cat) => (
