@@ -56,16 +56,22 @@ export const Header = () => {
           </div>
           {/* Desktop navigation */}
           <nav className='gap-8 text-base lg:text-lg font-medium hidden md:flex items-center'>
-            <a href='#' className='text-white/70 hover:text-white transition'>
+            <Link
+              href={`/${lang}/mission`}
+              className='text-white/70 hover:text-white transition'
+            >
               Mission
-            </a>
+            </Link>
             <a href='#' className='text-white/70 hover:text-white transition'>
               Features
             </a>
             <EducationalMegaMenu lang={lang} />
-            <a href='#' className='text-white/70 hover:text-white transition'>
+            <Link
+              href={`/${lang}/legal`}
+              className='text-white/70 hover:text-white transition'
+            >
               Policies
-            </a>
+            </Link>
           </nav>
           <div className='flex items-center gap-2 md:gap-4 shrink-0'>
             {/* Register: hidden on mobile — drawer has its own primary CTA. */}

@@ -29,10 +29,41 @@ const HOVER_CLOSE_DELAY = 150;
 
 export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
   const [open, setOpen] = useState(false);
+  const [panelPos, setPanelPos] = useState<{
+    top: number;
+    left: number;
+    width: number;
+  } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
   const isRtl = lang === "ar";
+
+  // Compute panel position clamped to viewport so it never overflows.
+  const computePos = useCallback(() => {
+    const t = triggerRef.current?.getBoundingClientRect();
+    if (!t) return;
+    const margin = 16;
+    const width = Math.min(920, window.innerWidth - margin * 2);
+    const idealLeft = t.left + t.width / 2 - width / 2;
+    const left = Math.max(
+      margin,
+      Math.min(idealLeft, window.innerWidth - width - margin),
+    );
+    setPanelPos({ top: t.bottom + 12, left, width });
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    computePos();
+    const onResize = () => computePos();
+    window.addEventListener("resize", onResize);
+    window.addEventListener("scroll", onResize, true);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", onResize, true);
+    };
+  }, [open, computePos]);
 
   // Hover intent timers — prevents flicker when crossing the gap between
   // trigger and panel, and avoids accidental open from synthetic
@@ -131,7 +162,16 @@ export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className='absolute top-full left-1/2 -translate-x-1/2 pt-3 w-screen max-w-[min(95vw,920px)] z-50'
+            className='fixed z-50'
+            style={
+              panelPos
+                ? {
+                    top: panelPos.top,
+                    left: panelPos.left,
+                    width: panelPos.width,
+                  }
+                : { top: -9999, left: -9999, width: 0 }
+            }
             id='educational-menu-panel'
             aria-label={TRIGGER_LABEL[lang]}
             onMouseEnter={clearTimers}
@@ -139,7 +179,7 @@ export function EducationalMegaMenu({ lang }: EducationalMegaMenuProps) {
           >
             {/* Invisible hover bridge so the cursor can travel from trigger
                 to panel without the gap closing the menu. */}
-            <div aria-hidden='true' className='absolute -top-1 inset-x-0 h-3' />
+            <div aria-hidden='true' className='absolute -top-3 inset-x-0 h-3' />
             <div className='rounded-2xl border border-white/15 bg-gradient-to-br from-brand-950/95 to-brand-900/95 backdrop-blur-xl shadow-2xl p-6 md:p-8'>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8'>
                 {CATEGORY_ORDER.map((cat) => (

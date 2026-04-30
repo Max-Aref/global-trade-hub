@@ -31,9 +31,9 @@ const COPY = {
   en: {
     close: "Close menu",
     primary: [
-      { label: "Mission", href: "#" },
-      { label: "Features", href: "#" },
-      { label: "Pricing", href: "#pricing" },
+      { label: "Mission", href: "/mission", localized: true },
+      { label: "Features", href: "#features", localized: false },
+      { label: "Pricing", href: "#pricing", localized: false },
     ],
     educational: "Educational",
     legal: "Legal",
@@ -46,9 +46,9 @@ const COPY = {
   ar: {
     close: "إغلاق القائمة",
     primary: [
-      { label: "المهمة", href: "#" },
-      { label: "الميزات", href: "#" },
-      { label: "الأسعار", href: "#pricing" },
+      { label: "المهمة", href: "/mission", localized: true },
+      { label: "الميزات", href: "#features", localized: false },
+      { label: "الأسعار", href: "#pricing", localized: false },
     ],
     educational: "التعليمية",
     legal: "الشؤون القانونية",
@@ -205,7 +205,7 @@ export function MobileDrawer({ open, onClose, lang }: MobileDrawerProps) {
                 {c.primary.map((item) => (
                   <li key={item.label}>
                     <Link
-                      href={item.href}
+                      href={item.localized ? `/${lang}${item.href}` : item.href}
                       onClick={onClose}
                       className='block px-3 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-white/5 transition'
                     >
