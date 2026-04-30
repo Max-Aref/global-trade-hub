@@ -13,7 +13,8 @@ import { PricingTransparency } from "@/sections/PricingTransparency";
 import { BuyerNetworkShowcase } from "@/sections/BuyerNetworkShowcase";
 import { localeConfig, type Locale } from "@/config/i18n";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://globaltradehub.com";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://globaltradehub.com";
 
 export const metadata: Metadata = {
   title: "Global Trade Hub — Connect Egyptian Exporters with U.S. Buyers",
