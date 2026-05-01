@@ -314,12 +314,17 @@ export function MobileDrawer({ open, onClose, lang }: MobileDrawerProps) {
             </nav>
 
             {/* Footer: CTAs */}
-            <div className='border-t border-white/10 px-5 py-5 space-y-4'>
-              <div className='flex flex-col gap-2'>
-                <Button href='/auth' onClick={onClose}>
-                  {c.register}
-                </Button>
-              </div>
+            <div className='border-t border-white/10 px-5 py-5 space-y-3'>
+              <Button href='/auth' onClick={onClose}>
+                {c.register}
+              </Button>
+              <Link
+                href='/auth'
+                onClick={onClose}
+                className='block w-full text-center px-4 py-2.5 rounded-lg text-sm font-medium text-white/80 hover:text-white border border-white/15 hover:border-white/30 transition'
+              >
+                {c.signIn}
+              </Link>
             </div>
           </motion.div>
         </motion.div>

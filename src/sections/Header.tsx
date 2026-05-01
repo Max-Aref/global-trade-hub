@@ -73,10 +73,17 @@ export const Header = () => {
             </Link>
           </nav>
           <div className='flex items-center gap-2 md:gap-4 shrink-0'>
-            {/* Register: hidden on mobile — drawer has its own primary CTA. */}
+            {/* Desktop: full Register CTA */}
             <div className='hidden md:inline-flex'>
               <Button href='/auth'>Register</Button>
             </div>
+            {/* Mobile: compact Sign in / Register link, always visible */}
+            <Link
+              href='/auth'
+              className='md:hidden inline-flex items-center h-9 px-3 rounded-lg text-sm font-medium text-white bg-brand-500 hover:bg-brand-400 active:bg-brand-600 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300'
+            >
+              Sign in
+            </Link>
             <button
               type='button'
               aria-label='Open menu'
